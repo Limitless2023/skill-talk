@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Agent Skills — 专家知识 × 技术放大</title>
+    <title>AI Agent Skills — 给 AI 装技能包</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -19,41 +19,27 @@
         html{scroll-behavior:smooth}
         body{font-family:var(--font);background:var(--bg);color:var(--white);
             overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
-
-        /* === SCROLL CONTAINER === */
         #deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;
             scroll-behavior:smooth;scrollbar-width:none}
         #deck::-webkit-scrollbar{display:none}
-
-        /* === SLIDE === */
         .slide{min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
             display:flex;align-items:center;justify-content:center;
-            padding:60px 48px;position:relative;
-            border-bottom:1px solid var(--border)}
+            padding:60px 48px;position:relative;border-bottom:1px solid var(--border)}
         .slide-inner{max-width:900px;width:100%}
-
-        /* === ENTRANCE ANIMATIONS === */
         .slide{opacity:0;transform:translateY(40px)}
         .slide.visible{opacity:1;transform:translateY(0);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
         .anim{opacity:0;transform:translateY(20px)}
         .anim.show{opacity:1;transform:translateY(0);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
-
-        /* === TYPOGRAPHY === */
         .slide-num{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--blue);
             letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
         .slide-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;
             letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
         .slide-sub{font-size:1rem;color:var(--g3);line-height:1.6;margin-bottom:40px;max-width:640px}
-        .highlight{color:var(--blue)}
-        .highlight-red{color:var(--red)}
-        .highlight-green{color:var(--green)}
-        .dim{color:var(--g3)}
-
-        /* === HERO === */
-        .hero-title{font-size:clamp(3rem,7vw,5.5rem);font-weight:900;letter-spacing:-.04em;
+        .hi{color:var(--blue)}.hi-r{color:var(--red)}.hi-g{color:var(--green)}.dim{color:var(--g3)}
+        .hero-title{font-size:clamp(2.8rem,6.5vw,5rem);font-weight:900;letter-spacing:-.04em;
             text-align:center;line-height:1.05;margin-bottom:20px}
-        .hero-sub{font-size:1.15rem;color:var(--g3);text-align:center;max-width:560px;
-            margin:0 auto 48px;line-height:1.6}
+        .hero-sub{font-size:1.1rem;color:var(--g3);text-align:center;max-width:560px;
+            margin:0 auto 48px;line-height:1.7}
         .hero-badge{display:inline-flex;align-items:center;gap:8px;
             padding:6px 16px;border:1px solid var(--g5);border-radius:100px;
             font-size:12px;color:var(--g2);letter-spacing:1px;margin-bottom:40px}
@@ -61,41 +47,31 @@
             animation:pulse 2s infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
         .hero-center{display:flex;flex-direction:column;align-items:center}
-
-        /* === FORMULA === */
         .formula{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
-        .f-box{padding:28px 32px;border:1px solid var(--border);border-radius:16px;
-            background:var(--bg2);text-align:center;min-width:180px;transition:border-color .3s}
-        .f-box:hover{border-color:var(--g4)}
-        .f-box.active{border-color:var(--blue)}
-        .f-icon{font-size:2.2rem;margin-bottom:8px}
+        .f-box{padding:24px 28px;border:1px solid var(--border);border-radius:16px;
+            background:var(--bg2);text-align:center;min-width:160px;transition:border-color .3s}
+        .f-box:hover{border-color:var(--g4)}.f-box.active{border-color:var(--blue)}
+        .f-icon{font-size:2rem;margin-bottom:6px}
         .f-label{font-size:13px;font-weight:700;color:var(--g1);letter-spacing:.5px;margin-bottom:2px}
-        .f-desc{font-size:12px;color:var(--g3)}
-        .f-op{font-size:2.5rem;font-weight:800;color:var(--blue);font-family:var(--mono)}
+        .f-desc{font-size:11px;color:var(--g3)}
+        .f-op{font-size:2.2rem;font-weight:800;color:var(--blue);font-family:var(--mono)}
         .formula-note{font-size:13px;color:var(--g3);text-align:center;font-style:italic}
         .formula-note strong{color:var(--red);font-style:normal}
-
-        /* === GRID / CARDS === */
         .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
         .grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
         @media(max-width:640px){.grid2,.grid4{grid-template-columns:1fr}}
-
         .card{padding:24px;background:var(--bg2);border:1px solid var(--border);
             border-radius:14px;transition:all .2s}
         .card:hover{border-color:var(--g4);transform:translateY(-2px)}
         .card h3{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
         .card p,.card li{font-size:13px;color:var(--g3);line-height:1.6}
         .card-accent{border-color:var(--blue-dim)}
-
-        /* === ROWS === */
         .row{display:flex;align-items:start;gap:14px;padding:14px 18px;
             background:var(--bg2);border:1px solid var(--border);border-radius:10px;
             margin-bottom:8px;transition:all .15s;font-size:14px}
         .row:hover{border-color:var(--g4);transform:translateX(4px)}
         .row-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
         .row-accent{border-color:var(--blue-dim);background:var(--blue-bg)}
-
-        /* === FLOW STEPS === */
         .steps{display:flex;flex-direction:column;gap:6px;padding-left:20px;position:relative}
         .steps::before{content:'';position:absolute;left:3px;top:18px;bottom:18px;width:1px;background:var(--g5)}
         .step{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:center;
@@ -106,25 +82,16 @@
             width:6px;height:6px;background:var(--blue);border-radius:50%}
         .step-n{font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600}
         .step-t{font-size:13px;color:var(--g1)}
-
-        /* === BADGE / TAG === */
         .badge{font-size:10px;padding:2px 8px;border-radius:100px;font-family:var(--mono);font-weight:600}
-        .b-blue{background:#1e3a5f;color:var(--blue)}
-        .b-purple{background:#2e1065;color:var(--purple)}
-        .b-green{background:#052e16;color:var(--green)}
-        .b-red{background:#450a0a;color:var(--red)}
+        .b-blue{background:#1e3a5f;color:var(--blue)}.b-purple{background:#2e1065;color:var(--purple)}
+        .b-green{background:#052e16;color:var(--green)}.b-red{background:#450a0a;color:var(--red)}
         .tag{padding:3px 10px;border:1px solid var(--border);border-radius:100px;
             font-size:11px;color:var(--g3);display:inline-block;margin:2px}
         .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-
-        /* === COMPARE TABLE === */
         .cmp-row{display:flex;justify-content:space-between;align-items:center;
             padding:10px 0;border-bottom:1px solid var(--g6);font-size:13px}
         .cmp-row:last-child{border-bottom:none}
-        .cmp-l{color:var(--g3)}
-        .cmp-v{color:var(--g1);font-weight:500;text-align:right}
-
-        /* === PITFALL === */
+        .cmp-l{color:var(--g3)}.cmp-v{color:var(--g1);font-weight:500;text-align:right}
         .pit{display:flex;gap:18px;align-items:start;padding:22px;
             background:var(--bg2);border:1px solid var(--border);border-radius:14px;
             margin-bottom:10px;transition:all .15s}
@@ -134,100 +101,88 @@
         .pit p{font-size:13px;color:var(--g3);line-height:1.6}
         .quote{margin-top:8px;padding:10px 14px;border-left:2px solid var(--g5);
             font-size:12px;color:var(--g2);line-height:1.6}
-
-        /* === SCENARIO === */
         .sc{padding:18px 20px;background:var(--bg2);border:1px solid var(--border);
             border-radius:12px;margin-bottom:8px;transition:all .15s}
         .sc:hover{border-color:var(--g4);transform:translateX(4px)}
         .sc h4{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
         .sc .pipe{font-size:12px;color:var(--g2);font-family:var(--mono);margin-top:6px}
         .sc .pipe .arr{color:var(--blue);margin:0 5px}
-
-        /* === CATEGORY LABEL === */
         .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:2px;
             font-weight:700;margin:28px 0 12px;padding-left:2px}
         .cat:first-of-type{margin-top:0}
-
-        /* === BIG QUOTE === */
         .bq{text-align:center}
         .bq blockquote{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;
             letter-spacing:-.02em;max-width:700px;margin:0 auto 16px;line-height:1.4}
         .bq .attr{font-size:13px;color:var(--g3)}
-
-        /* === CALLOUT === */
         .callout{padding:20px 24px;border:1px solid var(--blue-dim);border-radius:14px;
-            background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(59,130,246,.02));
-            margin-top:24px}
+            background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(59,130,246,.02));margin-top:24px}
         .callout h4{font-size:13px;color:var(--blue);margin-bottom:10px;font-weight:700}
         .callout-grid{display:grid;grid-template-columns:32px 1fr;gap:6px 10px;font-size:13px;color:var(--g1)}
         .callout-n{color:var(--blue);font-family:var(--mono);font-weight:700}
-
-        /* === PRIORITY MATRIX === */
         .matrix{margin-top:28px;padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:14px}
         .matrix h4{font-size:12px;color:var(--g2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
-
-        /* === PROGRESS NAV === */
         #nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);
-            display:flex;flex-direction:column;gap:8px;z-index:999}
-        .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--g5);
+            display:flex;flex-direction:column;gap:6px;z-index:999}
+        .nav-dot{width:7px;height:7px;border-radius:50%;background:var(--g5);
             cursor:pointer;transition:all .3s;border:none;padding:0}
-        .nav-dot.active{background:var(--blue);box-shadow:0 0 8px rgba(59,130,246,.4)}
+        .nav-dot.active{background:var(--blue);box-shadow:0 0 8px rgba(59,130,246,.4);width:9px;height:9px}
         .nav-dot:hover{background:var(--g4)}
-
-        /* === SLIDE COUNTER === */
         #counter{position:fixed;bottom:20px;right:24px;font-family:var(--mono);
             font-size:12px;color:var(--g4);z-index:999;letter-spacing:1px}
-
-        /* === FOOTER === */
         .foot{text-align:center}
         .foot h4{font-size:11px;color:var(--g3);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
         .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
         .foot-link{padding:6px 14px;border:1px solid var(--border);border-radius:100px;
             font-size:13px;color:var(--g3);text-decoration:none;transition:all .15s}
         .foot-link:hover{border-color:var(--g4);color:var(--g1)}
+        /* hook flow */
+        .hook-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+            margin:32px 0;font-family:var(--mono);font-size:14px;color:var(--g2)}
+        .hook-step{padding:8px 16px;background:var(--bg2);border:1px solid var(--border);
+            border-radius:8px;transition:all .3s}
+        .hook-arr{color:var(--blue);font-size:18px}
     </style>
 </head>
 <body>
-
 <div id="deck">
 
-<!-- SLIDE 0: HERO -->
+<!-- 0: HERO — 开场钩子 -->
 <section class="slide" data-slide="0">
     <div class="slide-inner hero-center">
-        <div class="hero-badge"><span class="pulse"></span>AI Agent Skills</div>
-        <h1 class="hero-title anim">专家知识 <span class="highlight">×</span> 技术放大</h1>
-        <p class="hero-sub anim">B端智能体落地的核心密码：<br>把专家做事的套路，变成机器可稳定执行的流程</p>
-        <div class="formula anim">
-            <div class="f-box"><div class="f-icon">🧠</div><div class="f-label">专家知识</div><div class="f-desc">业务SOP · 判断标准</div></div>
-            <div class="f-op">×</div>
-            <div class="f-box"><div class="f-icon">⚡</div><div class="f-label">技术能力</div><div class="f-desc">提示词 · 工作流 · 工具</div></div>
-            <div class="f-op">=</div>
-            <div class="f-box active"><div class="f-icon">🤖</div><div class="f-label">好 Agent</div><div class="f-desc">可规模化 · 可交付</div></div>
+        <div class="hero-badge"><span class="pulse"></span>AI Agent Skills 分享</div>
+        <h1 class="hero-title anim">给 AI 装<span class="hi">技能包</span></h1>
+        <p class="hero-sub anim">一句话让 AI 自动搜索资料 → 写文章 → 配图 → 排版 → 发布公众号<br><strong style="color:var(--g1)">这不是 Demo，是已经在跑的工作流</strong></p>
+        <div class="hook-flow anim">
+            <span class="hook-step">搜索资料</span><span class="hook-arr">→</span>
+            <span class="hook-step">撰写文章</span><span class="hook-arr">→</span>
+            <span class="hook-step">AI 配图</span><span class="hook-arr">→</span>
+            <span class="hook-step">自动排版</span><span class="hook-arr">→</span>
+            <span class="hook-step" style="border-color:var(--blue)">一键发布</span>
         </div>
-        <p class="formula-note anim">注意是<strong>乘法</strong>，不是加法。任何一边是 0，整体就是 0。</p>
+        <p class="anim" style="font-size:13px;color:var(--g3);text-align:center">而实现这一切，只需要一个 <strong style="color:var(--blue)">Skill</strong></p>
     </div>
 </section>
 
-<!-- SLIDE 1: 什么是 Skill -->
+<!-- 1: 什么是 Skill -->
 <section class="slide" data-slide="1">
     <div class="slide-inner">
         <div class="slide-num anim">Part 01</div>
-        <h2 class="slide-title anim">什么是 <span class="highlight">Skill</span></h2>
-        <p class="slide-sub anim">一句话：给 AI 的操作手册，写一次，永远可用</p>
+        <h2 class="slide-title anim">什么是 <span class="hi">Skill</span></h2>
+        <p class="slide-sub anim">把 AI 想象成超级能干的全能实习生</p>
 
         <div class="grid2 anim">
             <div class="card">
                 <h3>😩 没有 Skill</h3>
-                <p>每次都要手把手教 AI：<br>"标题要震惊、排版要分段、最后加二维码……"</p>
+                <p>每次都要手把手教：<br>"标题要震惊、排版要分段、最后加二维码……"</p>
                 <div style="margin-top:12px">
-                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">每次都重复教，费口舌（费 Token）</span></div>
-                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">AI 容易忘，下次又从零开始</span></div>
+                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">每次重复教，费口舌（费 Token）</span></div>
+                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">AI 容易忘，下次从零开始</span></div>
                     <div class="row"><span class="row-icon">❌</span><span style="font-size:13px">好的经验用完就丢</span></div>
                 </div>
             </div>
             <div class="card card-accent">
                 <h3>✅ 有了 Skill</h3>
-                <p>写好一本操作手册塞进 AI 背包，喊一声就自动干活</p>
+                <p>写好操作手册塞进背包，喊一声就自动干活</p>
                 <div style="margin-top:12px">
                     <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon">⚡</span><span style="font-size:13px"><strong>按需触发</strong> — AI 自动识别何时该用</span></div>
                     <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon">🧠</span><span style="font-size:13px"><strong>不占记忆</strong> — 不用时不消耗上下文</span></div>
@@ -238,54 +193,46 @@
     </div>
 </section>
 
-<!-- SLIDE 2: Skill 的三项核心能力 -->
+<!-- 2: Skill 三大能力 -->
 <section class="slide" data-slide="2">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 01 (续)</div>
-        <h2 class="slide-title anim">Skill 能帮 AI 解锁<span class="highlight">三项能力</span></h2>
+        <div class="slide-num anim">Part 01 续</div>
+        <h2 class="slide-title anim">Skill 解锁<span class="hi">三项能力</span></h2>
         <p class="slide-sub anim">从"只会聊天"到"真正干活"</p>
 
         <div class="pit anim">
             <div class="pit-icon">📋</div>
-            <div>
-                <h4>能力一：复刻你的工作习惯 <span class="badge b-blue">SOP</span></h4>
-                <p>把你的工作标准、排版要求、避坑指南打包给 AI</p>
-                <div class="quote">以前：让 AI 写周报，写得乱七八糟，改半天<br>有了 Skill：给它一个《周报专用 Skill》，每次格式完美</div>
-            </div>
+            <div><h4>复刻你的工作习惯 <span class="badge b-blue">SOP</span></h4>
+                <p>把工作标准、排版要求、避坑指南打包给 AI</p>
+                <div class="quote">以前：让 AI 写周报，写得乱七八糟<br>有了 Skill：给它《周报专用 Skill》，每次格式完美</div></div>
         </div>
-
         <div class="pit anim">
             <div class="pit-icon">🔧</div>
-            <div>
-                <h4>能力二：安装专业工具 <span class="badge b-purple">Tools</span></h4>
-                <p>让 AI 不只会打字，还能操作软件、调用 API、执行代码</p>
-                <div class="quote">以前：让 AI 做动图，它摊手说"臣妾做不到"<br>有了 Skill：给它一个《GIF 制作 Skill》，内含 Python 脚本，直接生成</div>
-            </div>
+            <div><h4>安装专业工具 <span class="badge b-purple">Tools</span></h4>
+                <p>让 AI 不只会打字，还能操作软件、调 API、执行代码</p>
+                <div class="quote">以前："帮我做个动图" → "臣妾做不到"<br>有了 Skill：给它《GIF 制作 Skill》，内含 Python 脚本，直接生成</div></div>
         </div>
-
         <div class="pit anim">
             <div class="pit-icon">🧬</div>
-            <div>
-                <h4>能力三：瞬间复制大神经验 <span class="badge b-green">Knowledge</span></h4>
+            <div><h4>瞬间复制大神经验 <span class="badge b-green">Knowledge</span></h4>
                 <p>Skill 是文件 = 可复制粘贴 = 经验即插即用</p>
-                <div class="quote">不懂写爆款标题？找来《爆款标题 Skill》扔给 AI<br>你的 AI 瞬间拥有大师级起标题能力 — 你不需要懂，只需要拥有这个 Skill</div>
-            </div>
+                <div class="quote">不懂爆款标题？找来《爆款标题 Skill》扔给 AI<br>你不需要懂，只需要拥有这个 Skill</div></div>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 3: Skill 的结构 -->
+<!-- 3: Skill 结构 -->
 <section class="slide" data-slide="3">
     <div class="slide-inner">
         <div class="slide-num anim">Part 02</div>
-        <h2 class="slide-title anim">Skill <span class="highlight">长什么样</span></h2>
+        <h2 class="slide-title anim">Skill <span class="hi">长什么样</span></h2>
         <p class="slide-sub anim">本质就是一个文件夹，非常轻量</p>
 
         <div class="card anim" style="padding:28px;font-family:var(--mono);font-size:13px;line-height:2.2">
             <span style="color:var(--g3)">my-contract-reviewer/</span><br>
-            <span style="color:var(--g3)">├──</span> <strong style="color:var(--blue)">SKILL.md</strong> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 核心：大脑（指令 + 流程 + 触发条件）</span><br>
-            <span style="color:var(--g3)">└── scripts/</span> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 选配：手脚（Python/Bash 脚本）</span><br>
-            <span style="color:var(--g3)">&nbsp;&nbsp;&nbsp;&nbsp;└──</span> check_clauses.py <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 比如：检查合同条款的脚本</span>
+            <span style="color:var(--g3)">├──</span> <strong style="color:var(--blue)">SKILL.md</strong> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 大脑（指令 + 流程 + 触发条件）</span><br>
+            <span style="color:var(--g3)">└── scripts/</span> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 手脚（Python/Bash 脚本）</span><br>
+            <span style="color:var(--g3)">&nbsp;&nbsp;&nbsp;&nbsp;└──</span> check_clauses.py
         </div>
 
         <div class="grid2 anim" style="margin-top:16px">
@@ -299,53 +246,47 @@
                 </div>
             </div>
             <div class="card">
-                <h3>💡 关键设计原则</h3>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>按需触发</strong> — 通过 description 自动匹配</span></div>
+                <h3>💡 设计原则</h3>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>按需触发</strong> — 通过 description 匹配</span></div>
                 <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>渐进加载</strong> — 不用时不占上下文</span></div>
                 <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>死板的活交给脚本</strong> — 省 Token 又精准</span></div>
-                <div class="row"><span class="row-icon" style="color:var(--red)">⚠</span><span style="font-size:13px"><strong>安全提醒</strong> — 第三方 Skill 务必审查代码</span></div>
+                <div class="row"><span class="row-icon" style="color:var(--red)">⚠</span><span style="font-size:13px"><strong>安全</strong> — 第三方 Skill 务必审查代码</span></div>
             </div>
-        </div>
-
-        <div class="callout anim">
-            <p style="font-size:14px;text-align:center;color:var(--g1)">创造 Skill 只需一句话："<strong style="color:var(--blue)">我想要一个能自动审查合同风险的 Skill</strong>" — AI 帮你生成</p>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 4: Skill vs MCP -->
+<!-- 4: Skill vs MCP -->
 <section class="slide" data-slide="4">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 02 (续)</div>
+        <div class="slide-num anim">Part 02 续</div>
         <h2 class="slide-title anim">Skill vs MCP <span class="dim" style="font-size:.55em">别搞混了</span></h2>
         <p class="slide-sub anim">一个教方法，一个给数据。两者结合 = 超级大厨</p>
 
         <div class="grid2 anim">
             <div class="card card-accent">
-                <h3>🍳 Skill = 菜谱 <span class="badge b-blue">教 AI 怎么做</span></h3>
+                <h3>🍳 Skill = 菜谱 <span class="badge b-blue">教怎么做</span></h3>
                 <div class="cmp-row"><span class="cmp-l">关注</span><span class="cmp-v">How — 思考逻辑、做事步骤</span></div>
                 <div class="cmp-row"><span class="cmp-l">形态</span><span class="cmp-v">几个 Markdown 文件</span></div>
-                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v highlight-green">极轻量，打包就能分享</span></div>
+                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v hi-g">极轻量，打包就能分享</span></div>
                 <div class="cmp-row"><span class="cmp-l">局限</span><span class="cmp-v">没法实时获取数据</span></div>
-                <div class="cmp-row"><span class="cmp-l">例子</span><span class="cmp-v">教 AI 按巴菲特逻辑分析</span></div>
             </div>
             <div class="card" style="border-color:#2e1065">
-                <h3>🧊 MCP = 冰箱 <span class="badge b-purple">给 AI 食材/数据</span></h3>
+                <h3>🧊 MCP = 冰箱 <span class="badge b-purple">给食材/数据</span></h3>
                 <div class="cmp-row"><span class="cmp-l">关注</span><span class="cmp-v">What — 连接外部数据和工具</span></div>
                 <div class="cmp-row"><span class="cmp-l">形态</span><span class="cmp-v">运行的服务（Server）</span></div>
-                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v highlight-green">能力强大，连接万物</span></div>
+                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v hi-g">能力强大，连接万物</span></div>
                 <div class="cmp-row"><span class="cmp-l">局限</span><span class="cmp-v">配置门槛高</span></div>
-                <div class="cmp-row"><span class="cmp-l">例子</span><span class="cmp-v">连接数据库查昨天 DAU</span></div>
             </div>
         </div>
 
         <div class="card anim" style="margin-top:16px">
-            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">📊 实战协作：写一份股市分析报告</h3>
-            <div class="steps" style="margin-top:12px">
-                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">获取今天最新股价、K线图、新闻 <span class="dim">— AI 脑子里没行情</span></span></div>
-                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">按《价值投资逻辑》分析数据 <span class="dim">— 告诉 AI 分析框架</span></span></div>
-                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">排版，生成 PDF 报告 <span class="dim">— 指导格式和风格</span></span></div>
-                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">通过邮件发送给老板 <span class="dim">— 连接邮件服务器</span></span></div>
+            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">📊 实战：写一份股市分析报告</h3>
+            <div class="steps" style="margin-top:10px">
+                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">抓今天股价新闻 <span class="dim">（食材）</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">按巴菲特逻辑分析 <span class="dim">（烹饪）</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">生成 PDF 报告 <span class="dim">（摆盘）</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">发邮件给老板 <span class="dim">（外卖送达）</span></span></div>
             </div>
         </div>
 
@@ -355,26 +296,41 @@
     </div>
 </section>
 
-<!-- SLIDE 5: 市场真实问题 -->
+<!-- 5: 核心公式 -->
 <section class="slide" data-slide="5">
-    <div class="slide-inner">
+    <div class="slide-inner hero-center">
         <div class="slide-num anim">Part 03</div>
-        <h2 class="slide-title anim">市场的<span class="highlight-red">真实</span>问题</h2>
-        <p class="slide-sub anim">企业端的困境不是"缺技术"</p>
+        <h2 class="slide-title anim" style="text-align:center">好 Agent 的<span class="hi">核心公式</span></h2>
+        <p class="hero-sub anim">Skill 只是载体，真正决定 Agent 质量的是什么？</p>
+        <div class="formula anim">
+            <div class="f-box"><div class="f-icon">🧠</div><div class="f-label">专家知识</div><div class="f-desc">业务SOP · 判断标准</div></div>
+            <div class="f-op">×</div>
+            <div class="f-box"><div class="f-icon">⚡</div><div class="f-label">技术能力</div><div class="f-desc">提示词 · 工作流 · 工具</div></div>
+            <div class="f-op">=</div>
+            <div class="f-box active"><div class="f-icon">🤖</div><div class="f-label">好 Agent</div><div class="f-desc">可规模化 · 可交付</div></div>
+        </div>
+        <p class="formula-note anim">注意是<strong>乘法</strong>，不是加法。任何一边是 0，整体就是 0。</p>
+    </div>
+</section>
 
+<!-- 6: 市场真实问题 -->
+<section class="slide" data-slide="6">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 03 续</div>
+        <h2 class="slide-title anim">市场的<span class="hi-r">真实</span>问题</h2>
+        <p class="slide-sub anim">企业端的困境不是"缺技术"</p>
         <div class="row anim"><span class="row-icon">❌</span><span>缺的不是技术 <span class="dim">— 大模型能力摆在那里，工作流平台也很成熟</span></span></div>
         <div class="row anim"><span class="row-icon">❌</span><span>缺对能力边界的清醒认识 <span class="dim">— AI 能做什么、不能做什么</span></span></div>
         <div class="row row-accent anim"><span class="row-icon">💡</span><span><strong>缺把专家流程写进系统的能力</strong> <span class="dim">— 这才是决定项目成败的总开关</span></span></div>
     </div>
 </section>
 
-<!-- SLIDE 2: 专家知识 -->
-<section class="slide" data-slide="6">
+<!-- 7: 专家知识 -->
+<section class="slide" data-slide="7">
     <div class="slide-inner">
         <div class="slide-num anim">Part 04</div>
-        <h2 class="slide-title anim">专家知识<span class="highlight">到底是什么</span></h2>
+        <h2 class="slide-title anim">专家知识<span class="hi">到底是什么</span></h2>
         <p class="slide-sub anim">不是"资料很多"，不是"懂行业术语"</p>
-
         <div class="grid2 anim">
             <div class="card">
                 <h3>📋 步骤拆解 <span class="badge b-blue">SOP</span></h3>
@@ -394,285 +350,260 @@
                 <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--yellow)">●</span><span style="font-size:13px">数值异常 → 触发风险提示</span></div>
                 <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--green)">●</span><span style="font-size:13px">结论必须保守表达</span></div>
                 <div style="margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
-                    <p style="font-size:12px;color:var(--g3);text-align:center">没有验收口径 → 输出没法评判 → 凭感觉 → 项目必崩</p>
+                    <p style="font-size:12px;color:var(--g3);text-align:center">没有验收口径 → 凭感觉 → 项目必崩</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 3: 为什么专家 > 技术 -->
-<section class="slide" data-slide="7">
+<!-- 8: 为什么专家>技术 -->
+<section class="slide" data-slide="8">
     <div class="slide-inner">
         <div class="slide-num anim">Part 05</div>
-        <h2 class="slide-title anim">为什么专家知识<span class="highlight">比技术更关键</span></h2>
+        <h2 class="slide-title anim">为什么专家知识<span class="hi">比技术更关键</span></h2>
         <p class="slide-sub anim">技术往往不是第一难点</p>
-
         <div class="row anim"><span class="row-icon">🚫</span><span>没专家 → <strong>流程拆不出</strong> <span class="dim">→ 模型"自由发挥" = 不可控、不可交付</span></span></div>
         <div class="row anim"><span class="row-icon">🚫</span><span>没标准 → <strong>没法评估</strong> <span class="dim">→ 60分还是95分？错一次损失多大？</span></span></div>
         <div class="row anim"><span class="row-icon">🚫</span><span>没业务 → <strong>提示词写不出</strong> <span class="dim">→ 像不会做菜的人写菜谱</span></span></div>
-
         <div class="callout anim">
             <p style="font-size:15px;text-align:center;color:var(--g1)">有技术但没专家 = <strong style="color:var(--blue)">有发动机但没方向盘</strong>，车再好也开不动</p>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 4: 两个大坑 -->
-<section class="slide" data-slide="8">
+<!-- 9: 两个大坑 -->
+<section class="slide" data-slide="9">
     <div class="slide-inner">
         <div class="slide-num anim">Part 06</div>
-        <h2 class="slide-title anim">有了专家<span class="highlight-red">也未必好使</span></h2>
+        <h2 class="slide-title anim">有了专家<span class="hi-r">也未必好使</span></h2>
         <p class="slide-sub anim">两个隐藏的大坑</p>
-
         <div class="pit anim">
             <div class="pit-icon">🕳️</div>
-            <div>
-                <h4>坑一：专家不愿意配合</h4>
+            <div><h4>坑一：专家不愿意配合</h4>
                 <p>把能力交给 AI = 稀释自己在公司的稀缺性</p>
-                <div class="quote">"老子花了钱，你就得把事儿办好，不要总是麻烦我。"<br>— 企业客户真实心态</div>
-            </div>
+                <div class="quote">"老子花了钱，你就得把事儿办好，不要总是麻烦我。"<br>— 企业客户真实心态</div></div>
         </div>
-
         <div class="pit anim">
             <div class="pit-icon">🕳️</div>
-            <div>
-                <h4>坑二：专家讲不清楚</h4>
+            <div><h4>坑二：专家讲不清楚</h4>
                 <p>"知识的诅咒" — 做太久，判断已内化成直觉</p>
                 <div class="quote">"为什么先看这个字段？" → "我就是习惯先看"<br>"什么情况算风险？" → "看多了就知道"</div>
-                <p style="margin-top:8px">大量时间花在"帮专家把经验翻译成可执行的步骤"上</p>
-            </div>
+                <p style="margin-top:8px">大量时间花在"帮专家把经验翻译成可执行的步骤"上</p></div>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 5: 横切 vs 竖切 -->
-<section class="slide" data-slide="9">
+<!-- 10: 横切 vs 竖切 -->
+<section class="slide" data-slide="10">
     <div class="slide-inner">
         <div class="slide-num anim">Part 07</div>
         <h2 class="slide-title anim">横着切还是竖着切？<br><span class="dim" style="font-size:.55em">以合同审查为例</span></h2>
         <p class="slide-sub anim">同样是"合同审查 Agent"，路径不同，结果天差地别</p>
-
         <div class="grid2 anim">
             <div class="card">
                 <h3>➡️ 横着切 <span class="badge b-red">通用审查</span></h3>
-                <div class="cmp-row"><span class="cmp-l">做法</span><span class="cmp-v">一个 Agent 审所有类型</span></div>
-                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v highlight-red">只能写通用检查项</span></div>
-                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v highlight-red">60-70%</span></div>
+                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v hi-r">只能写通用检查项</span></div>
+                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v hi-r">60-70%</span></div>
                 <div class="cmp-row"><span class="cmp-l">结果</span><span class="cmp-v" style="color:var(--yellow)">能用，但不敢信</span></div>
                 <div class="cmp-row"><span class="cmp-l">本质</span><span class="cmp-v">Demo 级</span></div>
             </div>
             <div class="card card-accent">
                 <h3>🔽 竖着切 <span class="badge b-blue">广告协议专审</span></h3>
-                <div class="cmp-row"><span class="cmp-l">做法</span><span class="cmp-v">只审广告投放类合同</span></div>
-                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v highlight-green">精准到每个关键条款</span></div>
-                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v highlight-green">95%+</span></div>
-                <div class="cmp-row"><span class="cmp-l">结果</span><span class="cmp-v highlight-green">敢用，能信，可交付</span></div>
+                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v hi-g">精准到每个关键条款</span></div>
+                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v hi-g">95%+</span></div>
+                <div class="cmp-row"><span class="cmp-l">结果</span><span class="cmp-v hi-g">敢用，能信，可交付</span></div>
                 <div class="cmp-row"><span class="cmp-l">本质</span><span class="cmp-v">生产级</span></div>
             </div>
         </div>
-
-        <div class="card anim" style="margin-top:16px">
+        <div class="card anim" style="margin-top:14px">
             <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">🔍 竖着切的专家知识长这样</h3>
             <div class="grid4" style="margin-top:10px">
                 <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">①</span><span style="font-size:12px">投放平台条款 vs 框架协议冲突</span></div>
-                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">②</span><span style="font-size:12px">效果对赌条款的风险敞口</span></div>
+                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">②</span><span style="font-size:12px">效果对赌的风险敞口</span></div>
                 <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">③</span><span style="font-size:12px">数据回传合规（个保法+GDPR）</span></div>
                 <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">④</span><span style="font-size:12px">结算周期 & 违约金条款</span></div>
             </div>
-            <p style="font-size:12px;color:var(--g3);margin-top:10px;text-align:center">这些细节，只有审过上百份广告协议的法务才知道 — <strong style="color:var(--g1)">这就是壁垒</strong></p>
         </div>
-
         <div class="callout anim">
-            <p style="font-size:14px;text-align:center;color:var(--g1)">建议路径：<strong style="color:var(--blue)">先竖后横</strong> — 选一个高频高价值场景做到 95%+，再复制到下一个</p>
+            <p style="font-size:14px;text-align:center;color:var(--g1)">建议：<strong style="color:var(--blue)">先竖后横</strong> — 选一个高频高价值场景做到 95%+，再复制到下一个</p>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 6: BIG QUOTE -->
-<section class="slide" data-slide="10">
+<!-- 11: 金句 -->
+<section class="slide" data-slide="11">
     <div class="slide-inner bq">
-        <blockquote class="anim">"落地的本质不是写代码，<br>而是把专家脑子里的<span class="highlight">隐性经验</span>，<br>翻译成机器能执行的<span class="highlight">显性规则</span>。"</blockquote>
+        <blockquote class="anim">"落地的本质不是写代码，<br>而是把专家脑子里的<span class="hi">隐性经验</span>，<br>翻译成机器能执行的<span class="hi">显性规则</span>。"</blockquote>
         <p class="attr anim">谁能完成这个翻译，谁就掌握了 Agent 落地的核心能力</p>
     </div>
 </section>
 
-<!-- SLIDE 7: 法务场景 — 合同管理 + 合规 -->
-<section class="slide" data-slide="11">
+<!-- 12: 法务场景（上） -->
+<section class="slide" data-slide="12">
     <div class="slide-inner">
         <div class="slide-num anim">Part 08</div>
-        <h2 class="slide-title anim">法务运营<span class="highlight">场景全景图</span></h2>
+        <h2 class="slide-title anim">法务运营<span class="hi">场景全景图</span></h2>
         <p class="slide-sub anim">你们每天做的事，哪些可以 Skill 化？</p>
 
         <div class="cat anim">📋 合同管理</div>
-        <div class="sc anim"><h4>🔍 合同风险预审</h4><div class="tags"><span class="tag">高频</span><span class="tag">SOP: 分类型审查</span><span class="tag">输出: 风险矩阵</span></div><div class="pipe">上传合同 <span class="arr">→</span> 识别类型 <span class="arr">→</span> 匹配 SOP <span class="arr">→</span> 逐项审查 <span class="arr">→</span> 风险等级 + 修改建议</div></div>
-        <div class="sc anim"><h4>⚖️ 合同条款对比</h4><div class="tags"><span class="tag">谈判场景</span><span class="tag">输入: 我方模板 vs 对方版本</span></div><div class="pipe">两版合同 <span class="arr">→</span> 逐条 diff <span class="arr">→</span> 标注偏离 <span class="arr">→</span> 风险排序 <span class="arr">→</span> 谈判要点清单</div></div>
-        <div class="sc anim"><h4>📊 合同台账管理</h4><div class="tags"><span class="tag">批量处理</span><span class="tag">输出: 结构化台账</span></div><div class="pipe">批量上传 <span class="arr">→</span> 提取关键信息 <span class="arr">→</span> 自动入台账 <span class="arr">→</span> 到期预警</div></div>
+        <div class="sc anim"><h4>🔍 合同风险预审</h4><div class="tags"><span class="tag">高频</span><span class="tag">SOP: 分类型审查</span></div><div class="pipe">上传合同 <span class="arr">→</span> 识别类型 <span class="arr">→</span> 匹配 SOP <span class="arr">→</span> 逐项审查 <span class="arr">→</span> 风险等级 + 修改建议</div></div>
+        <div class="sc anim"><h4>⚖️ 合同条款对比</h4><div class="tags"><span class="tag">谈判场景</span><span class="tag">我方 vs 对方</span></div><div class="pipe">两版合同 <span class="arr">→</span> 逐条 diff <span class="arr">→</span> 标注偏离 <span class="arr">→</span> 风险排序 <span class="arr">→</span> 谈判要点</div></div>
+        <div class="sc anim"><h4>📊 合同台账管理</h4><div class="tags"><span class="tag">批量处理</span></div><div class="pipe">批量上传 <span class="arr">→</span> 提取关键信息 <span class="arr">→</span> 自动入台账 <span class="arr">→</span> 到期预警</div></div>
 
         <div class="cat anim">🛡️ 合规与监管</div>
-        <div class="sc anim"><h4>📰 法规动态监测</h4><div class="tags"><span class="tag">自动化</span><span class="tag">MCP: 法规数据源</span><span class="tag">每日推送</span></div><div class="pipe">定时爬取新规 <span class="arr">→</span> 按业务线匹配 <span class="arr">→</span> 影响评估 <span class="arr">→</span> 推送对口法务</div></div>
-        <div class="sc anim"><h4>🔐 数据合规检查</h4><div class="tags"><span class="tag">个保法</span><span class="tag">GDPR</span><span class="tag">数据出境</span></div><div class="pipe">产品功能描述 <span class="arr">→</span> 匹配合规要求 <span class="arr">→</span> 检查清单 <span class="arr">→</span> 整改建议</div></div>
+        <div class="sc anim"><h4>📰 法规动态监测</h4><div class="tags"><span class="tag">自动化</span><span class="tag">每日推送</span></div><div class="pipe">爬取新规 <span class="arr">→</span> 按业务线匹配 <span class="arr">→</span> 影响评估 <span class="arr">→</span> 推送对口法务</div></div>
+        <div class="sc anim"><h4>🔐 数据合规检查</h4><div class="tags"><span class="tag">个保法</span><span class="tag">GDPR</span></div><div class="pipe">产品描述 <span class="arr">→</span> 匹配要求 <span class="arr">→</span> 检查清单 <span class="arr">→</span> 整改建议</div></div>
     </div>
 </section>
 
-<!-- SLIDE 8: 法务场景 — 尽调 + 效率 -->
-<section class="slide" data-slide="12">
+<!-- 13: 法务场景（下） -->
+<section class="slide" data-slide="13">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 08 (续)</div>
-        <h2 class="slide-title anim">法务场景<span class="highlight">全景图</span></h2>
+        <div class="slide-num anim">Part 08 续</div>
+        <h2 class="slide-title anim">法务场景<span class="hi">全景图</span></h2>
 
         <div class="cat anim">🔎 尽调与诉讼</div>
-        <div class="sc anim"><h4>🏢 企业尽调</h4><div class="tags"><span class="tag">MCP: 天眼查/企查查</span><span class="tag">验收: 字段完整性</span></div><div class="pipe">输入公司名 <span class="arr">→</span> 工商 <span class="arr">→</span> 诉讼 <span class="arr">→</span> 知产 <span class="arr">→</span> 关联图谱 <span class="arr">→</span> 风险评级</div></div>
-        <div class="sc anim"><h4>⚔️ 案例检索分析</h4><div class="tags"><span class="tag">MCP: 裁判文书网</span><span class="tag">类案推送</span></div><div class="pipe">输入案由 <span class="arr">→</span> 检索类案 <span class="arr">→</span> 提取裁判要旨 <span class="arr">→</span> 胜率分析 <span class="arr">→</span> 策略建议</div></div>
+        <div class="sc anim"><h4>🏢 企业尽调</h4><div class="tags"><span class="tag">MCP: 天眼查/企查查</span></div><div class="pipe">公司名 <span class="arr">→</span> 工商 <span class="arr">→</span> 诉讼 <span class="arr">→</span> 知产 <span class="arr">→</span> 关联图谱 <span class="arr">→</span> 风险评级</div></div>
+        <div class="sc anim"><h4>⚔️ 案例检索分析</h4><div class="tags"><span class="tag">裁判文书网</span></div><div class="pipe">案由 <span class="arr">→</span> 检索类案 <span class="arr">→</span> 裁判要旨 <span class="arr">→</span> 胜率分析 <span class="arr">→</span> 策略建议</div></div>
 
         <div class="cat anim">⚙️ 效率工具</div>
-        <div class="sc anim"><h4>📝 法律文书生成</h4><div class="tags"><span class="tag">律师函</span><span class="tag">法律意见书</span><span class="tag">合规声明</span></div><div class="pipe">选类型 <span class="arr">→</span> 填入事实 <span class="arr">→</span> 按模板生成 <span class="arr">→</span> 人工终审</div></div>
-        <div class="sc anim"><h4>📊 法务周报/月报</h4><div class="tags"><span class="tag">自动汇总</span><span class="tag">数据可视化</span></div><div class="pipe">工作记录 <span class="arr">→</span> 分类统计 <span class="arr">→</span> 趋势图 <span class="arr">→</span> 按老板喜欢的格式输出</div></div>
-        <div class="sc anim"><h4>💬 内部法律咨询</h4><div class="tags"><span class="tag">高频低复杂度</span><span class="tag">知识库: 内部制度+FAQ</span></div><div class="pipe">业务提问 <span class="arr">→</span> 匹配制度库 <span class="arr">→</span> 初步意见 <span class="arr">→</span> 复杂转人工 <span class="arr">→</span> 沉淀 FAQ</div></div>
+        <div class="sc anim"><h4>📝 法律文书生成</h4><div class="tags"><span class="tag">律师函</span><span class="tag">法律意见书</span></div><div class="pipe">选类型 <span class="arr">→</span> 填事实 <span class="arr">→</span> 按模板生成 <span class="arr">→</span> 人工终审</div></div>
+        <div class="sc anim"><h4>📊 法务周报/月报</h4><div class="tags"><span class="tag">自动汇总</span></div><div class="pipe">工作记录 <span class="arr">→</span> 分类统计 <span class="arr">→</span> 趋势图 <span class="arr">→</span> 老板喜欢的格式</div></div>
+        <div class="sc anim"><h4>💬 内部法律咨询</h4><div class="tags"><span class="tag">高频低复杂度</span></div><div class="pipe">业务提问 <span class="arr">→</span> 匹配制度库 <span class="arr">→</span> 初步意见 <span class="arr">→</span> 复杂转人工 <span class="arr">→</span> 沉淀 FAQ</div></div>
 
         <div class="matrix anim">
             <h4>💎 落地优先级</h4>
             <div class="grid4">
                 <div class="row" style="margin:0;border-color:var(--green)"><span class="row-icon">🟢</span><span style="font-size:12px"><strong>立刻做</strong> 合同预审 · 内部咨询 · 周报<br><span class="dim">高频 + SOP 清晰 + 见效快</span></span></div>
-                <div class="row" style="margin:0;border-color:var(--blue)"><span class="row-icon">🔵</span><span style="font-size:12px"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高 + 需调试</span></span></div>
-                <div class="row" style="margin:0;border-color:var(--yellow)"><span class="row-icon">🟡</span><span style="font-size:12px"><strong>规划中</strong> 尽调报告 · 数据合规<br><span class="dim">需外部数据源 + MCP</span></span></div>
-                <div class="row" style="margin:0"><span class="row-icon">⚪</span><span style="font-size:12px"><strong>长期建设</strong> 案例检索 · 台账管理<br><span class="dim">需历史数据 + 持续优化</span></span></div>
+                <div class="row" style="margin:0;border-color:var(--blue)"><span class="row-icon">🔵</span><span style="font-size:12px"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高</span></span></div>
+                <div class="row" style="margin:0;border-color:var(--yellow)"><span class="row-icon">🟡</span><span style="font-size:12px"><strong>规划中</strong> 尽调 · 数据合规<br><span class="dim">需外部数据源 + MCP</span></span></div>
+                <div class="row" style="margin:0"><span class="row-icon">⚪</span><span style="font-size:12px"><strong>长期</strong> 案例检索 · 台账管理<br><span class="dim">需历史数据 + 持续优化</span></span></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 9: Skill 的局限 -->
-<section class="slide" data-slide="13">
+<!-- 14: 你不需要会编程 + 安全 -->
+<section class="slide" data-slide="14">
     <div class="slide-inner">
         <div class="slide-num anim">Part 09</div>
-        <h2 class="slide-title anim">Skill 的局限：<span class="highlight-red">80 分到 95 分</span>的鸿沟</h2>
+        <h2 class="slide-title anim">你<span class="hi">不需要</span>会编程</h2>
+        <p class="slide-sub anim">创造 Skill 只需要一句话</p>
+
+        <div class="card card-accent anim" style="padding:28px;text-align:center;margin-bottom:20px">
+            <p style="font-size:16px;color:var(--g1);margin-bottom:8px">"我想要一个能自动审查合同风险的 Skill"</p>
+            <p style="font-size:13px;color:var(--g3)">AI 帮你生成 Skill → 你来调试优化 → 上线使用</p>
+        </div>
+
+        <div class="pit anim">
+            <div class="pit-icon">👨‍⚕️</div>
+            <div><h4>50 岁医生用秒哒做医院官网</h4>
+                <p>不是程序员，但比程序员更懂业务。超级个体用 AI 年入十几万，12 人小公司一个月交付两个项目赚 70 万</p>
+                <div class="quote">来自百度秒哒的真实案例 — 懂业务 > 懂代码</div></div>
+        </div>
+
+        <div class="pit anim">
+            <div class="pit-icon">📰</div>
+            <div><h4>一句话实现公众号全自动</h4>
+                <p>"帮我设计一个自动搜索 AI 内容、生成文章、配图、上传到公众号的 Skill"</p>
+                <div class="quote">搜索 → 撰写 → 配图 → 排版 → 发布 — 全程自动，人只点一下"发布"</div></div>
+        </div>
+
+        <div class="card anim" style="margin-top:16px;border-color:var(--red)">
+            <h3>⚠️ 安全提醒 <span class="badge b-red">重要</span></h3>
+            <p style="margin-bottom:8px">Skill 本质是代码和指令，有权限操作你的电脑</p>
+            <div class="row" style="margin-bottom:6px"><span class="row-icon">🔍</span><span style="font-size:13px">第三方 Skill 务必审查 SKILL.md 和 scripts/ 每一行代码</span></div>
+            <div class="row" style="margin-bottom:6px"><span class="row-icon">🤖</span><span style="font-size:13px">看不懂？扔给 AI 帮你检查有没有后门</span></div>
+            <div class="row"><span class="row-icon">💎</span><span style="font-size:13px"><strong>数据无价！</strong>不要盲目 install</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- 15: Skill 的局限 -->
+<section class="slide" data-slide="15">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 10</div>
+        <h2 class="slide-title anim">Skill 的局限：<span class="hi-r">80 → 95</span> 的鸿沟</h2>
         <p class="slide-sub anim">快速做到 80 分很容易，但最后 15 分才是真正的战场</p>
 
         <div class="grid2 anim">
             <div class="card" style="border-color:var(--green)">
-                <h3>✅ 80 分：快速搞定 <span class="badge b-green">天级</span></h3>
+                <h3>✅ 80 分 <span class="badge b-green">天级</span></h3>
                 <div class="cmp-row"><span class="cmp-l">标准化流程</span><span class="cmp-v">SOP 明确的重复任务</span></div>
                 <div class="cmp-row"><span class="cmp-l">格式化输出</span><span class="cmp-v">报告、台账、周报</span></div>
                 <div class="cmp-row"><span class="cmp-l">信息提取</span><span class="cmp-v">从合同中抽字段</span></div>
-                <div class="cmp-row"><span class="cmp-l">初筛分类</span><span class="cmp-v">风险等级初判</span></div>
             </div>
             <div class="card" style="border-color:var(--red)">
                 <h3>🔴 最后 15 分 <span class="badge b-red">月级</span></h3>
                 <div class="cmp-row"><span class="cmp-l">边界案例</span><span class="cmp-v">非标合同、混合条款</span></div>
                 <div class="cmp-row"><span class="cmp-l">幻觉控制</span><span class="cmp-v">编造不存在的引用</span></div>
-                <div class="cmp-row"><span class="cmp-l">一致性</span><span class="cmp-v">同一份审两次结果不同</span></div>
-                <div class="cmp-row"><span class="cmp-l">可解释性</span><span class="cmp-v">"为什么判高风险？"</span></div>
+                <div class="cmp-row"><span class="cmp-l">一致性</span><span class="cmp-v">同一份审两次不同</span></div>
             </div>
         </div>
 
-        <div class="pit anim"><div class="pit-icon">⚙️</div><div><h4>与现有系统集成</h4><p>法务不会换工作流。合同在 OA、审批在飞书、台账在 Excel — AI 怎么串？</p></div></div>
-        <div class="pit anim"><div class="pit-icon">🔄</div><div><h4>持续迭代与反馈闭环</h4><p>85% → 收集错误 → 优化 SOP → 90% → 加边界规则 → 93%… 没反馈机制就永远停在 80 分</p></div></div>
-        <div class="pit anim"><div class="pit-icon">👥</div><div><h4>人机协作边界</h4><p>全自动出事故就被叫停；全人工没效率。正确做法：按风险分流，低风险自动，高风险转人工</p></div></div>
-        <div class="pit anim"><div class="pit-icon">📏</div><div><h4>效果度量</h4><p>老板问"AI帮了多少忙？"  审查 2h→20min？漏检 15%→3%？没数据就没持续投入</p></div></div>
+        <div class="pit anim"><div class="pit-icon">⚙️</div><div><h4>与现有系统集成</h4><p>合同在 OA、审批在飞书、台账在 Excel — AI 怎么串？每个对接都是脏活累活</p></div></div>
+        <div class="pit anim"><div class="pit-icon">🔄</div><div><h4>持续迭代</h4><p>85% → 收集错误 → 优化 SOP → 90% → 加边界规则 → 93%… 没反馈就永远停在 80</p></div></div>
+        <div class="pit anim"><div class="pit-icon">👥</div><div><h4>人机协作边界</h4><p>全自动出事故就被叫停；全人工没效率。按风险分流：低风险自动，高风险转人工</p></div></div>
 
         <div class="callout anim">
             <h4>💡 务实建议</h4>
             <div class="callout-grid">
-                <span class="callout-n">01</span><span><strong>先跑起来再优化</strong> — 80 分今天就能用，别等 95 分</span>
-                <span class="callout-n">02</span><span><strong>设计人工兜底</strong> — AI 初筛，人终审，逐步扩大 AI 范围</span>
-                <span class="callout-n">03</span><span><strong>建立反馈循环</strong> — 每次人工修正都是迭代燃料</span>
-                <span class="callout-n">04</span><span><strong>量化一切</strong> — 用数据说话，让老板看到 ROI</span>
+                <span class="callout-n">01</span><span><strong>先跑再优化</strong> — 80 分今天就能用</span>
+                <span class="callout-n">02</span><span><strong>人工兜底</strong> — AI 初筛，人终审</span>
+                <span class="callout-n">03</span><span><strong>反馈循环</strong> — 每次修正都是迭代燃料</span>
+                <span class="callout-n">04</span><span><strong>量化 ROI</strong> — 用数据说话</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SLIDE 10: FOOTER -->
-<section class="slide" data-slide="14">
-    <div class="slide-inner foot">
-        <h4>Resources</h4>
-        <div class="foot-links">
-            <a class="foot-link" href="https://github.com/anthropics/skills" target="_blank">Anthropic Skills</a>
-            <a class="foot-link" href="https://github.com/anthropics/claude-code" target="_blank">Claude Code</a>
-            <a class="foot-link" href="https://skillsmp.com" target="_blank">Skills Marketplace</a>
-            <a class="foot-link" href="https://github.com/travisvn/awesome-claude-skills" target="_blank">Awesome Skills</a>
+<!-- 16: 收尾 + Resources -->
+<section class="slide" data-slide="16">
+    <div class="slide-inner bq">
+        <blockquote class="anim" style="margin-bottom:32px">"以前：学编程才能造工具。<br>现在：<span class="hi">懂业务就能造工具</span>。<br>法务最懂法务的痛，<br>所以法务人才是最该造 Skill 的人。"</blockquote>
+
+        <div class="anim" style="margin-top:48px">
+            <h4 style="font-size:11px;color:var(--g3);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;text-align:center">Resources</h4>
+            <div class="foot-links" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px">
+                <a class="foot-link" href="https://github.com/anthropics/skills" target="_blank" style="padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:13px;color:var(--g3);text-decoration:none">Anthropic Skills</a>
+                <a class="foot-link" href="https://github.com/anthropics/claude-code" target="_blank" style="padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:13px;color:var(--g3);text-decoration:none">Claude Code</a>
+                <a class="foot-link" href="https://skillsmp.com" target="_blank" style="padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:13px;color:var(--g3);text-decoration:none">Skills Marketplace</a>
+                <a class="foot-link" href="https://github.com/travisvn/awesome-claude-skills" target="_blank" style="padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:13px;color:var(--g3);text-decoration:none">Awesome Skills</a>
+            </div>
         </div>
     </div>
 </section>
 
-</div><!-- end #deck -->
-
-<!-- NAV DOTS -->
+</div>
 <nav id="nav"></nav>
 <div id="counter"></div>
 
 <script>
 (function(){
-    const deck = document.getElementById('deck');
-    const slides = [...document.querySelectorAll('.slide')];
-    const nav = document.getElementById('nav');
-    const counter = document.getElementById('counter');
-    let current = 0;
-
-    // Build nav dots
-    slides.forEach((_, i) => {
-        const d = document.createElement('button');
-        d.className = 'nav-dot';
-        d.addEventListener('click', () => goTo(i));
-        nav.appendChild(d);
-    });
-
-    function goTo(i) {
-        current = Math.max(0, Math.min(i, slides.length - 1));
-        slides[current].scrollIntoView({ behavior: 'smooth' });
+    const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],
+        nav=document.getElementById('nav'),counter=document.getElementById('counter');
+    let cur=0;
+    slides.forEach((_,i)=>{const d=document.createElement('button');d.className='nav-dot';d.addEventListener('click',()=>go(i));nav.appendChild(d)});
+    function go(i){cur=Math.max(0,Math.min(i,slides.length-1));slides[cur].scrollIntoView({behavior:'smooth'})}
+    function upd(){
+        const wh=deck.clientHeight;
+        slides.forEach((s,i)=>{const r=s.getBoundingClientRect();if(r.top>-wh/2&&r.top<=wh/2)cur=i});
+        nav.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+        counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
     }
-
-    function updateUI() {
-        // Find current slide
-        const wh = deck.clientHeight;
-        slides.forEach((s, i) => {
-            const r = s.getBoundingClientRect();
-            if (r.top > -wh / 2 && r.top <= wh / 2) current = i;
-        });
-
-        // Nav dots
-        nav.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-
-        // Counter
-        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
-    }
-
-    // Intersection observer for entrance animations
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                // Stagger children
-                const anims = e.target.querySelectorAll('.anim');
-                anims.forEach((a, i) => {
-                    setTimeout(() => a.classList.add('show'), 120 + i * 100);
-                });
-            }
-        });
-    }, { threshold: 0.2, root: deck });
-
-    slides.forEach(s => obs.observe(s));
-
-    // Keyboard
-    document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') {
-            e.preventDefault(); goTo(current + 1);
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Backspace') {
-            e.preventDefault(); goTo(current - 1);
-        }
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.anim').forEach((a,i)=>setTimeout(()=>a.classList.add('show'),120+i*100));
+    }})},{threshold:.2,root:deck});
+    slides.forEach(s=>obs.observe(s));
+    document.addEventListener('keydown',e=>{
+        if(['ArrowDown',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();go(cur+1)}
+        else if(['ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(cur-1)}
     });
-
-    deck.addEventListener('scroll', updateUI);
-    updateUI();
-
-    // Show first slide immediately
-    setTimeout(() => {
-        slides[0].classList.add('visible');
-        slides[0].querySelectorAll('.anim').forEach((a, i) => {
-            setTimeout(() => a.classList.add('show'), 200 + i * 120);
-        });
-    }, 100);
+    deck.addEventListener('scroll',upd);upd();
+    setTimeout(()=>{slides[0].classList.add('visible');
+        slides[0].querySelectorAll('.anim').forEach((a,i)=>setTimeout(()=>a.classList.add('show'),200+i*120))},100);
 })();
 </script>
 </body>
