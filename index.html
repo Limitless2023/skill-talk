@@ -16,6 +16,13 @@
             --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
             --mono:'JetBrains Mono',monospace;
         }
+        html.light{
+            --bg:#ffffff;--bg2:#f4f4f5;--bg3:#e4e4e7;
+            --white:#18181b;--g1:#27272a;--g2:#3f3f46;--g3:#71717a;--g4:#a1a1aa;--g5:#d4d4d8;--g6:#e4e4e7;
+            --blue:#2563eb;--blue-dim:#3b82f6;--blue-bg:rgba(37,99,235,.06);
+            --red:#dc2626;--green:#16a34a;--yellow:#ca8a04;--purple:#7c3aed;
+            --border:#e4e4e7;
+        }
         html{scroll-behavior:smooth}
         body{font-family:var(--font);background:var(--bg);color:var(--white);
             overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
@@ -129,6 +136,12 @@
         .nav-dot:hover{background:var(--g4)}
         #counter{position:fixed;bottom:20px;right:24px;font-family:var(--mono);
             font-size:12px;color:var(--g4);z-index:999;letter-spacing:1px}
+        #theme-toggle{position:fixed;top:20px;right:20px;z-index:999;
+            width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+            background:var(--bg2);color:var(--g2);font-size:18px;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;transition:all .3s;
+            backdrop-filter:blur(8px)}
+        #theme-toggle:hover{border-color:var(--g4);color:var(--white);transform:scale(1.1)}
         .foot{text-align:center}
         .foot h4{font-size:11px;color:var(--g3);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
         .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
@@ -677,6 +690,7 @@
 </section>
 
 </div>
+<button id="theme-toggle" title="切换 Light/Dark">🌙</button>
 <nav id="nav"></nav>
 <div id="counter"></div>
 
@@ -705,6 +719,15 @@
     deck.addEventListener('scroll',upd);upd();
     setTimeout(()=>{slides[0].classList.add('visible');
         slides[0].querySelectorAll('.anim').forEach((a,i)=>setTimeout(()=>a.classList.add('show'),200+i*120))},100);
+    // Theme toggle
+    const tog=document.getElementById('theme-toggle');
+    const saved=localStorage.getItem('skill-talk-theme');
+    if(saved==='light'){document.documentElement.classList.add('light');tog.textContent='☀️'}
+    tog.addEventListener('click',()=>{
+        const isLight=document.documentElement.classList.toggle('light');
+        tog.textContent=isLight?'☀️':'🌙';
+        localStorage.setItem('skill-talk-theme',isLight?'light':'dark');
+    });
 })();
 </script>
 </body>
