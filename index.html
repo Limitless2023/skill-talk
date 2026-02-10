@@ -710,22 +710,115 @@
 </section>
 
 <script>
-const els = document.querySelectorAll('.card, .fail-row, .flow-item, .pitfall, .scenario, .compare-col');
-const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.style.opacity = '1';
-            e.target.style.transform = 'translateX(0) translateY(0)';
+// Full-page scroll snap: each section = one "slide"
+(function() {
+    // Collect all top-level sections as "slides"
+    const slides = [];
+    document.querySelectorAll('.hero, .formula-section, .section, .big-quote, .foot').forEach(el => {
+        slides.push(el);
+    });
+
+    // Style: each slide fills viewport, scroll-snap
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth;';
+    
+    // Move body children into wrapper
+    while (document.body.firstChild) {
+        wrapper.appendChild(document.body.firstChild);
+    }
+    document.body.appendChild(wrapper);
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+
+    slides.forEach(slide => {
+        slide.style.cssText += ';min-height:100vh; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:center; padding-top:40px; padding-bottom:40px; box-sizing:border-box;';
+    });
+
+    // For .section which has children that may overflow, allow internal scroll
+    document.querySelectorAll('.section').forEach(s => {
+        s.style.overflow = 'auto';
+    });
+
+    // Entrance animation per slide
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+                // Animate children staggered
+                const children = e.target.querySelectorAll('.fail-row, .flow-item, .pitfall, .scenario, .compare-col, .compare, .formula, .formula-note');
+                children.forEach((c, i) => {
+                    setTimeout(() => {
+                        c.style.opacity = '1';
+                        c.style.transform = 'translateY(0) translateX(0)';
+                    }, 100 + i * 80);
+                });
+            }
+        });
+    }, { threshold: 0.15, root: wrapper });
+
+    slides.forEach(slide => {
+        slide.style.opacity = '0';
+        slide.style.transform = 'translateY(30px)';
+        slide.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        obs.observe(slide);
+
+        // Hide children initially
+        slide.querySelectorAll('.fail-row, .flow-item, .pitfall, .scenario, .compare-col, .compare, .formula, .formula-note').forEach(c => {
+            c.style.opacity = '0';
+            c.style.transform = 'translateY(12px)';
+            c.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        });
+    });
+
+    // Keyboard nav
+    let currentSlide = 0;
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            e.preventDefault();
+            currentSlide = Math.max(currentSlide - 1, 0);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
         }
     });
-}, { threshold: 0.1 });
-els.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(8px)';
-    el.style.transition = 'all .3s ease';
-    obs.observe(el);
-    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateX(0) translateY(0)'; }, 300 + i * 40);
-});
+
+    // Update currentSlide on scroll
+    wrapper.addEventListener('scroll', () => {
+        const wh = wrapper.clientHeight;
+        slides.forEach((s, i) => {
+            const rect = s.getBoundingClientRect();
+            if (rect.top >= -wh/2 && rect.top < wh/2) currentSlide = i;
+        });
+    });
+
+    // Progress indicator
+    const progress = document.createElement('div');
+    progress.style.cssText = 'position:fixed; right:16px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:6px; z-index:999;';
+    slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.style.cssText = 'width:6px; height:6px; border-radius:50%; background:#333; transition:all .3s; cursor:pointer;';
+        dot.addEventListener('click', () => {
+            currentSlide = i;
+            slides[i].scrollIntoView({ behavior: 'smooth' });
+        });
+        progress.appendChild(dot);
+    });
+    document.body.appendChild(progress);
+
+    // Update progress dots
+    function updateDots() {
+        progress.childNodes.forEach((dot, i) => {
+            dot.style.background = i === currentSlide ? '#3b82f6' : '#333';
+            dot.style.width = i === currentSlide ? '8px' : '6px';
+            dot.style.height = i === currentSlide ? '8px' : '6px';
+        });
+        requestAnimationFrame(updateDots);
+    }
+    updateDots();
+})();
 </script>
 </body>
 </html>
