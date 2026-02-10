@@ -196,6 +196,7 @@
             <span class="hook-step" style="border-color:var(--blue)">一键发布</span>
         </div>
         <p class="anim" style="font-size:13px;color:var(--g3);text-align:center">而实现这一切，只需要一个 <strong style="color:var(--blue)">Skill</strong></p>
+        <p class="anim" style="font-size:12px;color:var(--g4);text-align:center;margin-top:24px;letter-spacing:1px">↓ 那 Skill 到底是什么？</p>
     </div>
 </section>
 
@@ -225,6 +226,18 @@
                     <div class="row" style="border-color:var(--green)"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>可复用可分享</strong> — 写一次，团队都能用</span></div>
                 </div>
             </div>
+        </div>
+
+        <!-- Mock UI: Claude conversation -->
+        <div class="card anim" style="margin-top:16px;padding:20px;font-family:var(--mono);font-size:12px;line-height:1.8;border-color:var(--blue-dim)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+                <div style="width:8px;height:8px;border-radius:50%;background:var(--green)"></div>
+                <span style="font-family:var(--font);font-size:11px;color:var(--g2);letter-spacing:1px">CLAUDE + SKILL 工作中</span>
+            </div>
+            <div style="color:var(--g2)"><span style="color:var(--blue)">User</span> › 帮我审查这份广告投放协议</div>
+            <div style="color:var(--g3);font-size:11px;margin:4px 0">  ⟳ 加载 Skill: 广告协议专审 v2.1 …</div>
+            <div style="color:var(--g2)"><span style="color:var(--green)">Agent</span> › 已识别为广告投放协议，启动 6 项专审检查…</div>
+            <div style="color:var(--g2);margin-top:2px"><span style="color:var(--green)">Agent</span> › 发现 <span style="color:var(--red)">3 项高风险</span>、<span style="color:var(--yellow)">2 项中风险</span>，已生成修改建议 →</div>
         </div>
     </div>
 </section>
@@ -710,18 +723,40 @@
 
         <div class="grid2 anim" style="margin-top:16px;text-align:left">
             <div class="card card-accent">
-                <h3>现场演示</h3>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon">①</span><span style="font-size:13px">选一个法务场景</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon">②</span><span style="font-size:13px">一句话创造一个 Skill</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon">③</span><span style="font-size:13px">跑一遍看效果</span></div>
-                <div class="row"><span class="row-icon">④</span><span style="font-size:13px">现场优化迭代</span></div>
+                <h3>现场演示流程</h3>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">1</span><span style="font-size:13px">选一个法务场景</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">2</span><span style="font-size:13px">用自然语言描述需求</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">3</span><span style="font-size:13px">AI 生成 Skill → 跑一遍</span></div>
+                <div class="row"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">4</span><span style="font-size:13px">发现问题 → 现场迭代优化</span></div>
             </div>
             <div class="card">
                 <h3>你们来出题</h3>
-                <p style="margin-bottom:12px">挑一个你们日常工作中最头疼的环节，我们现场做一个 Skill</p>
+                <p style="margin-bottom:12px">挑一个日常最头疼的环节，我们现场做</p>
                 <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">合同审查？</span></div>
                 <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">法规追踪？</span></div>
                 <div class="row" style="border-color:var(--green)"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">文书生成？周报？</span></div>
+            </div>
+        </div>
+
+        <div class="card anim expand-trigger" style="margin-top:14px" onclick="document.getElementById('modal-backup').classList.add('open')">
+            <span class="expand-hint">备选方案 ↗</span>
+            <h3>Backup：合同风险预审 Skill</h3>
+            <p>如果现场冷场，直接演示这个 — 从零搭建一个合同预审 Skill</p>
+        </div>
+
+        <!-- Modal: Backup 演示方案 -->
+        <div id="modal-backup" class="modal-overlay" onclick="this.classList.remove('open')">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="document.getElementById('modal-backup').classList.remove('open')">✕</button>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">Backup 演示 <span style="color:var(--blue)">合同风险预审 Skill</span></h3>
+                <p style="font-size:13px;color:var(--g3);margin-bottom:20px">准备好的演示路径，2 分钟内完成</p>
+                <div class="steps">
+                    <div class="step"><span class="step-n">01</span><span class="step-t"><strong>对 AI 说：</strong>"帮我创建一个合同风险预审 Skill，要能识别合同类型，按类型匹配不同审查 SOP，输出风险等级和修改建议"</span></div>
+                    <div class="step"><span class="step-n">02</span><span class="step-t"><strong>AI 生成 SKILL.md</strong> → 展示给听众看结构</span></div>
+                    <div class="step"><span class="step-n">03</span><span class="step-t"><strong>上传一份示例合同</strong> → 看 AI 按 Skill 执行审查</span></div>
+                    <div class="step"><span class="step-n">04</span><span class="step-t"><strong>发现问题</strong>（比如遗漏了违约金条款）→ 修改 Skill → 再跑一次</span></div>
+                    <div class="step"><span class="step-n">05</span><span class="step-t"><strong>点题：</strong>"看到了吗？从需求到可用，5 分钟。但让它从 80 分到 95 分，需要你们的专家知识"</span></div>
+                </div>
             </div>
         </div>
     </div>
