@@ -430,70 +430,102 @@
     </div>
 </div>
 
-<!-- SECTION 05: 横着切 vs 竖着切 -->
+<!-- SECTION 05: 横着切 vs 竖着切 — 以法务合同审查为例 -->
 <div class="section">
     <div class="section-head">
         <div class="section-num">05</div>
         <div class="section-meta">
-            <h2>两条路径：横着切还是竖着切</h2>
-            <p>核心问题：你有没有专家知识</p>
+            <h2>横着切还是竖着切？以合同审查为例</h2>
+            <p>同样是"合同审查 Agent"，路径不同，结果天差地别</p>
         </div>
     </div>
 
+    <!-- 具象化例子 -->
+    <p style="font-size:14px; color:var(--gray-2); margin-bottom:24px;">字节法务团队处理的合同类型多种多样——采购合同、广告投放协议、数据合规协议、劳动合同、知识产权许可……<br>问题来了：<strong style="color:var(--white);">你是做一个"万能合同审查 Agent"，还是先把某一类合同做透？</strong></p>
+
     <div class="compare">
-        <div class="compare-col" style="border-color: var(--accent-dim);">
-            <h3>🔽 竖着切 <span class="badge badge-blue">深耕行业</span></h3>
-            <div class="compare-row">
-                <span class="compare-label">策略</span>
-                <span class="compare-val">选一个行业，扎进去</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">壁垒</span>
-                <span class="compare-val" style="color:var(--green);">高 — 专家知识本身是壁垒</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">竞争</span>
-                <span class="compare-val" style="color:var(--green);">小 — 懂行又懂技术的人少</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">信任</span>
-                <span class="compare-val">"这个团队懂我们业务"</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">风险</span>
-                <span class="compare-val">市场天花板</span>
-            </div>
-        </div>
         <div class="compare-col">
-            <h3>➡️ 横着切 <span class="badge badge-purple">通用场景</span></h3>
+            <h3>➡️ 横着切 <span class="badge badge-purple">通用合同审查</span></h3>
             <div class="compare-row">
-                <span class="compare-label">策略</span>
-                <span class="compare-val">通用能力，服务所有行业</span>
+                <span class="compare-label">做法</span>
+                <span class="compare-val">一个 Agent 审所有类型</span>
             </div>
             <div class="compare-row">
-                <span class="compare-label">壁垒</span>
-                <span class="compare-val" style="color:var(--red);">低 — 充分竞争市场</span>
+                <span class="compare-label">SOP</span>
+                <span class="compare-val" style="color:var(--red);">只能写通用检查项</span>
             </div>
             <div class="compare-row">
-                <span class="compare-label">竞争</span>
-                <span class="compare-val" style="color:var(--red);">大 — 都能做 RAG + DeepSeek</span>
+                <span class="compare-label">准确率</span>
+                <span class="compare-val" style="color:var(--red);">60-70% — 关键条款容易漏</span>
             </div>
             <div class="compare-row">
-                <span class="compare-label">出路</span>
-                <span class="compare-val">拼服务或极致产品体验</span>
+                <span class="compare-label">结果</span>
+                <span class="compare-val" style="color:var(--yellow);">能用，但不敢信</span>
             </div>
             <div class="compare-row">
-                <span class="compare-label">风险</span>
-                <span class="compare-val">利润薄、替代性强</span>
+                <span class="compare-label">本质</span>
+                <span class="compare-val">Demo 级 — 演示好看，不敢上线</span>
             </div>
         </div>
+        <div class="compare-col" style="border-color: var(--accent-dim);">
+            <h3>🔽 竖着切 <span class="badge badge-blue">广告投放协议专审</span></h3>
+            <div class="compare-row">
+                <span class="compare-label">做法</span>
+                <span class="compare-val">只审广告投放类合同</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">SOP</span>
+                <span class="compare-val" style="color:var(--green);">精准到每个关键条款</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">准确率</span>
+                <span class="compare-val" style="color:var(--green);">95%+ — 专家级水准</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">结果</span>
+                <span class="compare-val" style="color:var(--green);">敢用，能信，可交付</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">本质</span>
+                <span class="compare-val">生产级 — 真正替代人工</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 竖切的专家知识示例 -->
+    <div style="margin-top:16px; padding:20px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px;">
+        <h4 style="font-size:13px; color:var(--gray-2); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">🔍 竖着切的专家知识长这样</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="fail-row" style="margin:0;">
+                <div class="fail-icon" style="color:var(--accent);">①</div>
+                <div class="fail-text" style="font-size:12px;">投放平台条款 vs 框架协议是否冲突</div>
+            </div>
+            <div class="fail-row" style="margin:0;">
+                <div class="fail-icon" style="color:var(--accent);">②</div>
+                <div class="fail-text" style="font-size:12px;">效果对赌条款的风险敞口计算</div>
+            </div>
+            <div class="fail-row" style="margin:0;">
+                <div class="fail-icon" style="color:var(--accent);">③</div>
+                <div class="fail-text" style="font-size:12px;">数据回传合规（个保法 + GDPR）</div>
+            </div>
+            <div class="fail-row" style="margin:0;">
+                <div class="fail-icon" style="color:var(--accent);">④</div>
+                <div class="fail-text" style="font-size:12px;">结算周期 & 提前终止的违约金条款</div>
+            </div>
+        </div>
+        <p style="font-size:12px; color:var(--gray-3); margin-top:12px; text-align:center;">这些细节，只有审过上百份广告协议的法务才知道 — <strong style="color:var(--gray-1);">这就是壁垒</strong></p>
+    </div>
+
+    <!-- 策略建议 -->
+    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628; text-align:center;">
+        <p style="font-size:14px; color:var(--gray-1);">建议路径：<strong style="color:var(--accent);">先竖后横</strong> — 选一个高频高价值的合同类型做到 95%+，验证成功后再复制到下一个类型</p>
     </div>
 </div>
 
 <!-- BIG QUOTE -->
 <section class="big-quote">
-    <blockquote>"你不是在卖技术，你是在把专家的工作方式变成可复制的系统。"</blockquote>
-    <p class="attr">B端智能体落地的本质 — 专家流程工程化</p>
+    <blockquote>"落地的本质不是写代码，而是把专家脑子里的隐性经验，翻译成机器能执行的显性规则。"</blockquote>
+    <p class="attr">谁能完成这个翻译，谁就掌握了 Agent 落地的核心能力</p>
 </section>
 
 <!-- SECTION 06: 法务场景落地 -->
@@ -501,61 +533,168 @@
     <div class="section-head">
         <div class="section-num">06</div>
         <div class="section-meta">
-            <h2>法务运营场景落地</h2>
-            <p>你们最懂自己的痛点，所以你们才是最该造 Skill 的人</p>
+            <h2>法务运营场景全景图</h2>
+            <p>按工作流拆解：你们每天做的事，哪些可以 Skill 化？</p>
         </div>
     </div>
 
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📋</span>
-            <h3>合同风险审查 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">SOP: 5步审查路径</span>
-            <span class="tag">验收: 风险等级标准</span>
-            <span class="tag">输出: 风险报告表格</span>
-        </div>
-        <div class="flow-mini">上传合同 <span class="arrow">→</span> AI 逐项检查 <span class="arrow">→</span> 标注风险点 <span class="arrow">→</span> 输出审查报告</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📰</span>
-            <h3>法规监测 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">MCP: 连接法规数据库</span>
-            <span class="tag">Skill: 筛选相关条款</span>
-            <span class="tag">输出: 每日推送</span>
-        </div>
-        <div class="flow-mini">定时爬取新规 <span class="arrow">→</span> 匹配业务关键词 <span class="arrow">→</span> 生成摘要 <span class="arrow">→</span> 推送相关部门</div>
-    </div>
+    <!-- 合同管理大类 -->
+    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; padding-left:4px;">📋 合同管理</h4>
 
     <div class="scenario">
         <div class="scenario-head">
             <span class="scenario-icon">🔍</span>
-            <h3>尽调报告 Skill</h3>
+            <h3>合同风险预审 Skill</h3>
         </div>
         <div class="tags">
-            <span class="tag">MCP: 工商/诉讼/知产数据</span>
-            <span class="tag">Skill: 尽调框架</span>
-            <span class="tag">验收: 字段完整性检查</span>
+            <span class="tag">高频</span>
+            <span class="tag">SOP: 分类型审查路径</span>
+            <span class="tag">输出: 风险矩阵</span>
         </div>
-        <div class="flow-mini">输入公司名 <span class="arrow">→</span> 自动检索多源数据 <span class="arrow">→</span> 交叉验证 <span class="arrow">→</span> 生成尽调报告</div>
+        <div class="flow-mini">上传合同 <span class="arrow">→</span> 自动识别合同类型 <span class="arrow">→</span> 匹配对应 SOP <span class="arrow">→</span> 逐项审查 <span class="arrow">→</span> 输出风险等级 + 修改建议</div>
     </div>
 
     <div class="scenario">
         <div class="scenario-head">
-            <span class="scenario-icon">📝</span>
-            <h3>法务周报 Skill</h3>
+            <span class="scenario-icon">⚖️</span>
+            <h3>合同条款对比 Skill</h3>
         </div>
         <div class="tags">
-            <span class="tag">数据: 本周工作记录</span>
-            <span class="tag">Skill: 周报模板+风格</span>
-            <span class="tag">输出: 格式化周报</span>
+            <span class="tag">谈判场景</span>
+            <span class="tag">输入: 我方模板 vs 对方版本</span>
         </div>
-        <div class="flow-mini">获取工作记录 <span class="arrow">→</span> 按模板整理 <span class="arrow">→</span> 生成周报 <span class="arrow">→</span> 一键发送</div>
+        <div class="flow-mini">上传两版合同 <span class="arrow">→</span> 逐条 diff <span class="arrow">→</span> 标注偏离项 <span class="arrow">→</span> 按风险等级排序 <span class="arrow">→</span> 生成谈判要点清单</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📊</span>
+            <h3>合同台账管理 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">批量处理</span>
+            <span class="tag">输出: 结构化台账</span>
+        </div>
+        <div class="flow-mini">批量上传合同 <span class="arrow">→</span> 提取关键信息（主体/金额/期限/续约条件）<span class="arrow">→</span> 自动入台账 <span class="arrow">→</span> 到期预警</div>
+    </div>
+
+    <!-- 合规监管大类 -->
+    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">🛡️ 合规与监管</h4>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📰</span>
+            <h3>法规动态监测 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">自动化</span>
+            <span class="tag">MCP: 法规数据源</span>
+            <span class="tag">每日推送</span>
+        </div>
+        <div class="flow-mini">定时爬取新规 <span class="arrow">→</span> 按业务线匹配（广告法/数据安全/反垄断）<span class="arrow">→</span> 影响评估 <span class="arrow">→</span> 推送对口法务</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">🔐</span>
+            <h3>数据合规检查 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">个保法</span>
+            <span class="tag">GDPR</span>
+            <span class="tag">数据出境</span>
+        </div>
+        <div class="flow-mini">输入产品功能描述 <span class="arrow">→</span> 自动匹配合规要求 <span class="arrow">→</span> 生成检查清单 <span class="arrow">→</span> 标注缺失项 <span class="arrow">→</span> 输出整改建议</div>
+    </div>
+
+    <!-- 尽调与诉讼 -->
+    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">🔎 尽调与诉讼</h4>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">🏢</span>
+            <h3>企业尽调 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">MCP: 天眼查/企查查 API</span>
+            <span class="tag">验收: 字段完整性</span>
+        </div>
+        <div class="flow-mini">输入公司名 <span class="arrow">→</span> 工商信息 <span class="arrow">→</span> 诉讼记录 <span class="arrow">→</span> 知识产权 <span class="arrow">→</span> 关联公司图谱 <span class="arrow">→</span> 风险评级报告</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">⚔️</span>
+            <h3>案例检索与分析 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">MCP: 裁判文书网</span>
+            <span class="tag">类案推送</span>
+        </div>
+        <div class="flow-mini">输入案由/关键词 <span class="arrow">→</span> 检索类似案例 <span class="arrow">→</span> 提取裁判要旨 <span class="arrow">→</span> 胜率分析 <span class="arrow">→</span> 策略建议</div>
+    </div>
+
+    <!-- 效率工具 -->
+    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">⚙️ 效率工具</h4>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📝</span>
+            <h3>法律文书生成 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">律师函</span>
+            <span class="tag">法律意见书</span>
+            <span class="tag">合规声明</span>
+        </div>
+        <div class="flow-mini">选择文书类型 <span class="arrow">→</span> 填入关键事实 <span class="arrow">→</span> 按模板 + 专家风格生成 <span class="arrow">→</span> 人工终审</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📊</span>
+            <h3>法务周报/月报 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">自动汇总</span>
+            <span class="tag">数据可视化</span>
+        </div>
+        <div class="flow-mini">获取本周工作记录 <span class="arrow">→</span> 分类统计（合同/诉讼/咨询量）<span class="arrow">→</span> 生成趋势图 <span class="arrow">→</span> 按老板喜欢的格式输出</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">💬</span>
+            <h3>内部法律咨询 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">高频低复杂度</span>
+            <span class="tag">知识库: 内部制度+FAQ</span>
+        </div>
+        <div class="flow-mini">业务部门提问 <span class="arrow">→</span> 匹配内部制度库 <span class="arrow">→</span> 生成初步意见 <span class="arrow">→</span> 复杂问题转人工 <span class="arrow">→</span> 沉淀为新 FAQ</div>
+    </div>
+
+    <!-- 价值矩阵 -->
+    <div style="margin-top:32px; padding:24px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px;">
+        <h4 style="font-size:13px; color:var(--gray-2); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">💎 落地优先级建议：从高频高价值场景切入</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div class="fail-row" style="margin:0; border-color:var(--green);">
+                <div class="fail-icon">🟢</div>
+                <div class="fail-text" style="font-size:12px;"><strong>立刻做</strong> 合同预审 · 内部咨询 · 周报<br><span class="dim">高频 + SOP 清晰 + 见效快</span></div>
+            </div>
+            <div class="fail-row" style="margin:0; border-color:var(--accent);">
+                <div class="fail-icon">🔵</div>
+                <div class="fail-text" style="font-size:12px;"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高 + 需要调试</span></div>
+            </div>
+            <div class="fail-row" style="margin:0; border-color:var(--yellow);">
+                <div class="fail-icon">🟡</div>
+                <div class="fail-text" style="font-size:12px;"><strong>规划中</strong> 尽调报告 · 数据合规检查<br><span class="dim">需要外部数据源 + MCP 集成</span></div>
+            </div>
+            <div class="fail-row" style="margin:0;">
+                <div class="fail-icon">⚪</div>
+                <div class="fail-text" style="font-size:12px;"><strong>长期建设</strong> 案例检索 · 台账管理<br><span class="dim">需要大量历史数据 + 持续优化</span></div>
+            </div>
+        </div>
     </div>
 </div>
 
