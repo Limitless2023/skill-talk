@@ -142,6 +142,20 @@
         .nav-dot:hover{background:var(--g4)}
         #counter{position:fixed;bottom:20px;right:24px;font-family:var(--mono);
             font-size:12px;color:var(--g4);z-index:999;letter-spacing:1px}
+        .expand-trigger{cursor:pointer;position:relative;transition:all .2s}
+        .expand-trigger:hover{transform:translateY(-2px)}
+        .expand-hint{position:absolute;top:8px;right:12px;font-size:10px;color:var(--g3);
+            border:1px solid var(--border);padding:1px 8px;border-radius:100px;
+            font-family:var(--mono);pointer-events:none}
+        .modal-overlay{display:none!important;position:fixed;inset:0;z-index:9999;
+            background:rgba(0,0,0,.85);backdrop-filter:blur(12px);
+            align-items:center;justify-content:center;padding:40px;cursor:pointer}
+        .modal-overlay.open{display:flex!important;animation:fadeIn .25s ease}
+        .modal-box{max-width:800px;width:100%;background:var(--bg2);border:1px solid var(--border);
+            border-radius:20px;padding:36px;cursor:default;position:relative;max-height:90vh;overflow-y:auto}
+        .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;
+            color:var(--g3);font-size:18px;cursor:pointer;padding:4px;font-family:var(--mono)}
+        .modal-close:hover{color:var(--white)}
         #steps5-modal{display:none!important}
         #steps5-modal.open{display:flex!important;animation:fadeIn .25s ease}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -399,32 +413,57 @@
     <div class="slide-inner">
         <div class="slide-num anim">Part 04</div>
         <h2 class="slide-title anim">专家知识<span class="hi">到底是什么</span></h2>
-        <p class="slide-sub anim">不是"资料很多"，不是"懂行业术语"</p>
+        <p class="slide-sub anim">不是"资料很多"，不是"懂行业术语"，而是两样东西</p>
         <div class="grid2 anim">
-            <div class="card">
+            <div class="card expand-trigger" onclick="document.getElementById('modal-sop').classList.add('open')">
+                <span class="expand-hint">展开 ↗</span>
                 <h3>步骤拆解 <span class="badge b-blue">SOP</span></h3>
-                <p style="margin-bottom:14px">专家知道按什么顺序做，为什么这么做</p>
-                <div class="steps">
-                    <div class="step"><span class="step-n">01</span><span class="step-t">主体信息是否完整、匹配</span></div>
-                    <div class="step"><span class="step-n">02</span><span class="step-t">关键权责与违约边界</span></div>
-                    <div class="step"><span class="step-n">03</span><span class="step-t">付款与交付条件</span></div>
-                    <div class="step"><span class="step-n">04</span><span class="step-t">争议解决条款</span></div>
-                    <div class="step"><span class="step-n">05</span><span class="step-t">风险兜底与补救路径</span></div>
-                </div>
+                <p>专家知道按什么顺序做，为什么这么做</p>
+                <div class="quote">以合同审查为例：先看主体 → 再看权责 → 然后付款条件 → 争议解决 → 风险兜底<br>顺序不能乱，每一步都有原因</div>
             </div>
-            <div class="card">
-                <h3>✅ 完成标准 <span class="badge b-purple">验收口径</span></h3>
-                <p style="margin-bottom:14px">专家知道什么算"合格"、什么算"有风险"</p>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--red)">●</span><span style="font-size:13px">字段缺失 → 不能出报告</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--yellow)">●</span><span style="font-size:13px">数值异常 → 触发风险提示</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--green)">●</span><span style="font-size:13px">结论必须保守表达</span></div>
-                <div style="margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
-                    <p style="font-size:12px;color:var(--g3);text-align:center">没有验收口径 → 凭感觉 → 项目必崩</p>
-                </div>
+            <div class="card expand-trigger" onclick="document.getElementById('modal-criteria').classList.add('open')">
+                <span class="expand-hint">展开 ↗</span>
+                <h3>完成标准 <span class="badge b-purple">验收口径</span></h3>
+                <p>专家知道什么算"合格"、什么算"有风险"</p>
+                <div class="quote">字段缺失 → 不能出报告；数值异常 → 风险提示；结论必须保守表达<br>没有验收口径 → 凭感觉 → 项目必崩</div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Modal: SOP 详解 -->
+<div id="modal-sop" class="modal-overlay" onclick="this.classList.remove('open')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="document.getElementById('modal-sop').classList.remove('open')">✕</button>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">步骤拆解 <span style="color:var(--blue)">SOP</span></h3>
+        <p style="font-size:13px;color:var(--g3);margin-bottom:20px">以合同审查为例 — 专家脑中的审查流程</p>
+        <div class="steps">
+            <div class="step"><span class="step-n">01</span><span class="step-t"><strong>主体信息</strong> — 是否完整、是否匹配、有无资质要求</span></div>
+            <div class="step"><span class="step-n">02</span><span class="step-t"><strong>关键权责</strong> — 违约边界、责任上限、免责条款</span></div>
+            <div class="step"><span class="step-n">03</span><span class="step-t"><strong>付款条件</strong> — 周期、触发条件、违约金比例</span></div>
+            <div class="step"><span class="step-n">04</span><span class="step-t"><strong>争议解决</strong> — 仲裁 vs 诉讼、管辖地、适用法律</span></div>
+            <div class="step"><span class="step-n">05</span><span class="step-t"><strong>风险兜底</strong> — 补救路径、不可抗力、终止条件</span></div>
+        </div>
+        <div style="margin-top:16px;padding:14px;border:1px solid var(--blue-dim);border-radius:10px;background:rgba(59,130,246,.04)">
+            <p style="font-size:13px;color:var(--g1);text-align:center">这个顺序就是专家经验 — 写进 Skill，AI 就能按这个顺序执行</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: 验收口径详解 -->
+<div id="modal-criteria" class="modal-overlay" onclick="this.classList.remove('open')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="document.getElementById('modal-criteria').classList.remove('open')">✕</button>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">完成标准 <span style="color:var(--purple)">验收口径</span></h3>
+        <p style="font-size:13px;color:var(--g3);margin-bottom:20px">专家知道什么算"合格"，这决定了 AI 输出的质量底线</p>
+        <div class="row" style="margin-bottom:8px"><span class="row-icon" style="color:var(--red)">●</span><span style="font-size:14px"><strong>红灯 — 必须停</strong><br><span style="color:var(--g3)">字段缺失、主体不匹配、关键条款缺失 → 不能出报告，必须退回</span></span></div>
+        <div class="row" style="margin-bottom:8px"><span class="row-icon" style="color:var(--yellow)">●</span><span style="font-size:14px"><strong>黄灯 — 需关注</strong><br><span style="color:var(--g3)">数值异常、非标条款、历史纠纷 → 标记风险，提示人工复核</span></span></div>
+        <div class="row" style="margin-bottom:8px"><span class="row-icon" style="color:var(--green)">●</span><span style="font-size:14px"><strong>绿灯 — 可通过</strong><br><span style="color:var(--g3)">标准条款、常规范围 → 自动通过，但结论必须保守表达</span></span></div>
+        <div style="margin-top:16px;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg)">
+            <p style="font-size:13px;color:var(--g3);text-align:center">没有这套红黄绿标准，AI 就在"凭感觉"输出 — 跟没有一样</p>
+        </div>
+    </div>
+</div>
 
 <!-- 9: 两个大坑 -->
 <section class="slide" data-slide="9">
@@ -470,13 +509,27 @@
                 <div class="cmp-row"><span class="cmp-l">本质</span><span class="cmp-v">生产级</span></div>
             </div>
         </div>
-        <div class="card anim" style="margin-top:14px">
-            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">竖着切的专家知识长这样</h3>
-            <div class="grid4" style="margin-top:10px">
-                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">①</span><span style="font-size:12px">投放平台条款 vs 框架协议冲突</span></div>
-                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">②</span><span style="font-size:12px">效果对赌的风险敞口</span></div>
-                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">③</span><span style="font-size:12px">数据回传合规（个保法+GDPR）</span></div>
-                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">④</span><span style="font-size:12px">结算周期 & 违约金条款</span></div>
+        <div class="card anim expand-trigger" style="margin-top:14px" onclick="document.getElementById('modal-vertical').classList.add('open')">
+            <span class="expand-hint">展开 ↗</span>
+            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">竖着切的专家知识长这样 — 以广告协议为例</h3>
+            <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+                <span class="tag" style="border-color:var(--blue-dim);color:var(--blue)">平台条款冲突</span>
+                <span class="tag" style="border-color:var(--blue-dim);color:var(--blue)">效果对赌</span>
+                <span class="tag" style="border-color:var(--blue-dim);color:var(--blue)">数据回传合规</span>
+                <span class="tag" style="border-color:var(--blue-dim);color:var(--blue)">结算 & 违约金</span>
+            </div>
+        </div>
+
+        <!-- Modal: 竖着切详解 -->
+        <div id="modal-vertical" class="modal-overlay" onclick="this.classList.remove('open')">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="document.getElementById('modal-vertical').classList.remove('open')">✕</button>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:6px">广告协议专审 <span style="color:var(--blue)">专家知识拆解</span></h3>
+                <p style="font-size:13px;color:var(--g3);margin-bottom:20px">竖着切 = 深入一个合同类型，把专家知识拆到极致</p>
+                <div class="pit" style="margin-bottom:10px"><div class="pit-icon">01</div><div><h4>投放平台条款 vs 框架协议冲突</h4><p>平台自带的服务条款往往与双方签订的框架协议有冲突，需要逐条比对优先级</p></div></div>
+                <div class="pit" style="margin-bottom:10px"><div class="pit-icon">02</div><div><h4>效果对赌的风险敞口</h4><p>CPA/CPS 对赌条款的上限、兜底、结算争议解决 — 这里是亏钱的重灾区</p></div></div>
+                <div class="pit" style="margin-bottom:10px"><div class="pit-icon">03</div><div><h4>数据回传合规（个保法 + GDPR）</h4><p>广告投放涉及用户行为数据回传，必须检查数据处理协议、跨境传输合规</p></div></div>
+                <div class="pit"><div class="pit-icon">04</div><div><h4>结算周期 & 违约金条款</h4><p>付款周期、账期、提前终止的违约金比例 — 每一项都影响现金流</p></div></div>
             </div>
         </div>
         <div class="callout anim">
@@ -544,12 +597,22 @@
                 <div class="quote">技术人能造工具，但不知道造什么工具<br>你知道需要什么工具，现在 AI 帮你造</div></div>
         </div>
 
-        <div class="card anim" style="margin-top:16px;border-color:var(--red)">
+        <div class="card anim expand-trigger" style="margin-top:16px;border-color:var(--red)" onclick="document.getElementById('modal-security').classList.add('open')">
+            <span class="expand-hint">展开 ↗</span>
             <h3>安全提醒 <span class="badge b-red">重要</span></h3>
-            <p style="margin-bottom:8px">Skill 本质是代码和指令，有权限操作你的电脑</p>
-            <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">第三方 Skill 务必审查 SKILL.md 和 scripts/ 每一行代码</span></div>
-            <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">看不懂？扔给 AI 帮你检查有没有后门</span></div>
-            <div class="row"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>数据无价！</strong>不要盲目 install</span></div>
+            <p>Skill 本质是代码和指令 — 第三方 Skill 务必审查，数据无价</p>
+        </div>
+
+        <!-- Modal: 安全详解 -->
+        <div id="modal-security" class="modal-overlay" onclick="this.classList.remove('open')">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="document.getElementById('modal-security').classList.remove('open')">✕</button>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:20px;color:var(--red)">安全提醒</h3>
+                <p style="font-size:14px;color:var(--g1);margin-bottom:16px">Skill 里的脚本可以操作你的电脑、读取文件、发送网络请求 — 权限很大</p>
+                <div class="row" style="margin-bottom:8px"><span class="row-icon" style="color:var(--red)">✗</span><span style="font-size:14px"><strong>不要盲目安装第三方 Skill</strong><br><span style="color:var(--g3)">跟安装 App 一样，来源不明的不要装</span></span></div>
+                <div class="row" style="margin-bottom:8px"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:14px"><strong>务必审查 SKILL.md 和 scripts/ 里的每一行</strong><br><span style="color:var(--g3)">看不懂代码？把代码扔给 AI，问"这段代码有没有安全风险"</span></span></div>
+                <div class="row"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:14px"><strong>数据无价</strong><br><span style="color:var(--g3)">你的合同、客户信息、内部文件 — 一旦泄露不可逆。宁可多花 5 分钟审查</span></span></div>
+            </div>
         </div>
     </div>
 </section>
@@ -576,9 +639,27 @@
             </div>
         </div>
 
-        <div class="pit anim"><div class="pit-icon">01</div><div><h4>与现有系统集成</h4><p>数据散落在飞书合同、OA、邮件、共享文档 — AI 怎么串？每个对接都是脏活累活</p></div></div>
-        <div class="pit anim"><div class="pit-icon">02</div><div><h4>持续迭代</h4><p>85% → 收集错误 → 优化 SOP → 90% → 加边界规则 → 93%… 没反馈就永远停在 80</p></div></div>
-        <div class="pit anim"><div class="pit-icon">03</div><div><h4>人机协作边界</h4><p>全自动出事故就被叫停；全人工没效率。按风险分流：低风险自动，高风险转人工</p></div></div>
+        <div class="card anim expand-trigger" onclick="document.getElementById('modal-eng').classList.add('open')" style="margin-top:8px">
+            <span class="expand-hint">展开 ↗</span>
+            <h3>工程挑战</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <span class="tag">系统集成</span>
+                <span class="tag">持续迭代</span>
+                <span class="tag">人机协作边界</span>
+            </div>
+            <p style="margin-top:8px;font-size:12px;color:var(--g3)">80→95 的真正难点不在 AI，在工程和组织</p>
+        </div>
+
+        <!-- Modal: 工程挑战详解 -->
+        <div id="modal-eng" class="modal-overlay" onclick="this.classList.remove('open')">
+            <div class="modal-box" onclick="event.stopPropagation()">
+                <button class="modal-close" onclick="document.getElementById('modal-eng').classList.remove('open')">✕</button>
+                <h3 style="font-size:18px;font-weight:800;margin-bottom:20px">80 → 95 的 <span style="color:var(--red)">工程挑战</span></h3>
+                <div class="pit" style="margin-bottom:10px"><div class="pit-icon">01</div><div><h4>与现有系统集成</h4><p>数据散落在飞书合同、OA、邮件、共享文档 — AI 怎么串？<br>每个对接都是脏活累活，没有捷径</p></div></div>
+                <div class="pit" style="margin-bottom:10px"><div class="pit-icon">02</div><div><h4>持续迭代</h4><p>85% → 收集错误 → 优化 SOP → 90% → 加边界规则 → 93%…<br>没有反馈循环就永远停在 80 分</p></div></div>
+                <div class="pit"><div class="pit-icon">03</div><div><h4>人机协作边界</h4><p>全自动出事故就被叫停；全人工没效率<br>正确做法：按风险分流 — 低风险自动，高风险转人工</p></div></div>
+            </div>
+        </div>
 
         <div class="callout anim">
             <h4>务实建议</h4>
