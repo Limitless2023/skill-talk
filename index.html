@@ -208,10 +208,157 @@
     </div>
 </section>
 
-<!-- SLIDE 1: 市场真实问题 -->
+<!-- SLIDE 1: 什么是 Skill -->
 <section class="slide" data-slide="1">
     <div class="slide-inner">
         <div class="slide-num anim">Part 01</div>
+        <h2 class="slide-title anim">什么是 <span class="highlight">Skill</span></h2>
+        <p class="slide-sub anim">一句话：给 AI 的操作手册，写一次，永远可用</p>
+
+        <div class="grid2 anim">
+            <div class="card">
+                <h3>😩 没有 Skill</h3>
+                <p>每次都要手把手教 AI：<br>"标题要震惊、排版要分段、最后加二维码……"</p>
+                <div style="margin-top:12px">
+                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">每次都重复教，费口舌（费 Token）</span></div>
+                    <div class="row" style="margin-bottom:6px"><span class="row-icon">❌</span><span style="font-size:13px">AI 容易忘，下次又从零开始</span></div>
+                    <div class="row"><span class="row-icon">❌</span><span style="font-size:13px">好的经验用完就丢</span></div>
+                </div>
+            </div>
+            <div class="card card-accent">
+                <h3>✅ 有了 Skill</h3>
+                <p>写好一本操作手册塞进 AI 背包，喊一声就自动干活</p>
+                <div style="margin-top:12px">
+                    <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon">⚡</span><span style="font-size:13px"><strong>按需触发</strong> — AI 自动识别何时该用</span></div>
+                    <div class="row" style="margin-bottom:6px;border-color:var(--green)"><span class="row-icon">🧠</span><span style="font-size:13px"><strong>不占记忆</strong> — 不用时不消耗上下文</span></div>
+                    <div class="row" style="border-color:var(--green)"><span class="row-icon">🔄</span><span style="font-size:13px"><strong>可复用可分享</strong> — 写一次，团队都能用</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 2: Skill 的三项核心能力 -->
+<section class="slide" data-slide="2">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 01 (续)</div>
+        <h2 class="slide-title anim">Skill 能帮 AI 解锁<span class="highlight">三项能力</span></h2>
+        <p class="slide-sub anim">从"只会聊天"到"真正干活"</p>
+
+        <div class="pit anim">
+            <div class="pit-icon">📋</div>
+            <div>
+                <h4>能力一：复刻你的工作习惯 <span class="badge b-blue">SOP</span></h4>
+                <p>把你的工作标准、排版要求、避坑指南打包给 AI</p>
+                <div class="quote">以前：让 AI 写周报，写得乱七八糟，改半天<br>有了 Skill：给它一个《周报专用 Skill》，每次格式完美</div>
+            </div>
+        </div>
+
+        <div class="pit anim">
+            <div class="pit-icon">🔧</div>
+            <div>
+                <h4>能力二：安装专业工具 <span class="badge b-purple">Tools</span></h4>
+                <p>让 AI 不只会打字，还能操作软件、调用 API、执行代码</p>
+                <div class="quote">以前：让 AI 做动图，它摊手说"臣妾做不到"<br>有了 Skill：给它一个《GIF 制作 Skill》，内含 Python 脚本，直接生成</div>
+            </div>
+        </div>
+
+        <div class="pit anim">
+            <div class="pit-icon">🧬</div>
+            <div>
+                <h4>能力三：瞬间复制大神经验 <span class="badge b-green">Knowledge</span></h4>
+                <p>Skill 是文件 = 可复制粘贴 = 经验即插即用</p>
+                <div class="quote">不懂写爆款标题？找来《爆款标题 Skill》扔给 AI<br>你的 AI 瞬间拥有大师级起标题能力 — 你不需要懂，只需要拥有这个 Skill</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 3: Skill 的结构 -->
+<section class="slide" data-slide="3">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 02</div>
+        <h2 class="slide-title anim">Skill <span class="highlight">长什么样</span></h2>
+        <p class="slide-sub anim">本质就是一个文件夹，非常轻量</p>
+
+        <div class="card anim" style="padding:28px;font-family:var(--mono);font-size:13px;line-height:2.2">
+            <span style="color:var(--g3)">my-contract-reviewer/</span><br>
+            <span style="color:var(--g3)">├──</span> <strong style="color:var(--blue)">SKILL.md</strong> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 核心：大脑（指令 + 流程 + 触发条件）</span><br>
+            <span style="color:var(--g3)">└── scripts/</span> <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 选配：手脚（Python/Bash 脚本）</span><br>
+            <span style="color:var(--g3)">&nbsp;&nbsp;&nbsp;&nbsp;└──</span> check_clauses.py <span style="color:var(--g3);font-family:var(--font);font-size:12px">← 比如：检查合同条款的脚本</span>
+        </div>
+
+        <div class="grid2 anim" style="margin-top:16px">
+            <div class="card">
+                <h3>📄 SKILL.md 里写什么</h3>
+                <div class="steps">
+                    <div class="step"><span class="step-n">①</span><span class="step-t"><strong>身份证</strong> — 名称 + 描述 + 触发条件</span></div>
+                    <div class="step"><span class="step-n">②</span><span class="step-t"><strong>执行指令</strong> — 按什么步骤做</span></div>
+                    <div class="step"><span class="step-n">③</span><span class="step-t"><strong>输出格式</strong> — 结果长什么样</span></div>
+                    <div class="step"><span class="step-n">④</span><span class="step-t"><strong>注意事项</strong> — 边界和限制</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>💡 关键设计原则</h3>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>按需触发</strong> — 通过 description 自动匹配</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>渐进加载</strong> — 不用时不占上下文</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">●</span><span style="font-size:13px"><strong>死板的活交给脚本</strong> — 省 Token 又精准</span></div>
+                <div class="row"><span class="row-icon" style="color:var(--red)">⚠</span><span style="font-size:13px"><strong>安全提醒</strong> — 第三方 Skill 务必审查代码</span></div>
+            </div>
+        </div>
+
+        <div class="callout anim">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">创造 Skill 只需一句话："<strong style="color:var(--blue)">我想要一个能自动审查合同风险的 Skill</strong>" — AI 帮你生成</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: Skill vs MCP -->
+<section class="slide" data-slide="4">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 02 (续)</div>
+        <h2 class="slide-title anim">Skill vs MCP <span class="dim" style="font-size:.55em">别搞混了</span></h2>
+        <p class="slide-sub anim">一个教方法，一个给数据。两者结合 = 超级大厨</p>
+
+        <div class="grid2 anim">
+            <div class="card card-accent">
+                <h3>🍳 Skill = 菜谱 <span class="badge b-blue">教 AI 怎么做</span></h3>
+                <div class="cmp-row"><span class="cmp-l">关注</span><span class="cmp-v">How — 思考逻辑、做事步骤</span></div>
+                <div class="cmp-row"><span class="cmp-l">形态</span><span class="cmp-v">几个 Markdown 文件</span></div>
+                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v highlight-green">极轻量，打包就能分享</span></div>
+                <div class="cmp-row"><span class="cmp-l">局限</span><span class="cmp-v">没法实时获取数据</span></div>
+                <div class="cmp-row"><span class="cmp-l">例子</span><span class="cmp-v">教 AI 按巴菲特逻辑分析</span></div>
+            </div>
+            <div class="card" style="border-color:#2e1065">
+                <h3>🧊 MCP = 冰箱 <span class="badge b-purple">给 AI 食材/数据</span></h3>
+                <div class="cmp-row"><span class="cmp-l">关注</span><span class="cmp-v">What — 连接外部数据和工具</span></div>
+                <div class="cmp-row"><span class="cmp-l">形态</span><span class="cmp-v">运行的服务（Server）</span></div>
+                <div class="cmp-row"><span class="cmp-l">优势</span><span class="cmp-v highlight-green">能力强大，连接万物</span></div>
+                <div class="cmp-row"><span class="cmp-l">局限</span><span class="cmp-v">配置门槛高</span></div>
+                <div class="cmp-row"><span class="cmp-l">例子</span><span class="cmp-v">连接数据库查昨天 DAU</span></div>
+            </div>
+        </div>
+
+        <div class="card anim" style="margin-top:16px">
+            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">📊 实战协作：写一份股市分析报告</h3>
+            <div class="steps" style="margin-top:12px">
+                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">获取今天最新股价、K线图、新闻 <span class="dim">— AI 脑子里没行情</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">按《价值投资逻辑》分析数据 <span class="dim">— 告诉 AI 分析框架</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--blue)">Skill</span><span class="step-t">排版，生成 PDF 报告 <span class="dim">— 指导格式和风格</span></span></div>
+                <div class="step"><span class="step-n" style="color:var(--purple)">MCP</span><span class="step-t">通过邮件发送给老板 <span class="dim">— 连接邮件服务器</span></span></div>
+            </div>
+        </div>
+
+        <div class="callout anim">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">未来 AI 工作流：<strong style="color:var(--purple)">MCP 连接数据资产</strong> + <strong style="color:var(--blue)">Skill 固化业务流程</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5: 市场真实问题 -->
+<section class="slide" data-slide="5">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 03</div>
         <h2 class="slide-title anim">市场的<span class="highlight-red">真实</span>问题</h2>
         <p class="slide-sub anim">企业端的困境不是"缺技术"</p>
 
@@ -222,9 +369,9 @@
 </section>
 
 <!-- SLIDE 2: 专家知识 -->
-<section class="slide" data-slide="2">
+<section class="slide" data-slide="6">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 02</div>
+        <div class="slide-num anim">Part 04</div>
         <h2 class="slide-title anim">专家知识<span class="highlight">到底是什么</span></h2>
         <p class="slide-sub anim">不是"资料很多"，不是"懂行业术语"</p>
 
@@ -255,9 +402,9 @@
 </section>
 
 <!-- SLIDE 3: 为什么专家 > 技术 -->
-<section class="slide" data-slide="3">
+<section class="slide" data-slide="7">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 03</div>
+        <div class="slide-num anim">Part 05</div>
         <h2 class="slide-title anim">为什么专家知识<span class="highlight">比技术更关键</span></h2>
         <p class="slide-sub anim">技术往往不是第一难点</p>
 
@@ -272,9 +419,9 @@
 </section>
 
 <!-- SLIDE 4: 两个大坑 -->
-<section class="slide" data-slide="4">
+<section class="slide" data-slide="8">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 04</div>
+        <div class="slide-num anim">Part 06</div>
         <h2 class="slide-title anim">有了专家<span class="highlight-red">也未必好使</span></h2>
         <p class="slide-sub anim">两个隐藏的大坑</p>
 
@@ -300,9 +447,9 @@
 </section>
 
 <!-- SLIDE 5: 横切 vs 竖切 -->
-<section class="slide" data-slide="5">
+<section class="slide" data-slide="9">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 05</div>
+        <div class="slide-num anim">Part 07</div>
         <h2 class="slide-title anim">横着切还是竖着切？<br><span class="dim" style="font-size:.55em">以合同审查为例</span></h2>
         <p class="slide-sub anim">同样是"合同审查 Agent"，路径不同，结果天差地别</p>
 
@@ -343,7 +490,7 @@
 </section>
 
 <!-- SLIDE 6: BIG QUOTE -->
-<section class="slide" data-slide="6">
+<section class="slide" data-slide="10">
     <div class="slide-inner bq">
         <blockquote class="anim">"落地的本质不是写代码，<br>而是把专家脑子里的<span class="highlight">隐性经验</span>，<br>翻译成机器能执行的<span class="highlight">显性规则</span>。"</blockquote>
         <p class="attr anim">谁能完成这个翻译，谁就掌握了 Agent 落地的核心能力</p>
@@ -351,9 +498,9 @@
 </section>
 
 <!-- SLIDE 7: 法务场景 — 合同管理 + 合规 -->
-<section class="slide" data-slide="7">
+<section class="slide" data-slide="11">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 06</div>
+        <div class="slide-num anim">Part 08</div>
         <h2 class="slide-title anim">法务运营<span class="highlight">场景全景图</span></h2>
         <p class="slide-sub anim">你们每天做的事，哪些可以 Skill 化？</p>
 
@@ -369,9 +516,9 @@
 </section>
 
 <!-- SLIDE 8: 法务场景 — 尽调 + 效率 -->
-<section class="slide" data-slide="8">
+<section class="slide" data-slide="12">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 06 (续)</div>
+        <div class="slide-num anim">Part 08 (续)</div>
         <h2 class="slide-title anim">法务场景<span class="highlight">全景图</span></h2>
 
         <div class="cat anim">🔎 尽调与诉讼</div>
@@ -396,9 +543,9 @@
 </section>
 
 <!-- SLIDE 9: Skill 的局限 -->
-<section class="slide" data-slide="9">
+<section class="slide" data-slide="13">
     <div class="slide-inner">
-        <div class="slide-num anim">Part 07</div>
+        <div class="slide-num anim">Part 09</div>
         <h2 class="slide-title anim">Skill 的局限：<span class="highlight-red">80 分到 95 分</span>的鸿沟</h2>
         <p class="slide-sub anim">快速做到 80 分很容易，但最后 15 分才是真正的战场</p>
 
@@ -437,7 +584,7 @@
 </section>
 
 <!-- SLIDE 10: FOOTER -->
-<section class="slide" data-slide="10">
+<section class="slide" data-slide="14">
     <div class="slide-inner foot">
         <h4>Resources</h4>
         <div class="foot-links">
