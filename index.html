@@ -477,13 +477,51 @@
         <div class="sc anim"><h4>📊 法务周报/月报</h4><div class="tags"><span class="tag">自动汇总</span></div><div class="pipe">工作记录 <span class="arr">→</span> 分类统计 <span class="arr">→</span> 趋势图 <span class="arr">→</span> 老板喜欢的格式</div></div>
         <div class="sc anim"><h4>💬 内部法律咨询</h4><div class="tags"><span class="tag">高频低复杂度</span></div><div class="pipe">业务提问 <span class="arr">→</span> 匹配制度库 <span class="arr">→</span> 初步意见 <span class="arr">→</span> 复杂转人工 <span class="arr">→</span> 沉淀 FAQ</div></div>
 
-        <div class="matrix anim">
-            <h4>💎 落地优先级</h4>
-            <div class="grid4">
-                <div class="row" style="margin:0;border-color:var(--green)"><span class="row-icon">🟢</span><span style="font-size:12px"><strong>立刻做</strong> 合同预审 · 内部咨询 · 周报<br><span class="dim">高频 + SOP 清晰 + 见效快</span></span></div>
-                <div class="row" style="margin:0;border-color:var(--blue)"><span class="row-icon">🔵</span><span style="font-size:12px"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高</span></span></div>
-                <div class="row" style="margin:0;border-color:var(--yellow)"><span class="row-icon">🟡</span><span style="font-size:12px"><strong>规划中</strong> 尽调 · 数据合规<br><span class="dim">需外部数据源 + MCP</span></span></div>
-                <div class="row" style="margin:0"><span class="row-icon">⚪</span><span style="font-size:12px"><strong>长期</strong> 案例检索 · 台账管理<br><span class="dim">需历史数据 + 持续优化</span></span></div>
+        <!-- 优先级矩阵图 -->
+        <div class="matrix anim" style="padding:28px">
+            <h4>💎 落地优先级矩阵</h4>
+            <div style="position:relative;width:100%;aspect-ratio:16/10;margin-top:8px">
+                <!-- 坐标轴 -->
+                <div style="position:absolute;left:40px;top:0;bottom:32px;width:1px;background:var(--g5)"></div>
+                <div style="position:absolute;left:40px;right:0;bottom:32px;height:1px;background:var(--g5)"></div>
+                <!-- Y轴标签 -->
+                <div style="position:absolute;left:0;top:0;font-size:10px;color:var(--g3);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:1px">业务价值 ↑</div>
+                <!-- X轴标签 -->
+                <div style="position:absolute;bottom:8px;right:0;font-size:10px;color:var(--g3);letter-spacing:1px">实现难度 →</div>
+                <!-- 象限背景 -->
+                <div style="position:absolute;left:41px;top:0;width:calc(50% - 20px);height:calc(50% - 16px);background:rgba(34,197,94,.06);border-radius:8px 0 0 0"></div>
+                <div style="position:absolute;right:0;top:0;width:calc(50% - 20px);height:calc(50% - 16px);background:rgba(59,130,246,.06);border-radius:0 8px 0 0"></div>
+                <div style="position:absolute;left:41px;bottom:33px;width:calc(50% - 20px);height:calc(50% - 16px);background:rgba(113,113,122,.04);border-radius:0 0 0 8px"></div>
+                <div style="position:absolute;right:0;bottom:33px;width:calc(50% - 20px);height:calc(50% - 16px);background:rgba(234,179,8,.04);border-radius:0 0 8px 0"></div>
+                <!-- 象限标注 -->
+                <div style="position:absolute;left:52px;top:6px;font-size:9px;color:var(--green);font-weight:700;letter-spacing:1px;text-transform:uppercase">🟢 立刻做</div>
+                <div style="position:absolute;right:8px;top:6px;font-size:9px;color:var(--blue);font-weight:700;letter-spacing:1px;text-transform:uppercase">🔵 重点攻坚</div>
+                <div style="position:absolute;left:52px;bottom:38px;font-size:9px;color:var(--g3);font-weight:700;letter-spacing:1px;text-transform:uppercase">⚪ 低优先</div>
+                <div style="position:absolute;right:8px;bottom:38px;font-size:9px;color:var(--yellow);font-weight:700;letter-spacing:1px;text-transform:uppercase">🟡 规划储备</div>
+                <!-- 场景气泡 -->
+                <!-- 左上：高价值 + 易实现 -->
+                <div style="position:absolute;left:15%;top:12%;padding:6px 12px;background:var(--bg);border:1px solid var(--green);border-radius:8px;font-size:11px;color:var(--g1);white-space:nowrap">📋 合同预审<br><span style="font-size:9px;color:var(--g3)">高频 · SOP清晰 · 见效快</span></div>
+                <div style="position:absolute;left:12%;top:42%;padding:6px 12px;background:var(--bg);border:1px solid var(--green);border-radius:8px;font-size:11px;color:var(--g1);white-space:nowrap">💬 内部咨询<br><span style="font-size:9px;color:var(--g3)">高频 · 知识库现成</span></div>
+                <div style="position:absolute;left:32%;top:30%;padding:6px 12px;background:var(--bg);border:1px solid var(--green);border-radius:8px;font-size:11px;color:var(--g1);white-space:nowrap">📊 周报月报<br><span style="font-size:9px;color:var(--g3)">模板化 · 数据现成</span></div>
+                <!-- 右上：高价值 + 难实现 -->
+                <div style="position:absolute;left:58%;top:8%;padding:6px 12px;background:var(--bg);border:1px solid var(--blue);border-radius:8px;font-size:11px;color:var(--g1);white-space:nowrap">⚖️ 条款对比<br><span style="font-size:9px;color:var(--g3)">高价值 · 需精调</span></div>
+                <div style="position:absolute;left:60%;top:28%;padding:6px 12px;background:var(--bg);border:1px solid var(--blue);border-radius:8px;font-size:11px;color:var(--g1);white-space:nowrap">📝 文书生成<br><span style="font-size:9px;color:var(--g3)">模板多 · 风格调优</span></div>
+                <div style="position:absolute;left:55%;top:48%;padding:6px 12px;background:var(--bg);border:1px solid var(--blue);border-radius:8px;font-size:11px;color:var(--g3);white-space:nowrap">📰 法规监测<br><span style="font-size:9px;color:var(--g3)">需 MCP + 数据源</span></div>
+                <!-- 右下：低价值 + 难实现 -->
+                <div style="position:absolute;left:62%;top:68%;padding:6px 12px;background:var(--bg);border:1px solid var(--yellow);border-radius:8px;font-size:11px;color:var(--g3);white-space:nowrap">🏢 尽调报告<br><span style="font-size:9px;color:var(--g3)">外部API · 数据整合</span></div>
+                <div style="position:absolute;left:72%;top:82%;padding:6px 12px;background:var(--bg);border:1px solid var(--g4);border-radius:8px;font-size:11px;color:var(--g3);white-space:nowrap">⚔️ 案例检索<br><span style="font-size:9px;color:var(--g3)">数据壁垒 · 长期建设</span></div>
+                <!-- 左下 -->
+                <div style="position:absolute;left:18%;top:72%;padding:6px 12px;background:var(--bg);border:1px solid var(--g4);border-radius:8px;font-size:11px;color:var(--g3);white-space:nowrap">📊 台账管理<br><span style="font-size:9px;color:var(--g3)">低频 · 需历史数据</span></div>
+                <div style="position:absolute;left:30%;top:58%;padding:6px 12px;background:var(--bg);border:1px solid var(--yellow);border-radius:8px;font-size:11px;color:var(--g3);white-space:nowrap">🔐 数据合规<br><span style="font-size:9px;color:var(--g3)">低频 · 专业性极高</span></div>
+            </div>
+            <!-- 参考维度说明 -->
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+                <span style="font-size:10px;color:var(--g3)">📐 参考维度：</span>
+                <span style="font-size:10px;color:var(--g2)">频率高低</span>
+                <span style="font-size:10px;color:var(--g2)">业务价值</span>
+                <span style="font-size:10px;color:var(--g2)">SOP 清晰度</span>
+                <span style="font-size:10px;color:var(--g2)">数据可得性</span>
+                <span style="font-size:10px;color:var(--g2)">专家知识是否已沉淀</span>
             </div>
         </div>
     </div>
