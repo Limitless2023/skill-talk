@@ -717,34 +717,48 @@
     </div>
 </section>
 
-<!-- 17: Q&A -->
+<!-- 17: AI 学习路径 -->
 <section class="slide" data-slide="17">
-    <div class="slide-inner hero-center">
+    <div class="slide-inner">
         <div class="slide-num anim">Part 12</div>
-        <h1 class="hero-title anim" style="font-size:clamp(2.5rem,5vw,4rem)">Q&A</h1>
-        <p class="hero-sub anim">随便聊聊，有问必答</p>
+        <h2 class="slide-title anim">学 AI 的<span class="hi">三个心法</span></h2>
+        <p class="slide-sub anim">不是"学技术"，是"换一种思维方式"</p>
 
-        <div class="grid2 anim" style="margin-top:16px;text-align:left">
-            <div class="card">
-                <h3>可以聊的方向</h3>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">Skill 的技术细节</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">AI 在法务领域的更多可能</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">如何说服老板投入 AI</span></div>
-                <div class="row"><span class="row-icon" style="color:var(--g2)">›</span><span style="font-size:13px">你们团队可以怎么开始</span></div>
-            </div>
-            <div class="card" style="border-color:var(--green)">
-                <h3>下一步行动</h3>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">1</span><span style="font-size:13px">选一个最痛的场景</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">2</span><span style="font-size:13px">写下你的 SOP（哪怕用大白话）</span></div>
-                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">3</span><span style="font-size:13px">用 Claude / ChatGPT 试着做一个 Skill</span></div>
-                <div class="row"><span class="row-icon" style="color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700">4</span><span style="font-size:13px">跑起来，迭代，量化效果</span></div>
-            </div>
+        <div class="pit anim">
+            <div class="pit-icon">01</div>
+            <div><h4>保持好奇心</h4>
+                <p>看到新东西先想"这能帮我干什么"，而不是"这跟我有什么关系"</p>
+                <div class="quote">好奇心是一切学习的起点 — 没有好奇心，给你再多教程也没用</div></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon">02</div>
+            <div><h4>动手试，在反馈中迭代</h4>
+                <p>别光看教程，打开 AI 就开始用。用错了没关系，每次尝试都是一次学习</p>
+                <div class="quote">把自己当成一个 Agent：<strong style="color:var(--blue)">思考 → 行动 → 感知 → 修正</strong><br>你用 AI 的过程，本身就是一个 Agent 循环</div></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon">03</div>
+            <div><h4>万事先问 AI</h4>
+                <p>不知道怎么表达？问 AI。不知道怎么做？让 AI 调研。不懂的概念？让 AI 解释。</p>
+                <div class="quote">AI 是最有耐心的老师 — 不会嫌你问得蠢，不会因为你反复问而不耐烦<br>用 AI 学 AI，这本身就是最好的练习</div></div>
+        </div>
+
+        <div class="callout anim">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">学 AI 不需要技术背景 — 需要的是<strong style="color:var(--blue)">好奇心 + 行动力 + 不怕犯错</strong></p>
         </div>
     </div>
 </section>
 
-<!-- 18: 收尾 + Resources -->
+<!-- 18: Q&A -->
 <section class="slide" data-slide="18">
+    <div class="slide-inner hero-center">
+        <h1 class="hero-title anim" style="font-size:clamp(2.5rem,5vw,4rem)">Q&A</h1>
+        <p class="hero-sub anim">随便聊聊，有问必答</p>
+    </div>
+</section>
+
+<!-- 19: 收尾 + Resources -->
+<section class="slide" data-slide="19">
     <div class="slide-inner bq">
         <blockquote class="anim" style="margin-bottom:32px">"以前：学编程才能造工具。<br>现在：<span class="hi">懂业务就能造工具</span>。<br>法务最懂法务的痛，<br>所以法务人才是最该造 Skill 的人。"</blockquote>
 
@@ -767,7 +781,7 @@
 </section>
 
 </div>
-<button id="theme-toggle" title="切换 Light/Dark">🌙</button>
+<button id="theme-toggle" title="切换 Light/Dark"><span style="font-family:var(--mono);font-size:12px;font-weight:700">D</span></button>
 <nav id="nav"></nav>
 <div id="counter"></div>
 
@@ -799,10 +813,10 @@
     // Theme toggle
     const tog=document.getElementById('theme-toggle');
     const saved=localStorage.getItem('skill-talk-theme');
-    if(saved==='light'){document.documentElement.classList.add('light');tog.textContent='☀️'}
+    if(saved==='light'){document.documentElement.classList.add('light');tog.querySelector('span').textContent='L'}
     tog.addEventListener('click',()=>{
         const isLight=document.documentElement.classList.toggle('light');
-        tog.textContent=isLight?'☀️':'🌙';
+        tog.querySelector('span').textContent=isLight?'L':'D';
         localStorage.setItem('skill-talk-theme',isLight?'light':'dark');
     });
 })();
