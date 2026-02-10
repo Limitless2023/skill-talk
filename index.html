@@ -23,6 +23,8 @@
             --red:#dc2626;--green:#16a34a;--yellow:#ca8a04;--purple:#7c3aed;
             --border:#e4e4e7;
         }
+        .pit-icon,.row-icon,.f-icon{filter:grayscale(1)}
+        .sc h4,.card h3,.matrix h4,.cat{filter:grayscale(1)}
         html{scroll-behavior:smooth}
         body{font-family:var(--font);background:var(--bg);color:var(--white);
             overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
@@ -136,6 +138,8 @@
         .nav-dot:hover{background:var(--g4)}
         #counter{position:fixed;bottom:20px;right:24px;font-family:var(--mono);
             font-size:12px;color:var(--g4);z-index:999;letter-spacing:1px}
+        #steps5-trigger [style*="font-size:16px"]{filter:grayscale(1)}
+        #steps5-modal [style*="font-size:15px"]{filter:grayscale(1)}
         #steps5-modal{display:none!important}
         #steps5-modal.open{display:flex!important;animation:fadeIn .25s ease}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
