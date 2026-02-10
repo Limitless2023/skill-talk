@@ -4,927 +4,528 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Skills — 专家知识 × 技术放大</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg: #000; --bg-card: #0a0a0a; --bg-hover: #111;
-            --white: #fff; --gray-1: #e5e5e5; --gray-2: #a1a1a1;
-            --gray-3: #666; --gray-4: #333; --gray-5: #1a1a1a;
-            --border: #1a1a1a;
-            --accent: #3b82f6; --accent-dim: #1d4ed8;
-            --red: #ef4444; --green: #22c55e; --yellow: #eab308;
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#09090b;--bg2:#111113;--bg3:#18181b;
+            --white:#fafafa;--g1:#e4e4e7;--g2:#a1a1aa;--g3:#71717a;--g4:#3f3f46;--g5:#27272a;--g6:#1c1c1e;
+            --blue:#3b82f6;--blue-dim:#1d4ed8;--blue-bg:rgba(59,130,246,.08);
+            --red:#ef4444;--green:#22c55e;--yellow:#eab308;--purple:#a78bfa;
+            --border:#27272a;
+            --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            --mono:'JetBrains Mono',monospace;
         }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg); color: var(--white);
-            line-height: 1.6; -webkit-font-smoothing: antialiased;
-        }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--font);background:var(--bg);color:var(--white);
+            overflow:hidden;height:100vh;-webkit-font-smoothing:antialiased}
+
+        /* === SCROLL CONTAINER === */
+        #deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;
+            scroll-behavior:smooth;scrollbar-width:none}
+        #deck::-webkit-scrollbar{display:none}
+
+        /* === SLIDE === */
+        .slide{min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+            display:flex;align-items:center;justify-content:center;
+            padding:60px 48px;position:relative;
+            border-bottom:1px solid var(--border)}
+        .slide-inner{max-width:900px;width:100%}
+
+        /* === ENTRANCE ANIMATIONS === */
+        .slide{opacity:0;transform:translateY(40px)}
+        .slide.visible{opacity:1;transform:translateY(0);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+        .anim{opacity:0;transform:translateY(20px)}
+        .anim.show{opacity:1;transform:translateY(0);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
+
+        /* === TYPOGRAPHY === */
+        .slide-num{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--blue);
+            letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+        .slide-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;
+            letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
+        .slide-sub{font-size:1rem;color:var(--g3);line-height:1.6;margin-bottom:40px;max-width:640px}
+        .highlight{color:var(--blue)}
+        .highlight-red{color:var(--red)}
+        .highlight-green{color:var(--green)}
+        .dim{color:var(--g3)}
 
         /* === HERO === */
-        .hero {
-            padding: 100px 24px 80px; text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 14px; border: 1px solid var(--gray-4);
-            border-radius: 100px; font-size: 13px; color: var(--gray-2);
-            margin-bottom: 32px; letter-spacing: 0.5px;
-        }
-        .hero-badge .dot {
-            width: 6px; height: 6px; background: var(--accent);
-            border-radius: 50%; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
-            letter-spacing: -0.03em; margin-bottom: 16px;
-        }
-        .hero-sub {
-            font-size: 1.15rem; color: var(--gray-3); font-weight: 400;
-            margin-bottom: 56px; max-width: 600px; margin-left: auto; margin-right: auto;
-        }
+        .hero-title{font-size:clamp(3rem,7vw,5.5rem);font-weight:900;letter-spacing:-.04em;
+            text-align:center;line-height:1.05;margin-bottom:20px}
+        .hero-sub{font-size:1.15rem;color:var(--g3);text-align:center;max-width:560px;
+            margin:0 auto 48px;line-height:1.6}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;
+            padding:6px 16px;border:1px solid var(--g5);border-radius:100px;
+            font-size:12px;color:var(--g2);letter-spacing:1px;margin-bottom:40px}
+        .hero-badge .pulse{width:6px;height:6px;background:var(--blue);border-radius:50%;
+            animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        .hero-center{display:flex;flex-direction:column;align-items:center}
 
         /* === FORMULA === */
-        .formula-section {
-            padding: 80px 24px; border-bottom: 1px solid var(--border);
-            text-align: center;
-        }
-        .formula {
-            display: flex; align-items: center; justify-content: center;
-            gap: 24px; flex-wrap: wrap; margin-bottom: 24px;
-        }
-        .formula-box {
-            padding: 24px 36px; border: 1px solid var(--border);
-            border-radius: 16px; background: var(--bg-card);
-            min-width: 200px;
-        }
-        .formula-box .icon { font-size: 2.5rem; margin-bottom: 8px; }
-        .formula-box .label {
-            font-size: 14px; color: var(--gray-2); font-weight: 600;
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
-        }
-        .formula-box .desc { font-size: 13px; color: var(--gray-3); }
-        .formula-op {
-            font-size: 3rem; font-weight: 800; color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .formula-note {
-            font-size: 14px; color: var(--gray-3); font-style: italic;
-        }
-        .formula-note strong { color: var(--red); font-style: normal; }
+        .formula{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+        .f-box{padding:28px 32px;border:1px solid var(--border);border-radius:16px;
+            background:var(--bg2);text-align:center;min-width:180px;transition:border-color .3s}
+        .f-box:hover{border-color:var(--g4)}
+        .f-box.active{border-color:var(--blue)}
+        .f-icon{font-size:2.2rem;margin-bottom:8px}
+        .f-label{font-size:13px;font-weight:700;color:var(--g1);letter-spacing:.5px;margin-bottom:2px}
+        .f-desc{font-size:12px;color:var(--g3)}
+        .f-op{font-size:2.5rem;font-weight:800;color:var(--blue);font-family:var(--mono)}
+        .formula-note{font-size:13px;color:var(--g3);text-align:center;font-style:italic}
+        .formula-note strong{color:var(--red);font-style:normal}
 
-        /* === SECTIONS === */
-        .section {
-            max-width: 880px; margin: 0 auto;
-            padding: 64px 24px; border-bottom: 1px solid var(--border);
-        }
-        .section-head {
-            display: flex; align-items: baseline; gap: 16px;
-            margin-bottom: 40px; padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-        .section-num {
-            font-size: 4rem; font-weight: 900;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: -0.05em; color: var(--gray-1);
-        }
-        .section-meta h2 { font-size: 1.25rem; font-weight: 600; }
-        .section-meta p { color: var(--gray-3); font-size: 14px; }
+        /* === GRID / CARDS === */
+        .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        @media(max-width:640px){.grid2,.grid4{grid-template-columns:1fr}}
 
-        /* === CARDS === */
-        .card-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px; margin-bottom: 32px;
-        }
-        .card {
-            padding: 24px; background: var(--bg-card);
-            border: 1px solid var(--border); border-radius: 12px;
-            transition: all .15s ease;
-        }
-        .card:hover { border-color: var(--gray-4); transform: translateY(-2px); }
-        .card .card-icon { font-size: 2rem; margin-bottom: 12px; }
-        .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-        .card p { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+        .card{padding:24px;background:var(--bg2);border:1px solid var(--border);
+            border-radius:14px;transition:all .2s}
+        .card:hover{border-color:var(--g4);transform:translateY(-2px)}
+        .card h3{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+        .card p,.card li{font-size:13px;color:var(--g3);line-height:1.6}
+        .card-accent{border-color:var(--blue-dim)}
 
-        /* === FLOW === */
-        .flow {
-            display: flex; flex-direction: column; gap: 0;
-            padding-left: 20px; position: relative; margin-bottom: 32px;
-        }
-        .flow::before {
-            content: ''; position: absolute; left: 3px; top: 24px; bottom: 24px;
-            width: 1px; background: var(--gray-4);
-        }
-        .flow-item {
-            display: grid; grid-template-columns: 40px 1fr; gap: 16px;
-            align-items: center; padding: 16px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 10px; position: relative;
-            transition: all .15s ease; margin-bottom: 8px;
-        }
-        .flow-item:hover { border-color: var(--gray-4); transform: translateX(4px); background: var(--bg-hover); }
-        .flow-item::before {
-            content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
-            width: 6px; height: 6px; background: var(--white); border-radius: 50%;
-        }
-        .flow-step {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px; color: var(--accent); font-weight: 600;
-        }
-        .flow-text { font-size: 14px; color: var(--gray-1); }
-        .flow-text strong { color: var(--white); }
+        /* === ROWS === */
+        .row{display:flex;align-items:start;gap:14px;padding:14px 18px;
+            background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+            margin-bottom:8px;transition:all .15s;font-size:14px}
+        .row:hover{border-color:var(--g4);transform:translateX(4px)}
+        .row-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+        .row-accent{border-color:var(--blue-dim);background:var(--blue-bg)}
 
-        /* === COMPARISON === */
-        .compare {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-            margin-bottom: 32px;
-        }
-        .compare-col {
-            padding: 28px; background: var(--bg-card);
-            border: 1px solid var(--border); border-radius: 12px;
-        }
-        .compare-col h3 {
-            font-size: 14px; font-weight: 600; margin-bottom: 16px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .compare-col .badge {
-            font-size: 11px; padding: 2px 8px; border-radius: 100px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .badge-blue { background: #1e3a5f; color: var(--accent); }
-        .badge-purple { background: #3b1f5e; color: #a78bfa; }
-        .compare-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 0; border-bottom: 1px solid var(--gray-5);
-            font-size: 13px;
-        }
-        .compare-row:last-child { border-bottom: none; }
-        .compare-label { color: var(--gray-3); }
-        .compare-val { color: var(--gray-1); font-weight: 500; }
+        /* === FLOW STEPS === */
+        .steps{display:flex;flex-direction:column;gap:6px;padding-left:20px;position:relative}
+        .steps::before{content:'';position:absolute;left:3px;top:18px;bottom:18px;width:1px;background:var(--g5)}
+        .step{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:center;
+            padding:12px 14px;background:var(--bg2);border:1px solid var(--border);
+            border-radius:8px;position:relative;transition:all .15s}
+        .step:hover{border-color:var(--g4);transform:translateX(4px)}
+        .step::before{content:'';position:absolute;left:-16px;top:50%;transform:translateY(-50%);
+            width:6px;height:6px;background:var(--blue);border-radius:50%}
+        .step-n{font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600}
+        .step-t{font-size:13px;color:var(--g1)}
 
-        /* === PITFALLS === */
-        .pitfall {
-            display: flex; gap: 20px; align-items: flex-start;
-            padding: 24px; background: var(--bg-card);
-            border: 1px solid var(--border); border-radius: 12px;
-            margin-bottom: 12px; transition: all .15s ease;
-        }
-        .pitfall:hover { border-color: var(--gray-4); }
-        .pitfall-icon { font-size: 2rem; flex-shrink: 0; }
-        .pitfall h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-        .pitfall p { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
-        .pitfall .quote {
-            margin-top: 8px; padding: 10px 14px;
-            border-left: 2px solid var(--gray-4);
-            font-size: 13px; color: var(--gray-2); font-style: italic;
-        }
+        /* === BADGE / TAG === */
+        .badge{font-size:10px;padding:2px 8px;border-radius:100px;font-family:var(--mono);font-weight:600}
+        .b-blue{background:#1e3a5f;color:var(--blue)}
+        .b-purple{background:#2e1065;color:var(--purple)}
+        .b-green{background:#052e16;color:var(--green)}
+        .b-red{background:#450a0a;color:var(--red)}
+        .tag{padding:3px 10px;border:1px solid var(--border);border-radius:100px;
+            font-size:11px;color:var(--g3);display:inline-block;margin:2px}
+        .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
 
-        /* === FAIL ROWS === */
-        .fail-row {
-            display: grid; grid-template-columns: 32px 1fr; gap: 12px;
-            align-items: start; padding: 14px 16px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 10px; margin-bottom: 8px;
-            transition: all .15s ease;
-        }
-        .fail-row:hover { border-color: var(--gray-4); }
-        .fail-icon { font-size: 1.2rem; text-align: center; padding-top: 2px; }
-        .fail-text { font-size: 14px; color: var(--gray-1); }
-        .fail-text .dim { color: var(--gray-3); }
+        /* === COMPARE TABLE === */
+        .cmp-row{display:flex;justify-content:space-between;align-items:center;
+            padding:10px 0;border-bottom:1px solid var(--g6);font-size:13px}
+        .cmp-row:last-child{border-bottom:none}
+        .cmp-l{color:var(--g3)}
+        .cmp-v{color:var(--g1);font-weight:500;text-align:right}
 
-        /* === QUOTE === */
-        .big-quote {
-            padding: 64px 24px; text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        .big-quote blockquote {
-            font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600;
-            letter-spacing: -0.02em; max-width: 700px;
-            margin: 0 auto 16px; line-height: 1.5;
-        }
-        .big-quote .attr {
-            font-size: 13px; color: var(--gray-3);
-        }
+        /* === PITFALL === */
+        .pit{display:flex;gap:18px;align-items:start;padding:22px;
+            background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+            margin-bottom:10px;transition:all .15s}
+        .pit:hover{border-color:var(--g4)}
+        .pit-icon{font-size:1.8rem;flex-shrink:0}
+        .pit h4{font-size:14px;font-weight:600;margin-bottom:4px}
+        .pit p{font-size:13px;color:var(--g3);line-height:1.6}
+        .quote{margin-top:8px;padding:10px 14px;border-left:2px solid var(--g5);
+            font-size:12px;color:var(--g2);line-height:1.6}
 
-        /* === SCENARIO CARDS === */
-        .scenario {
-            padding: 24px; background: var(--bg-card);
-            border: 1px solid var(--border); border-radius: 12px;
-            margin-bottom: 12px; transition: all .15s ease;
-        }
-        .scenario:hover { border-color: var(--gray-4); transform: translateX(4px); }
-        .scenario-head {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
-        }
-        .scenario-icon { font-size: 1.5rem; }
-        .scenario h3 { font-size: 15px; font-weight: 600; }
-        .scenario .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-        .scenario .tag {
-            padding: 3px 10px; border: 1px solid var(--border);
-            border-radius: 100px; font-size: 11px; color: var(--gray-3);
-        }
-        .scenario .flow-mini {
-            font-size: 13px; color: var(--gray-2); margin-top: 10px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .scenario .flow-mini .arrow { color: var(--accent); margin: 0 6px; }
+        /* === SCENARIO === */
+        .sc{padding:18px 20px;background:var(--bg2);border:1px solid var(--border);
+            border-radius:12px;margin-bottom:8px;transition:all .15s}
+        .sc:hover{border-color:var(--g4);transform:translateX(4px)}
+        .sc h4{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+        .sc .pipe{font-size:12px;color:var(--g2);font-family:var(--mono);margin-top:6px}
+        .sc .pipe .arr{color:var(--blue);margin:0 5px}
+
+        /* === CATEGORY LABEL === */
+        .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:2px;
+            font-weight:700;margin:28px 0 12px;padding-left:2px}
+        .cat:first-of-type{margin-top:0}
+
+        /* === BIG QUOTE === */
+        .bq{text-align:center}
+        .bq blockquote{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;
+            letter-spacing:-.02em;max-width:700px;margin:0 auto 16px;line-height:1.4}
+        .bq .attr{font-size:13px;color:var(--g3)}
+
+        /* === CALLOUT === */
+        .callout{padding:20px 24px;border:1px solid var(--blue-dim);border-radius:14px;
+            background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(59,130,246,.02));
+            margin-top:24px}
+        .callout h4{font-size:13px;color:var(--blue);margin-bottom:10px;font-weight:700}
+        .callout-grid{display:grid;grid-template-columns:32px 1fr;gap:6px 10px;font-size:13px;color:var(--g1)}
+        .callout-n{color:var(--blue);font-family:var(--mono);font-weight:700}
+
+        /* === PRIORITY MATRIX === */
+        .matrix{margin-top:28px;padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:14px}
+        .matrix h4{font-size:12px;color:var(--g2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+
+        /* === PROGRESS NAV === */
+        #nav{position:fixed;right:20px;top:50%;transform:translateY(-50%);
+            display:flex;flex-direction:column;gap:8px;z-index:999}
+        .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--g5);
+            cursor:pointer;transition:all .3s;border:none;padding:0}
+        .nav-dot.active{background:var(--blue);box-shadow:0 0 8px rgba(59,130,246,.4)}
+        .nav-dot:hover{background:var(--g4)}
+
+        /* === SLIDE COUNTER === */
+        #counter{position:fixed;bottom:20px;right:24px;font-family:var(--mono);
+            font-size:12px;color:var(--g4);z-index:999;letter-spacing:1px}
 
         /* === FOOTER === */
-        .foot {
-            border-top: 1px solid var(--border);
-            padding: 64px 24px; text-align: center;
-        }
-        .foot h3 {
-            font-size: 11px; color: var(--gray-3); text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 24px;
-        }
-        .foot-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 700px; margin: 0 auto; }
-        .foot-tag {
-            padding: 6px 14px; border: 1px solid var(--border);
-            border-radius: 100px; font-size: 13px; color: var(--gray-3);
-            transition: all .15s ease; text-decoration: none;
-        }
-        .foot-tag:hover { border-color: var(--gray-4); color: var(--gray-1); }
-
-        @media (max-width: 640px) {
-            .compare { grid-template-columns: 1fr; }
-            .formula { flex-direction: column; gap: 12px; }
-            .formula-op { font-size: 2rem; }
-        }
+        .foot{text-align:center}
+        .foot h4{font-size:11px;color:var(--g3);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+        .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+        .foot-link{padding:6px 14px;border:1px solid var(--border);border-radius:100px;
+            font-size:13px;color:var(--g3);text-decoration:none;transition:all .15s}
+        .foot-link:hover{border-color:var(--g4);color:var(--g1)}
     </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-badge"><span class="dot"></span>AI Agent Skills</div>
-    <h1>专家知识 × 技术放大</h1>
-    <p class="hero-sub">B端智能体落地的核心密码：把专家做事的套路，变成机器可稳定执行的流程</p>
-</section>
+<div id="deck">
 
-<!-- FORMULA -->
-<section class="formula-section">
-    <div class="formula">
-        <div class="formula-box">
-            <div class="icon">🧠</div>
-            <div class="label">专家知识</div>
-            <div class="desc">业务SOP · 判断标准</div>
+<!-- SLIDE 0: HERO -->
+<section class="slide" data-slide="0">
+    <div class="slide-inner hero-center">
+        <div class="hero-badge"><span class="pulse"></span>AI Agent Skills</div>
+        <h1 class="hero-title anim">专家知识 <span class="highlight">×</span> 技术放大</h1>
+        <p class="hero-sub anim">B端智能体落地的核心密码：<br>把专家做事的套路，变成机器可稳定执行的流程</p>
+        <div class="formula anim">
+            <div class="f-box"><div class="f-icon">🧠</div><div class="f-label">专家知识</div><div class="f-desc">业务SOP · 判断标准</div></div>
+            <div class="f-op">×</div>
+            <div class="f-box"><div class="f-icon">⚡</div><div class="f-label">技术能力</div><div class="f-desc">提示词 · 工作流 · 工具</div></div>
+            <div class="f-op">=</div>
+            <div class="f-box active"><div class="f-icon">🤖</div><div class="f-label">好 Agent</div><div class="f-desc">可规模化 · 可交付</div></div>
         </div>
-        <div class="formula-op">×</div>
-        <div class="formula-box">
-            <div class="icon">⚡</div>
-            <div class="label">技术能力</div>
-            <div class="desc">提示词 · 工作流 · 工具 · 系统集成</div>
-        </div>
-        <div class="formula-op">=</div>
-        <div class="formula-box" style="border-color: var(--accent);">
-            <div class="icon">🤖</div>
-            <div class="label">好 Agent</div>
-            <div class="desc">可规模化 · 可运维 · 可交付</div>
-        </div>
-    </div>
-    <p class="formula-note">注意是<strong>乘法</strong>，不是加法。任何一边是 0，整体就是 0。</p>
-</section>
-
-<!-- SECTION 01: 市场真实问题 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">01</div>
-        <div class="section-meta">
-            <h2>市场的真实问题</h2>
-            <p>企业端的困境不是"缺技术"</p>
-        </div>
-    </div>
-
-    <div class="fail-row">
-        <div class="fail-icon">❌</div>
-        <div class="fail-text">缺的不是技术 <span class="dim">— 大模型能力摆在那里，工作流平台也很成熟</span></div>
-    </div>
-    <div class="fail-row">
-        <div class="fail-icon">❌</div>
-        <div class="fail-text">缺对能力边界的清醒认识 <span class="dim">— AI 能做什么、不能做什么</span></div>
-    </div>
-    <div class="fail-row" style="border-color: var(--accent);">
-        <div class="fail-icon">💡</div>
-        <div class="fail-text"><strong>缺把专家流程写进系统的能力</strong> <span class="dim">— 这才是决定项目成败的总开关</span></div>
-    </div>
-</div>
-
-<!-- SECTION 02: 专家知识 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">02</div>
-        <div class="section-meta">
-            <h2>专家知识到底是什么</h2>
-            <p>不是"资料很多"，不是"懂行业术语"</p>
-        </div>
-    </div>
-
-    <div class="compare">
-        <div class="compare-col">
-            <h3>📋 步骤拆解 <span class="badge badge-blue">SOP</span></h3>
-            <p style="font-size:13px; color:var(--gray-3); margin-bottom:16px;">专家知道按什么顺序做，为什么这么做</p>
-            <div class="flow" style="padding-left:16px;">
-                <div class="flow-item" style="margin-bottom:6px;">
-                    <span class="flow-step">01</span>
-                    <span class="flow-text">主体信息是否完整、是否匹配</span>
-                </div>
-                <div class="flow-item" style="margin-bottom:6px;">
-                    <span class="flow-step">02</span>
-                    <span class="flow-text">关键权责与违约边界</span>
-                </div>
-                <div class="flow-item" style="margin-bottom:6px;">
-                    <span class="flow-step">03</span>
-                    <span class="flow-text">付款与交付条件</span>
-                </div>
-                <div class="flow-item" style="margin-bottom:6px;">
-                    <span class="flow-step">04</span>
-                    <span class="flow-text">争议解决条款</span>
-                </div>
-                <div class="flow-item">
-                    <span class="flow-step">05</span>
-                    <span class="flow-text">风险兜底与补救路径</span>
-                </div>
-            </div>
-        </div>
-        <div class="compare-col">
-            <h3>✅ 完成标准 <span class="badge badge-purple">验收口径</span></h3>
-            <p style="font-size:13px; color:var(--gray-3); margin-bottom:16px;">专家知道什么结果算"合格"、什么算"有风险"</p>
-            <div class="fail-row" style="margin-bottom:6px;">
-                <div class="fail-icon" style="color:var(--red);">●</div>
-                <div class="fail-text" style="font-size:13px;">哪些字段缺失 → 不能出报告</div>
-            </div>
-            <div class="fail-row" style="margin-bottom:6px;">
-                <div class="fail-icon" style="color:var(--yellow);">●</div>
-                <div class="fail-text" style="font-size:13px;">哪些数值异常 → 触发风险提示</div>
-            </div>
-            <div class="fail-row" style="margin-bottom:6px;">
-                <div class="fail-icon" style="color:var(--green);">●</div>
-                <div class="fail-text" style="font-size:13px;">哪些结论必须保守表达</div>
-            </div>
-            <div style="margin-top:16px; padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--bg);">
-                <p style="font-size:12px; color:var(--gray-3);">没有验收口径 → 输出了也没法判断好坏 → 只能凭感觉 → 项目必崩</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 03: 为什么专家知识更关键 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">03</div>
-        <div class="section-meta">
-            <h2>为什么专家知识比技术更关键</h2>
-            <p>技术往往不是第一难点</p>
-        </div>
-    </div>
-
-    <div class="fail-row">
-        <div class="fail-icon">🚫</div>
-        <div class="fail-text">没专家 → <strong>流程拆不出</strong> <span class="dim">→ 模型"自由发挥" = B端不可控、不可交付</span></div>
-    </div>
-    <div class="fail-row">
-        <div class="fail-icon">🚫</div>
-        <div class="fail-text">没标准 → <strong>没法评估</strong> <span class="dim">→ 60分还是95分？错一次损失多大？</span></div>
-    </div>
-    <div class="fail-row">
-        <div class="fail-icon">🚫</div>
-        <div class="fail-text">没业务 → <strong>提示词写不出</strong> <span class="dim">→ 像不会做菜的人写菜谱</span></div>
-    </div>
-
-    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628; text-align:center;">
-        <p style="font-size:14px; color:var(--gray-1);">有技术但没专家 = <strong style="color:var(--accent);">有发动机但没方向盘</strong>，车再好也开不动</p>
-    </div>
-</div>
-
-<!-- SECTION 04: 两个大坑 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">04</div>
-        <div class="section-meta">
-            <h2>有了专家也未必好使</h2>
-            <p>两个隐藏的大坑</p>
-        </div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">🕳️</div>
-        <div>
-            <h3>坑一：专家不愿意配合</h3>
-            <p>把能力交给 AI = 稀释自己在公司的稀缺性</p>
-            <div class="quote">"老子花了钱，你就得把事儿办好，不要总是麻烦我。"<br>— 企业客户真实心态</div>
-        </div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">🕳️</div>
-        <div>
-            <h3>坑二：专家讲不清楚</h3>
-            <p>"知识的诅咒" — 做太久，判断已内化成直觉和肌肉记忆</p>
-            <div class="quote">"为什么先看这个字段？" → "我就是习惯先看"<br>"什么情况算风险？" → "看多了就知道"</div>
-            <p style="margin-top:8px;">大量时间花在"帮专家把经验翻译成可执行的步骤和标准"上</p>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 05: 横着切 vs 竖着切 — 以法务合同审查为例 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">05</div>
-        <div class="section-meta">
-            <h2>横着切还是竖着切？以合同审查为例</h2>
-            <p>同样是"合同审查 Agent"，路径不同，结果天差地别</p>
-        </div>
-    </div>
-
-    <!-- 具象化例子 -->
-    <p style="font-size:14px; color:var(--gray-2); margin-bottom:24px;">字节法务团队处理的合同类型多种多样——采购合同、广告投放协议、数据合规协议、劳动合同、知识产权许可……<br>问题来了：<strong style="color:var(--white);">你是做一个"万能合同审查 Agent"，还是先把某一类合同做透？</strong></p>
-
-    <div class="compare">
-        <div class="compare-col">
-            <h3>➡️ 横着切 <span class="badge badge-purple">通用合同审查</span></h3>
-            <div class="compare-row">
-                <span class="compare-label">做法</span>
-                <span class="compare-val">一个 Agent 审所有类型</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">SOP</span>
-                <span class="compare-val" style="color:var(--red);">只能写通用检查项</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">准确率</span>
-                <span class="compare-val" style="color:var(--red);">60-70% — 关键条款容易漏</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">结果</span>
-                <span class="compare-val" style="color:var(--yellow);">能用，但不敢信</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">本质</span>
-                <span class="compare-val">Demo 级 — 演示好看，不敢上线</span>
-            </div>
-        </div>
-        <div class="compare-col" style="border-color: var(--accent-dim);">
-            <h3>🔽 竖着切 <span class="badge badge-blue">广告投放协议专审</span></h3>
-            <div class="compare-row">
-                <span class="compare-label">做法</span>
-                <span class="compare-val">只审广告投放类合同</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">SOP</span>
-                <span class="compare-val" style="color:var(--green);">精准到每个关键条款</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">准确率</span>
-                <span class="compare-val" style="color:var(--green);">95%+ — 专家级水准</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">结果</span>
-                <span class="compare-val" style="color:var(--green);">敢用，能信，可交付</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">本质</span>
-                <span class="compare-val">生产级 — 真正替代人工</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 竖切的专家知识示例 -->
-    <div style="margin-top:16px; padding:20px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px;">
-        <h4 style="font-size:13px; color:var(--gray-2); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">🔍 竖着切的专家知识长这样</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <div class="fail-row" style="margin:0;">
-                <div class="fail-icon" style="color:var(--accent);">①</div>
-                <div class="fail-text" style="font-size:12px;">投放平台条款 vs 框架协议是否冲突</div>
-            </div>
-            <div class="fail-row" style="margin:0;">
-                <div class="fail-icon" style="color:var(--accent);">②</div>
-                <div class="fail-text" style="font-size:12px;">效果对赌条款的风险敞口计算</div>
-            </div>
-            <div class="fail-row" style="margin:0;">
-                <div class="fail-icon" style="color:var(--accent);">③</div>
-                <div class="fail-text" style="font-size:12px;">数据回传合规（个保法 + GDPR）</div>
-            </div>
-            <div class="fail-row" style="margin:0;">
-                <div class="fail-icon" style="color:var(--accent);">④</div>
-                <div class="fail-text" style="font-size:12px;">结算周期 & 提前终止的违约金条款</div>
-            </div>
-        </div>
-        <p style="font-size:12px; color:var(--gray-3); margin-top:12px; text-align:center;">这些细节，只有审过上百份广告协议的法务才知道 — <strong style="color:var(--gray-1);">这就是壁垒</strong></p>
-    </div>
-
-    <!-- 策略建议 -->
-    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628; text-align:center;">
-        <p style="font-size:14px; color:var(--gray-1);">建议路径：<strong style="color:var(--accent);">先竖后横</strong> — 选一个高频高价值的合同类型做到 95%+，验证成功后再复制到下一个类型</p>
-    </div>
-</div>
-
-<!-- BIG QUOTE -->
-<section class="big-quote">
-    <blockquote>"落地的本质不是写代码，而是把专家脑子里的隐性经验，翻译成机器能执行的显性规则。"</blockquote>
-    <p class="attr">谁能完成这个翻译，谁就掌握了 Agent 落地的核心能力</p>
-</section>
-
-<!-- SECTION 06: 法务场景落地 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">06</div>
-        <div class="section-meta">
-            <h2>法务运营场景全景图</h2>
-            <p>按工作流拆解：你们每天做的事，哪些可以 Skill 化？</p>
-        </div>
-    </div>
-
-    <!-- 合同管理大类 -->
-    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; padding-left:4px;">📋 合同管理</h4>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">🔍</span>
-            <h3>合同风险预审 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">高频</span>
-            <span class="tag">SOP: 分类型审查路径</span>
-            <span class="tag">输出: 风险矩阵</span>
-        </div>
-        <div class="flow-mini">上传合同 <span class="arrow">→</span> 自动识别合同类型 <span class="arrow">→</span> 匹配对应 SOP <span class="arrow">→</span> 逐项审查 <span class="arrow">→</span> 输出风险等级 + 修改建议</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">⚖️</span>
-            <h3>合同条款对比 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">谈判场景</span>
-            <span class="tag">输入: 我方模板 vs 对方版本</span>
-        </div>
-        <div class="flow-mini">上传两版合同 <span class="arrow">→</span> 逐条 diff <span class="arrow">→</span> 标注偏离项 <span class="arrow">→</span> 按风险等级排序 <span class="arrow">→</span> 生成谈判要点清单</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📊</span>
-            <h3>合同台账管理 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">批量处理</span>
-            <span class="tag">输出: 结构化台账</span>
-        </div>
-        <div class="flow-mini">批量上传合同 <span class="arrow">→</span> 提取关键信息（主体/金额/期限/续约条件）<span class="arrow">→</span> 自动入台账 <span class="arrow">→</span> 到期预警</div>
-    </div>
-
-    <!-- 合规监管大类 -->
-    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">🛡️ 合规与监管</h4>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📰</span>
-            <h3>法规动态监测 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">自动化</span>
-            <span class="tag">MCP: 法规数据源</span>
-            <span class="tag">每日推送</span>
-        </div>
-        <div class="flow-mini">定时爬取新规 <span class="arrow">→</span> 按业务线匹配（广告法/数据安全/反垄断）<span class="arrow">→</span> 影响评估 <span class="arrow">→</span> 推送对口法务</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">🔐</span>
-            <h3>数据合规检查 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">个保法</span>
-            <span class="tag">GDPR</span>
-            <span class="tag">数据出境</span>
-        </div>
-        <div class="flow-mini">输入产品功能描述 <span class="arrow">→</span> 自动匹配合规要求 <span class="arrow">→</span> 生成检查清单 <span class="arrow">→</span> 标注缺失项 <span class="arrow">→</span> 输出整改建议</div>
-    </div>
-
-    <!-- 尽调与诉讼 -->
-    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">🔎 尽调与诉讼</h4>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">🏢</span>
-            <h3>企业尽调 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">MCP: 天眼查/企查查 API</span>
-            <span class="tag">验收: 字段完整性</span>
-        </div>
-        <div class="flow-mini">输入公司名 <span class="arrow">→</span> 工商信息 <span class="arrow">→</span> 诉讼记录 <span class="arrow">→</span> 知识产权 <span class="arrow">→</span> 关联公司图谱 <span class="arrow">→</span> 风险评级报告</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">⚔️</span>
-            <h3>案例检索与分析 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">MCP: 裁判文书网</span>
-            <span class="tag">类案推送</span>
-        </div>
-        <div class="flow-mini">输入案由/关键词 <span class="arrow">→</span> 检索类似案例 <span class="arrow">→</span> 提取裁判要旨 <span class="arrow">→</span> 胜率分析 <span class="arrow">→</span> 策略建议</div>
-    </div>
-
-    <!-- 效率工具 -->
-    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin:32px 0 16px; padding-left:4px;">⚙️ 效率工具</h4>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📝</span>
-            <h3>法律文书生成 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">律师函</span>
-            <span class="tag">法律意见书</span>
-            <span class="tag">合规声明</span>
-        </div>
-        <div class="flow-mini">选择文书类型 <span class="arrow">→</span> 填入关键事实 <span class="arrow">→</span> 按模板 + 专家风格生成 <span class="arrow">→</span> 人工终审</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">📊</span>
-            <h3>法务周报/月报 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">自动汇总</span>
-            <span class="tag">数据可视化</span>
-        </div>
-        <div class="flow-mini">获取本周工作记录 <span class="arrow">→</span> 分类统计（合同/诉讼/咨询量）<span class="arrow">→</span> 生成趋势图 <span class="arrow">→</span> 按老板喜欢的格式输出</div>
-    </div>
-
-    <div class="scenario">
-        <div class="scenario-head">
-            <span class="scenario-icon">💬</span>
-            <h3>内部法律咨询 Skill</h3>
-        </div>
-        <div class="tags">
-            <span class="tag">高频低复杂度</span>
-            <span class="tag">知识库: 内部制度+FAQ</span>
-        </div>
-        <div class="flow-mini">业务部门提问 <span class="arrow">→</span> 匹配内部制度库 <span class="arrow">→</span> 生成初步意见 <span class="arrow">→</span> 复杂问题转人工 <span class="arrow">→</span> 沉淀为新 FAQ</div>
-    </div>
-
-    <!-- 价值矩阵 -->
-    <div style="margin-top:32px; padding:24px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px;">
-        <h4 style="font-size:13px; color:var(--gray-2); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px;">💎 落地优先级建议：从高频高价值场景切入</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div class="fail-row" style="margin:0; border-color:var(--green);">
-                <div class="fail-icon">🟢</div>
-                <div class="fail-text" style="font-size:12px;"><strong>立刻做</strong> 合同预审 · 内部咨询 · 周报<br><span class="dim">高频 + SOP 清晰 + 见效快</span></div>
-            </div>
-            <div class="fail-row" style="margin:0; border-color:var(--accent);">
-                <div class="fail-icon">🔵</div>
-                <div class="fail-text" style="font-size:12px;"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高 + 需要调试</span></div>
-            </div>
-            <div class="fail-row" style="margin:0; border-color:var(--yellow);">
-                <div class="fail-icon">🟡</div>
-                <div class="fail-text" style="font-size:12px;"><strong>规划中</strong> 尽调报告 · 数据合规检查<br><span class="dim">需要外部数据源 + MCP 集成</span></div>
-            </div>
-            <div class="fail-row" style="margin:0;">
-                <div class="fail-icon">⚪</div>
-                <div class="fail-text" style="font-size:12px;"><strong>长期建设</strong> 案例检索 · 台账管理<br><span class="dim">需要大量历史数据 + 持续优化</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SECTION 07: Skill 的局限与现实 -->
-<div class="section">
-    <div class="section-head">
-        <div class="section-num">07</div>
-        <div class="section-meta">
-            <h2>Skill 的局限：80 分到 95 分的鸿沟</h2>
-            <p>快速做到 80 分很容易，但最后 15 分才是真正的战场</p>
-        </div>
-    </div>
-
-    <!-- 80分 vs 95分 -->
-    <div class="compare" style="margin-bottom:24px;">
-        <div class="compare-col" style="border-color:var(--green);">
-            <h3>✅ 80 分：Skill 能快速搞定 <span class="badge badge-blue">天</span></h3>
-            <div class="compare-row">
-                <span class="compare-label">标准化流程</span>
-                <span class="compare-val">SOP 明确的重复任务</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">格式化输出</span>
-                <span class="compare-val">报告、台账、周报</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">信息提取</span>
-                <span class="compare-val">从合同中抽字段</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">初筛分类</span>
-                <span class="compare-val">风险等级初判</span>
-            </div>
-        </div>
-        <div class="compare-col" style="border-color:var(--red);">
-            <h3>🔴 最后 15 分：需要工程化 <span class="badge badge-purple">月</span></h3>
-            <div class="compare-row">
-                <span class="compare-label">边界案例</span>
-                <span class="compare-val">非标合同、混合条款</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">幻觉控制</span>
-                <span class="compare-val">编造不存在的条款引用</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">一致性</span>
-                <span class="compare-val">同一份合同审两次结果不同</span>
-            </div>
-            <div class="compare-row">
-                <span class="compare-label">可解释性</span>
-                <span class="compare-val">"为什么判高风险？" 要能追溯</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 工程化挑战 -->
-    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; padding-left:4px;">🔧 从 Demo 到生产的工程挑战</h4>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">⚙️</div>
-        <div>
-            <h3>挑战一：与现有系统集成</h3>
-            <p>法务团队不会为了用 AI 换一套工作流。Skill 必须嵌入现有工具链</p>
-            <div class="quote">合同在 OA 系统里 → 审批在飞书 → 台账在 Excel → AI 怎么串起来？<br>答案：MCP 做连接器，但每个系统的对接都是脏活累活</div>
-        </div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">🔄</div>
-        <div>
-            <h3>挑战二：持续迭代与反馈闭环</h3>
-            <p>Skill 不是写完就结束，它需要像产品一样运营</p>
-            <div class="quote">第一版 Skill 准确率 85% → 收集错误案例 → 优化 SOP → 第二版 90% → 加入边界规则 → 第三版 93%...<br>没有反馈机制，Skill 永远停在 80 分</div>
-        </div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">👥</div>
-        <div>
-            <h3>挑战三：人机协作的边界设计</h3>
-            <p>哪些环节 AI 自动处理，哪些必须人工复核？这条线画在哪里决定成败</p>
-            <div class="quote">全自动 → 出一次事故就被叫停<br>全人工复核 → 没效率提升，不如不用<br>正确做法：按风险等级分流 — 低风险自动通过，高风险转人工</div>
-        </div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-icon">📏</div>
-        <div>
-            <h3>挑战四：效果度量</h3>
-            <p>老板问"AI 到底帮了多少忙？"你怎么答？</p>
-            <div class="quote">需要建立可量化的指标：审查时间从 2 小时 → 20 分钟？<br>漏检率从 15% → 3%？每月节省多少人力？<br>没有数据，就没有持续投入的理由</div>
-        </div>
-    </div>
-
-    <!-- 务实建议 -->
-    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628;">
-        <h4 style="font-size:13px; color:var(--accent); margin-bottom:12px;">💡 务实建议</h4>
-        <div style="display:grid; grid-template-columns:40px 1fr; gap:8px; font-size:13px; color:var(--gray-1);">
-            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">01</span>
-            <span><strong>先跑起来再优化</strong> — 80 分的 Skill 今天就能用，别等 95 分才上线</span>
-            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">02</span>
-            <span><strong>设计人工兜底</strong> — AI 做初筛，人做终审，逐步扩大 AI 自主范围</span>
-            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">03</span>
-            <span><strong>建立反馈循环</strong> — 每次人工修正都是 Skill 迭代的燃料</span>
-            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">04</span>
-            <span><strong>量化一切</strong> — 用数据说话，让老板看到 ROI</span>
-        </div>
-    </div>
-</div>
-
-<!-- FOOTER -->
-<section class="foot">
-    <h3>Resources</h3>
-    <div class="foot-tags">
-        <a class="foot-tag" href="https://github.com/anthropics/skills" target="_blank">Anthropic Skills</a>
-        <a class="foot-tag" href="https://github.com/anthropics/claude-code" target="_blank">Claude Code</a>
-        <a class="foot-tag" href="https://skillsmp.com" target="_blank">Skills Marketplace</a>
-        <a class="foot-tag" href="https://github.com/travisvn/awesome-claude-skills" target="_blank">Awesome Skills</a>
+        <p class="formula-note anim">注意是<strong>乘法</strong>，不是加法。任何一边是 0，整体就是 0。</p>
     </div>
 </section>
+
+<!-- SLIDE 1: 市场真实问题 -->
+<section class="slide" data-slide="1">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 01</div>
+        <h2 class="slide-title anim">市场的<span class="highlight-red">真实</span>问题</h2>
+        <p class="slide-sub anim">企业端的困境不是"缺技术"</p>
+
+        <div class="row anim"><span class="row-icon">❌</span><span>缺的不是技术 <span class="dim">— 大模型能力摆在那里，工作流平台也很成熟</span></span></div>
+        <div class="row anim"><span class="row-icon">❌</span><span>缺对能力边界的清醒认识 <span class="dim">— AI 能做什么、不能做什么</span></span></div>
+        <div class="row row-accent anim"><span class="row-icon">💡</span><span><strong>缺把专家流程写进系统的能力</strong> <span class="dim">— 这才是决定项目成败的总开关</span></span></div>
+    </div>
+</section>
+
+<!-- SLIDE 2: 专家知识 -->
+<section class="slide" data-slide="2">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 02</div>
+        <h2 class="slide-title anim">专家知识<span class="highlight">到底是什么</span></h2>
+        <p class="slide-sub anim">不是"资料很多"，不是"懂行业术语"</p>
+
+        <div class="grid2 anim">
+            <div class="card">
+                <h3>📋 步骤拆解 <span class="badge b-blue">SOP</span></h3>
+                <p style="margin-bottom:14px">专家知道按什么顺序做，为什么这么做</p>
+                <div class="steps">
+                    <div class="step"><span class="step-n">01</span><span class="step-t">主体信息是否完整、匹配</span></div>
+                    <div class="step"><span class="step-n">02</span><span class="step-t">关键权责与违约边界</span></div>
+                    <div class="step"><span class="step-n">03</span><span class="step-t">付款与交付条件</span></div>
+                    <div class="step"><span class="step-n">04</span><span class="step-t">争议解决条款</span></div>
+                    <div class="step"><span class="step-n">05</span><span class="step-t">风险兜底与补救路径</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✅ 完成标准 <span class="badge b-purple">验收口径</span></h3>
+                <p style="margin-bottom:14px">专家知道什么算"合格"、什么算"有风险"</p>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--red)">●</span><span style="font-size:13px">字段缺失 → 不能出报告</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--yellow)">●</span><span style="font-size:13px">数值异常 → 触发风险提示</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--green)">●</span><span style="font-size:13px">结论必须保守表达</span></div>
+                <div style="margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+                    <p style="font-size:12px;color:var(--g3);text-align:center">没有验收口径 → 输出没法评判 → 凭感觉 → 项目必崩</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 3: 为什么专家 > 技术 -->
+<section class="slide" data-slide="3">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 03</div>
+        <h2 class="slide-title anim">为什么专家知识<span class="highlight">比技术更关键</span></h2>
+        <p class="slide-sub anim">技术往往不是第一难点</p>
+
+        <div class="row anim"><span class="row-icon">🚫</span><span>没专家 → <strong>流程拆不出</strong> <span class="dim">→ 模型"自由发挥" = 不可控、不可交付</span></span></div>
+        <div class="row anim"><span class="row-icon">🚫</span><span>没标准 → <strong>没法评估</strong> <span class="dim">→ 60分还是95分？错一次损失多大？</span></span></div>
+        <div class="row anim"><span class="row-icon">🚫</span><span>没业务 → <strong>提示词写不出</strong> <span class="dim">→ 像不会做菜的人写菜谱</span></span></div>
+
+        <div class="callout anim">
+            <p style="font-size:15px;text-align:center;color:var(--g1)">有技术但没专家 = <strong style="color:var(--blue)">有发动机但没方向盘</strong>，车再好也开不动</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: 两个大坑 -->
+<section class="slide" data-slide="4">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 04</div>
+        <h2 class="slide-title anim">有了专家<span class="highlight-red">也未必好使</span></h2>
+        <p class="slide-sub anim">两个隐藏的大坑</p>
+
+        <div class="pit anim">
+            <div class="pit-icon">🕳️</div>
+            <div>
+                <h4>坑一：专家不愿意配合</h4>
+                <p>把能力交给 AI = 稀释自己在公司的稀缺性</p>
+                <div class="quote">"老子花了钱，你就得把事儿办好，不要总是麻烦我。"<br>— 企业客户真实心态</div>
+            </div>
+        </div>
+
+        <div class="pit anim">
+            <div class="pit-icon">🕳️</div>
+            <div>
+                <h4>坑二：专家讲不清楚</h4>
+                <p>"知识的诅咒" — 做太久，判断已内化成直觉</p>
+                <div class="quote">"为什么先看这个字段？" → "我就是习惯先看"<br>"什么情况算风险？" → "看多了就知道"</div>
+                <p style="margin-top:8px">大量时间花在"帮专家把经验翻译成可执行的步骤"上</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5: 横切 vs 竖切 -->
+<section class="slide" data-slide="5">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 05</div>
+        <h2 class="slide-title anim">横着切还是竖着切？<br><span class="dim" style="font-size:.55em">以合同审查为例</span></h2>
+        <p class="slide-sub anim">同样是"合同审查 Agent"，路径不同，结果天差地别</p>
+
+        <div class="grid2 anim">
+            <div class="card">
+                <h3>➡️ 横着切 <span class="badge b-red">通用审查</span></h3>
+                <div class="cmp-row"><span class="cmp-l">做法</span><span class="cmp-v">一个 Agent 审所有类型</span></div>
+                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v highlight-red">只能写通用检查项</span></div>
+                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v highlight-red">60-70%</span></div>
+                <div class="cmp-row"><span class="cmp-l">结果</span><span class="cmp-v" style="color:var(--yellow)">能用，但不敢信</span></div>
+                <div class="cmp-row"><span class="cmp-l">本质</span><span class="cmp-v">Demo 级</span></div>
+            </div>
+            <div class="card card-accent">
+                <h3>🔽 竖着切 <span class="badge b-blue">广告协议专审</span></h3>
+                <div class="cmp-row"><span class="cmp-l">做法</span><span class="cmp-v">只审广告投放类合同</span></div>
+                <div class="cmp-row"><span class="cmp-l">SOP</span><span class="cmp-v highlight-green">精准到每个关键条款</span></div>
+                <div class="cmp-row"><span class="cmp-l">准确率</span><span class="cmp-v highlight-green">95%+</span></div>
+                <div class="cmp-row"><span class="cmp-l">结果</span><span class="cmp-v highlight-green">敢用，能信，可交付</span></div>
+                <div class="cmp-row"><span class="cmp-l">本质</span><span class="cmp-v">生产级</span></div>
+            </div>
+        </div>
+
+        <div class="card anim" style="margin-top:16px">
+            <h3 style="font-size:12px;color:var(--g2);letter-spacing:1px">🔍 竖着切的专家知识长这样</h3>
+            <div class="grid4" style="margin-top:10px">
+                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">①</span><span style="font-size:12px">投放平台条款 vs 框架协议冲突</span></div>
+                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">②</span><span style="font-size:12px">效果对赌条款的风险敞口</span></div>
+                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">③</span><span style="font-size:12px">数据回传合规（个保法+GDPR）</span></div>
+                <div class="row" style="margin:0"><span class="row-icon" style="color:var(--blue)">④</span><span style="font-size:12px">结算周期 & 违约金条款</span></div>
+            </div>
+            <p style="font-size:12px;color:var(--g3);margin-top:10px;text-align:center">这些细节，只有审过上百份广告协议的法务才知道 — <strong style="color:var(--g1)">这就是壁垒</strong></p>
+        </div>
+
+        <div class="callout anim">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">建议路径：<strong style="color:var(--blue)">先竖后横</strong> — 选一个高频高价值场景做到 95%+，再复制到下一个</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 6: BIG QUOTE -->
+<section class="slide" data-slide="6">
+    <div class="slide-inner bq">
+        <blockquote class="anim">"落地的本质不是写代码，<br>而是把专家脑子里的<span class="highlight">隐性经验</span>，<br>翻译成机器能执行的<span class="highlight">显性规则</span>。"</blockquote>
+        <p class="attr anim">谁能完成这个翻译，谁就掌握了 Agent 落地的核心能力</p>
+    </div>
+</section>
+
+<!-- SLIDE 7: 法务场景 — 合同管理 + 合规 -->
+<section class="slide" data-slide="7">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 06</div>
+        <h2 class="slide-title anim">法务运营<span class="highlight">场景全景图</span></h2>
+        <p class="slide-sub anim">你们每天做的事，哪些可以 Skill 化？</p>
+
+        <div class="cat anim">📋 合同管理</div>
+        <div class="sc anim"><h4>🔍 合同风险预审</h4><div class="tags"><span class="tag">高频</span><span class="tag">SOP: 分类型审查</span><span class="tag">输出: 风险矩阵</span></div><div class="pipe">上传合同 <span class="arr">→</span> 识别类型 <span class="arr">→</span> 匹配 SOP <span class="arr">→</span> 逐项审查 <span class="arr">→</span> 风险等级 + 修改建议</div></div>
+        <div class="sc anim"><h4>⚖️ 合同条款对比</h4><div class="tags"><span class="tag">谈判场景</span><span class="tag">输入: 我方模板 vs 对方版本</span></div><div class="pipe">两版合同 <span class="arr">→</span> 逐条 diff <span class="arr">→</span> 标注偏离 <span class="arr">→</span> 风险排序 <span class="arr">→</span> 谈判要点清单</div></div>
+        <div class="sc anim"><h4>📊 合同台账管理</h4><div class="tags"><span class="tag">批量处理</span><span class="tag">输出: 结构化台账</span></div><div class="pipe">批量上传 <span class="arr">→</span> 提取关键信息 <span class="arr">→</span> 自动入台账 <span class="arr">→</span> 到期预警</div></div>
+
+        <div class="cat anim">🛡️ 合规与监管</div>
+        <div class="sc anim"><h4>📰 法规动态监测</h4><div class="tags"><span class="tag">自动化</span><span class="tag">MCP: 法规数据源</span><span class="tag">每日推送</span></div><div class="pipe">定时爬取新规 <span class="arr">→</span> 按业务线匹配 <span class="arr">→</span> 影响评估 <span class="arr">→</span> 推送对口法务</div></div>
+        <div class="sc anim"><h4>🔐 数据合规检查</h4><div class="tags"><span class="tag">个保法</span><span class="tag">GDPR</span><span class="tag">数据出境</span></div><div class="pipe">产品功能描述 <span class="arr">→</span> 匹配合规要求 <span class="arr">→</span> 检查清单 <span class="arr">→</span> 整改建议</div></div>
+    </div>
+</section>
+
+<!-- SLIDE 8: 法务场景 — 尽调 + 效率 -->
+<section class="slide" data-slide="8">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 06 (续)</div>
+        <h2 class="slide-title anim">法务场景<span class="highlight">全景图</span></h2>
+
+        <div class="cat anim">🔎 尽调与诉讼</div>
+        <div class="sc anim"><h4>🏢 企业尽调</h4><div class="tags"><span class="tag">MCP: 天眼查/企查查</span><span class="tag">验收: 字段完整性</span></div><div class="pipe">输入公司名 <span class="arr">→</span> 工商 <span class="arr">→</span> 诉讼 <span class="arr">→</span> 知产 <span class="arr">→</span> 关联图谱 <span class="arr">→</span> 风险评级</div></div>
+        <div class="sc anim"><h4>⚔️ 案例检索分析</h4><div class="tags"><span class="tag">MCP: 裁判文书网</span><span class="tag">类案推送</span></div><div class="pipe">输入案由 <span class="arr">→</span> 检索类案 <span class="arr">→</span> 提取裁判要旨 <span class="arr">→</span> 胜率分析 <span class="arr">→</span> 策略建议</div></div>
+
+        <div class="cat anim">⚙️ 效率工具</div>
+        <div class="sc anim"><h4>📝 法律文书生成</h4><div class="tags"><span class="tag">律师函</span><span class="tag">法律意见书</span><span class="tag">合规声明</span></div><div class="pipe">选类型 <span class="arr">→</span> 填入事实 <span class="arr">→</span> 按模板生成 <span class="arr">→</span> 人工终审</div></div>
+        <div class="sc anim"><h4>📊 法务周报/月报</h4><div class="tags"><span class="tag">自动汇总</span><span class="tag">数据可视化</span></div><div class="pipe">工作记录 <span class="arr">→</span> 分类统计 <span class="arr">→</span> 趋势图 <span class="arr">→</span> 按老板喜欢的格式输出</div></div>
+        <div class="sc anim"><h4>💬 内部法律咨询</h4><div class="tags"><span class="tag">高频低复杂度</span><span class="tag">知识库: 内部制度+FAQ</span></div><div class="pipe">业务提问 <span class="arr">→</span> 匹配制度库 <span class="arr">→</span> 初步意见 <span class="arr">→</span> 复杂转人工 <span class="arr">→</span> 沉淀 FAQ</div></div>
+
+        <div class="matrix anim">
+            <h4>💎 落地优先级</h4>
+            <div class="grid4">
+                <div class="row" style="margin:0;border-color:var(--green)"><span class="row-icon">🟢</span><span style="font-size:12px"><strong>立刻做</strong> 合同预审 · 内部咨询 · 周报<br><span class="dim">高频 + SOP 清晰 + 见效快</span></span></div>
+                <div class="row" style="margin:0;border-color:var(--blue)"><span class="row-icon">🔵</span><span style="font-size:12px"><strong>尽快做</strong> 条款对比 · 法规监测 · 文书生成<br><span class="dim">中频 + 价值高 + 需调试</span></span></div>
+                <div class="row" style="margin:0;border-color:var(--yellow)"><span class="row-icon">🟡</span><span style="font-size:12px"><strong>规划中</strong> 尽调报告 · 数据合规<br><span class="dim">需外部数据源 + MCP</span></span></div>
+                <div class="row" style="margin:0"><span class="row-icon">⚪</span><span style="font-size:12px"><strong>长期建设</strong> 案例检索 · 台账管理<br><span class="dim">需历史数据 + 持续优化</span></span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 9: Skill 的局限 -->
+<section class="slide" data-slide="9">
+    <div class="slide-inner">
+        <div class="slide-num anim">Part 07</div>
+        <h2 class="slide-title anim">Skill 的局限：<span class="highlight-red">80 分到 95 分</span>的鸿沟</h2>
+        <p class="slide-sub anim">快速做到 80 分很容易，但最后 15 分才是真正的战场</p>
+
+        <div class="grid2 anim">
+            <div class="card" style="border-color:var(--green)">
+                <h3>✅ 80 分：快速搞定 <span class="badge b-green">天级</span></h3>
+                <div class="cmp-row"><span class="cmp-l">标准化流程</span><span class="cmp-v">SOP 明确的重复任务</span></div>
+                <div class="cmp-row"><span class="cmp-l">格式化输出</span><span class="cmp-v">报告、台账、周报</span></div>
+                <div class="cmp-row"><span class="cmp-l">信息提取</span><span class="cmp-v">从合同中抽字段</span></div>
+                <div class="cmp-row"><span class="cmp-l">初筛分类</span><span class="cmp-v">风险等级初判</span></div>
+            </div>
+            <div class="card" style="border-color:var(--red)">
+                <h3>🔴 最后 15 分 <span class="badge b-red">月级</span></h3>
+                <div class="cmp-row"><span class="cmp-l">边界案例</span><span class="cmp-v">非标合同、混合条款</span></div>
+                <div class="cmp-row"><span class="cmp-l">幻觉控制</span><span class="cmp-v">编造不存在的引用</span></div>
+                <div class="cmp-row"><span class="cmp-l">一致性</span><span class="cmp-v">同一份审两次结果不同</span></div>
+                <div class="cmp-row"><span class="cmp-l">可解释性</span><span class="cmp-v">"为什么判高风险？"</span></div>
+            </div>
+        </div>
+
+        <div class="pit anim"><div class="pit-icon">⚙️</div><div><h4>与现有系统集成</h4><p>法务不会换工作流。合同在 OA、审批在飞书、台账在 Excel — AI 怎么串？</p></div></div>
+        <div class="pit anim"><div class="pit-icon">🔄</div><div><h4>持续迭代与反馈闭环</h4><p>85% → 收集错误 → 优化 SOP → 90% → 加边界规则 → 93%… 没反馈机制就永远停在 80 分</p></div></div>
+        <div class="pit anim"><div class="pit-icon">👥</div><div><h4>人机协作边界</h4><p>全自动出事故就被叫停；全人工没效率。正确做法：按风险分流，低风险自动，高风险转人工</p></div></div>
+        <div class="pit anim"><div class="pit-icon">📏</div><div><h4>效果度量</h4><p>老板问"AI帮了多少忙？"  审查 2h→20min？漏检 15%→3%？没数据就没持续投入</p></div></div>
+
+        <div class="callout anim">
+            <h4>💡 务实建议</h4>
+            <div class="callout-grid">
+                <span class="callout-n">01</span><span><strong>先跑起来再优化</strong> — 80 分今天就能用，别等 95 分</span>
+                <span class="callout-n">02</span><span><strong>设计人工兜底</strong> — AI 初筛，人终审，逐步扩大 AI 范围</span>
+                <span class="callout-n">03</span><span><strong>建立反馈循环</strong> — 每次人工修正都是迭代燃料</span>
+                <span class="callout-n">04</span><span><strong>量化一切</strong> — 用数据说话，让老板看到 ROI</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10: FOOTER -->
+<section class="slide" data-slide="10">
+    <div class="slide-inner foot">
+        <h4>Resources</h4>
+        <div class="foot-links">
+            <a class="foot-link" href="https://github.com/anthropics/skills" target="_blank">Anthropic Skills</a>
+            <a class="foot-link" href="https://github.com/anthropics/claude-code" target="_blank">Claude Code</a>
+            <a class="foot-link" href="https://skillsmp.com" target="_blank">Skills Marketplace</a>
+            <a class="foot-link" href="https://github.com/travisvn/awesome-claude-skills" target="_blank">Awesome Skills</a>
+        </div>
+    </div>
+</section>
+
+</div><!-- end #deck -->
+
+<!-- NAV DOTS -->
+<nav id="nav"></nav>
+<div id="counter"></div>
 
 <script>
-// Full-page scroll snap: each section = one "slide"
-(function() {
-    // Collect all top-level sections as "slides"
-    const slides = [];
-    document.querySelectorAll('.hero, .formula-section, .section, .big-quote, .foot').forEach(el => {
-        slides.push(el);
+(function(){
+    const deck = document.getElementById('deck');
+    const slides = [...document.querySelectorAll('.slide')];
+    const nav = document.getElementById('nav');
+    const counter = document.getElementById('counter');
+    let current = 0;
+
+    // Build nav dots
+    slides.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.className = 'nav-dot';
+        d.addEventListener('click', () => goTo(i));
+        nav.appendChild(d);
     });
 
-    // Style: each slide fills viewport, scroll-snap
-    const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth;';
-    
-    // Move body children into wrapper
-    while (document.body.firstChild) {
-        wrapper.appendChild(document.body.firstChild);
+    function goTo(i) {
+        current = Math.max(0, Math.min(i, slides.length - 1));
+        slides[current].scrollIntoView({ behavior: 'smooth' });
     }
-    document.body.appendChild(wrapper);
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100vh';
 
-    slides.forEach(slide => {
-        slide.style.cssText += ';min-height:100vh; scroll-snap-align:start; display:flex; flex-direction:column; justify-content:center; padding-top:40px; padding-bottom:40px; box-sizing:border-box;';
-    });
+    function updateUI() {
+        // Find current slide
+        const wh = deck.clientHeight;
+        slides.forEach((s, i) => {
+            const r = s.getBoundingClientRect();
+            if (r.top > -wh / 2 && r.top <= wh / 2) current = i;
+        });
 
-    // For .section which has children that may overflow, allow internal scroll
-    document.querySelectorAll('.section').forEach(s => {
-        s.style.overflow = 'auto';
-    });
+        // Nav dots
+        nav.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
 
-    // Entrance animation per slide
+        // Counter
+        counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+
+    // Intersection observer for entrance animations
     const obs = new IntersectionObserver(entries => {
         entries.forEach(e => {
             if (e.isIntersecting) {
-                e.target.style.opacity = '1';
-                e.target.style.transform = 'translateY(0)';
-                // Animate children staggered
-                const children = e.target.querySelectorAll('.fail-row, .flow-item, .pitfall, .scenario, .compare-col, .compare, .formula, .formula-note');
-                children.forEach((c, i) => {
-                    setTimeout(() => {
-                        c.style.opacity = '1';
-                        c.style.transform = 'translateY(0) translateX(0)';
-                    }, 100 + i * 80);
+                e.target.classList.add('visible');
+                // Stagger children
+                const anims = e.target.querySelectorAll('.anim');
+                anims.forEach((a, i) => {
+                    setTimeout(() => a.classList.add('show'), 120 + i * 100);
                 });
             }
         });
-    }, { threshold: 0.15, root: wrapper });
+    }, { threshold: 0.2, root: deck });
 
-    slides.forEach(slide => {
-        slide.style.opacity = '0';
-        slide.style.transform = 'translateY(30px)';
-        slide.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        obs.observe(slide);
+    slides.forEach(s => obs.observe(s));
 
-        // Hide children initially
-        slide.querySelectorAll('.fail-row, .flow-item, .pitfall, .scenario, .compare-col, .compare, .formula, .formula-note').forEach(c => {
-            c.style.opacity = '0';
-            c.style.transform = 'translateY(12px)';
-            c.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        });
-    });
-
-    // Keyboard nav
-    let currentSlide = 0;
+    // Keyboard
     document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
-            e.preventDefault();
-            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            e.preventDefault();
-            currentSlide = Math.max(currentSlide - 1, 0);
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') {
+            e.preventDefault(); goTo(current + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'Backspace') {
+            e.preventDefault(); goTo(current - 1);
         }
     });
 
-    // Update currentSlide on scroll
-    wrapper.addEventListener('scroll', () => {
-        const wh = wrapper.clientHeight;
-        slides.forEach((s, i) => {
-            const rect = s.getBoundingClientRect();
-            if (rect.top >= -wh/2 && rect.top < wh/2) currentSlide = i;
-        });
-    });
+    deck.addEventListener('scroll', updateUI);
+    updateUI();
 
-    // Progress indicator
-    const progress = document.createElement('div');
-    progress.style.cssText = 'position:fixed; right:16px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:6px; z-index:999;';
-    slides.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.style.cssText = 'width:6px; height:6px; border-radius:50%; background:#333; transition:all .3s; cursor:pointer;';
-        dot.addEventListener('click', () => {
-            currentSlide = i;
-            slides[i].scrollIntoView({ behavior: 'smooth' });
+    // Show first slide immediately
+    setTimeout(() => {
+        slides[0].classList.add('visible');
+        slides[0].querySelectorAll('.anim').forEach((a, i) => {
+            setTimeout(() => a.classList.add('show'), 200 + i * 120);
         });
-        progress.appendChild(dot);
-    });
-    document.body.appendChild(progress);
-
-    // Update progress dots
-    function updateDots() {
-        progress.childNodes.forEach((dot, i) => {
-            dot.style.background = i === currentSlide ? '#3b82f6' : '#333';
-            dot.style.width = i === currentSlide ? '8px' : '6px';
-            dot.style.height = i === currentSlide ? '8px' : '6px';
-        });
-        requestAnimationFrame(updateDots);
-    }
-    updateDots();
+    }, 100);
 })();
 </script>
 </body>
