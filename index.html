@@ -698,6 +698,113 @@
     </div>
 </div>
 
+<!-- SECTION 07: Skill 的局限与现实 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">07</div>
+        <div class="section-meta">
+            <h2>Skill 的局限：80 分到 95 分的鸿沟</h2>
+            <p>快速做到 80 分很容易，但最后 15 分才是真正的战场</p>
+        </div>
+    </div>
+
+    <!-- 80分 vs 95分 -->
+    <div class="compare" style="margin-bottom:24px;">
+        <div class="compare-col" style="border-color:var(--green);">
+            <h3>✅ 80 分：Skill 能快速搞定 <span class="badge badge-blue">天</span></h3>
+            <div class="compare-row">
+                <span class="compare-label">标准化流程</span>
+                <span class="compare-val">SOP 明确的重复任务</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">格式化输出</span>
+                <span class="compare-val">报告、台账、周报</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">信息提取</span>
+                <span class="compare-val">从合同中抽字段</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">初筛分类</span>
+                <span class="compare-val">风险等级初判</span>
+            </div>
+        </div>
+        <div class="compare-col" style="border-color:var(--red);">
+            <h3>🔴 最后 15 分：需要工程化 <span class="badge badge-purple">月</span></h3>
+            <div class="compare-row">
+                <span class="compare-label">边界案例</span>
+                <span class="compare-val">非标合同、混合条款</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">幻觉控制</span>
+                <span class="compare-val">编造不存在的条款引用</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">一致性</span>
+                <span class="compare-val">同一份合同审两次结果不同</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">可解释性</span>
+                <span class="compare-val">"为什么判高风险？" 要能追溯</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 工程化挑战 -->
+    <h4 style="font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px; padding-left:4px;">🔧 从 Demo 到生产的工程挑战</h4>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">⚙️</div>
+        <div>
+            <h3>挑战一：与现有系统集成</h3>
+            <p>法务团队不会为了用 AI 换一套工作流。Skill 必须嵌入现有工具链</p>
+            <div class="quote">合同在 OA 系统里 → 审批在飞书 → 台账在 Excel → AI 怎么串起来？<br>答案：MCP 做连接器，但每个系统的对接都是脏活累活</div>
+        </div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">🔄</div>
+        <div>
+            <h3>挑战二：持续迭代与反馈闭环</h3>
+            <p>Skill 不是写完就结束，它需要像产品一样运营</p>
+            <div class="quote">第一版 Skill 准确率 85% → 收集错误案例 → 优化 SOP → 第二版 90% → 加入边界规则 → 第三版 93%...<br>没有反馈机制，Skill 永远停在 80 分</div>
+        </div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">👥</div>
+        <div>
+            <h3>挑战三：人机协作的边界设计</h3>
+            <p>哪些环节 AI 自动处理，哪些必须人工复核？这条线画在哪里决定成败</p>
+            <div class="quote">全自动 → 出一次事故就被叫停<br>全人工复核 → 没效率提升，不如不用<br>正确做法：按风险等级分流 — 低风险自动通过，高风险转人工</div>
+        </div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">📏</div>
+        <div>
+            <h3>挑战四：效果度量</h3>
+            <p>老板问"AI 到底帮了多少忙？"你怎么答？</p>
+            <div class="quote">需要建立可量化的指标：审查时间从 2 小时 → 20 分钟？<br>漏检率从 15% → 3%？每月节省多少人力？<br>没有数据，就没有持续投入的理由</div>
+        </div>
+    </div>
+
+    <!-- 务实建议 -->
+    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628;">
+        <h4 style="font-size:13px; color:var(--accent); margin-bottom:12px;">💡 务实建议</h4>
+        <div style="display:grid; grid-template-columns:40px 1fr; gap:8px; font-size:13px; color:var(--gray-1);">
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">01</span>
+            <span><strong>先跑起来再优化</strong> — 80 分的 Skill 今天就能用，别等 95 分才上线</span>
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">02</span>
+            <span><strong>设计人工兜底</strong> — AI 做初筛，人做终审，逐步扩大 AI 自主范围</span>
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">03</span>
+            <span><strong>建立反馈循环</strong> — 每次人工修正都是 Skill 迭代的燃料</span>
+            <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600;">04</span>
+            <span><strong>量化一切</strong> — 用数据说话，让老板看到 ROI</span>
+        </div>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <section class="foot">
     <h3>Resources</h3>
