@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Skills — 专家知识 × 技术放大</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #000; --bg-card: #0a0a0a; --bg-hover: #111;
+            --white: #fff; --gray-1: #e5e5e5; --gray-2: #a1a1a1;
+            --gray-3: #666; --gray-4: #333; --gray-5: #1a1a1a;
+            --border: #1a1a1a;
+            --accent: #3b82f6; --accent-dim: #1d4ed8;
+            --red: #ef4444; --green: #22c55e; --yellow: #eab308;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg); color: var(--white);
+            line-height: 1.6; -webkit-font-smoothing: antialiased;
+        }
+
+        /* === HERO === */
+        .hero {
+            padding: 100px 24px 80px; text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border: 1px solid var(--gray-4);
+            border-radius: 100px; font-size: 13px; color: var(--gray-2);
+            margin-bottom: 32px; letter-spacing: 0.5px;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px; background: var(--accent);
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+            letter-spacing: -0.03em; margin-bottom: 16px;
+        }
+        .hero-sub {
+            font-size: 1.15rem; color: var(--gray-3); font-weight: 400;
+            margin-bottom: 56px; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+
+        /* === FORMULA === */
+        .formula-section {
+            padding: 80px 24px; border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        .formula {
+            display: flex; align-items: center; justify-content: center;
+            gap: 24px; flex-wrap: wrap; margin-bottom: 24px;
+        }
+        .formula-box {
+            padding: 24px 36px; border: 1px solid var(--border);
+            border-radius: 16px; background: var(--bg-card);
+            min-width: 200px;
+        }
+        .formula-box .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .formula-box .label {
+            font-size: 14px; color: var(--gray-2); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+        }
+        .formula-box .desc { font-size: 13px; color: var(--gray-3); }
+        .formula-op {
+            font-size: 3rem; font-weight: 800; color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .formula-note {
+            font-size: 14px; color: var(--gray-3); font-style: italic;
+        }
+        .formula-note strong { color: var(--red); font-style: normal; }
+
+        /* === SECTIONS === */
+        .section {
+            max-width: 880px; margin: 0 auto;
+            padding: 64px 24px; border-bottom: 1px solid var(--border);
+        }
+        .section-head {
+            display: flex; align-items: baseline; gap: 16px;
+            margin-bottom: 40px; padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-num {
+            font-size: 4rem; font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.05em; color: var(--gray-1);
+        }
+        .section-meta h2 { font-size: 1.25rem; font-weight: 600; }
+        .section-meta p { color: var(--gray-3); font-size: 14px; }
+
+        /* === CARDS === */
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px; margin-bottom: 32px;
+        }
+        .card {
+            padding: 24px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px;
+            transition: all .15s ease;
+        }
+        .card:hover { border-color: var(--gray-4); transform: translateY(-2px); }
+        .card .card-icon { font-size: 2rem; margin-bottom: 12px; }
+        .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        .card p { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+
+        /* === FLOW === */
+        .flow {
+            display: flex; flex-direction: column; gap: 0;
+            padding-left: 20px; position: relative; margin-bottom: 32px;
+        }
+        .flow::before {
+            content: ''; position: absolute; left: 3px; top: 24px; bottom: 24px;
+            width: 1px; background: var(--gray-4);
+        }
+        .flow-item {
+            display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+            align-items: center; padding: 16px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; position: relative;
+            transition: all .15s ease; margin-bottom: 8px;
+        }
+        .flow-item:hover { border-color: var(--gray-4); transform: translateX(4px); background: var(--bg-hover); }
+        .flow-item::before {
+            content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
+            width: 6px; height: 6px; background: var(--white); border-radius: 50%;
+        }
+        .flow-step {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; color: var(--accent); font-weight: 600;
+        }
+        .flow-text { font-size: 14px; color: var(--gray-1); }
+        .flow-text strong { color: var(--white); }
+
+        /* === COMPARISON === */
+        .compare {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            margin-bottom: 32px;
+        }
+        .compare-col {
+            padding: 28px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px;
+        }
+        .compare-col h3 {
+            font-size: 14px; font-weight: 600; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .compare-col .badge {
+            font-size: 11px; padding: 2px 8px; border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .badge-blue { background: #1e3a5f; color: var(--accent); }
+        .badge-purple { background: #3b1f5e; color: #a78bfa; }
+        .compare-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid var(--gray-5);
+            font-size: 13px;
+        }
+        .compare-row:last-child { border-bottom: none; }
+        .compare-label { color: var(--gray-3); }
+        .compare-val { color: var(--gray-1); font-weight: 500; }
+
+        /* === PITFALLS === */
+        .pitfall {
+            display: flex; gap: 20px; align-items: flex-start;
+            padding: 24px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px;
+            margin-bottom: 12px; transition: all .15s ease;
+        }
+        .pitfall:hover { border-color: var(--gray-4); }
+        .pitfall-icon { font-size: 2rem; flex-shrink: 0; }
+        .pitfall h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .pitfall p { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+        .pitfall .quote {
+            margin-top: 8px; padding: 10px 14px;
+            border-left: 2px solid var(--gray-4);
+            font-size: 13px; color: var(--gray-2); font-style: italic;
+        }
+
+        /* === FAIL ROWS === */
+        .fail-row {
+            display: grid; grid-template-columns: 32px 1fr; gap: 12px;
+            align-items: start; padding: 14px 16px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; margin-bottom: 8px;
+            transition: all .15s ease;
+        }
+        .fail-row:hover { border-color: var(--gray-4); }
+        .fail-icon { font-size: 1.2rem; text-align: center; padding-top: 2px; }
+        .fail-text { font-size: 14px; color: var(--gray-1); }
+        .fail-text .dim { color: var(--gray-3); }
+
+        /* === QUOTE === */
+        .big-quote {
+            padding: 64px 24px; text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .big-quote blockquote {
+            font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600;
+            letter-spacing: -0.02em; max-width: 700px;
+            margin: 0 auto 16px; line-height: 1.5;
+        }
+        .big-quote .attr {
+            font-size: 13px; color: var(--gray-3);
+        }
+
+        /* === SCENARIO CARDS === */
+        .scenario {
+            padding: 24px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px;
+            margin-bottom: 12px; transition: all .15s ease;
+        }
+        .scenario:hover { border-color: var(--gray-4); transform: translateX(4px); }
+        .scenario-head {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+        }
+        .scenario-icon { font-size: 1.5rem; }
+        .scenario h3 { font-size: 15px; font-weight: 600; }
+        .scenario .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .scenario .tag {
+            padding: 3px 10px; border: 1px solid var(--border);
+            border-radius: 100px; font-size: 11px; color: var(--gray-3);
+        }
+        .scenario .flow-mini {
+            font-size: 13px; color: var(--gray-2); margin-top: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .scenario .flow-mini .arrow { color: var(--accent); margin: 0 6px; }
+
+        /* === FOOTER === */
+        .foot {
+            border-top: 1px solid var(--border);
+            padding: 64px 24px; text-align: center;
+        }
+        .foot h3 {
+            font-size: 11px; color: var(--gray-3); text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .foot-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 700px; margin: 0 auto; }
+        .foot-tag {
+            padding: 6px 14px; border: 1px solid var(--border);
+            border-radius: 100px; font-size: 13px; color: var(--gray-3);
+            transition: all .15s ease; text-decoration: none;
+        }
+        .foot-tag:hover { border-color: var(--gray-4); color: var(--gray-1); }
+
+        @media (max-width: 640px) {
+            .compare { grid-template-columns: 1fr; }
+            .formula { flex-direction: column; gap: 12px; }
+            .formula-op { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge"><span class="dot"></span>AI Agent Skills</div>
+    <h1>专家知识 × 技术放大</h1>
+    <p class="hero-sub">B端智能体落地的核心密码：把专家做事的套路，变成机器可稳定执行的流程</p>
+</section>
+
+<!-- FORMULA -->
+<section class="formula-section">
+    <div class="formula">
+        <div class="formula-box">
+            <div class="icon">🧠</div>
+            <div class="label">专家知识</div>
+            <div class="desc">业务SOP · 判断标准</div>
+        </div>
+        <div class="formula-op">×</div>
+        <div class="formula-box">
+            <div class="icon">⚡</div>
+            <div class="label">技术能力</div>
+            <div class="desc">提示词 · 工作流 · 工具 · 系统集成</div>
+        </div>
+        <div class="formula-op">=</div>
+        <div class="formula-box" style="border-color: var(--accent);">
+            <div class="icon">🤖</div>
+            <div class="label">好 Agent</div>
+            <div class="desc">可规模化 · 可运维 · 可交付</div>
+        </div>
+    </div>
+    <p class="formula-note">注意是<strong>乘法</strong>，不是加法。任何一边是 0，整体就是 0。</p>
+</section>
+
+<!-- SECTION 01: 市场真实问题 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">01</div>
+        <div class="section-meta">
+            <h2>市场的真实问题</h2>
+            <p>企业端的困境不是"缺技术"</p>
+        </div>
+    </div>
+
+    <div class="fail-row">
+        <div class="fail-icon">❌</div>
+        <div class="fail-text">缺的不是技术 <span class="dim">— 大模型能力摆在那里，工作流平台也很成熟</span></div>
+    </div>
+    <div class="fail-row">
+        <div class="fail-icon">❌</div>
+        <div class="fail-text">缺对能力边界的清醒认识 <span class="dim">— AI 能做什么、不能做什么</span></div>
+    </div>
+    <div class="fail-row" style="border-color: var(--accent);">
+        <div class="fail-icon">💡</div>
+        <div class="fail-text"><strong>缺把专家流程写进系统的能力</strong> <span class="dim">— 这才是决定项目成败的总开关</span></div>
+    </div>
+</div>
+
+<!-- SECTION 02: 专家知识 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">02</div>
+        <div class="section-meta">
+            <h2>专家知识到底是什么</h2>
+            <p>不是"资料很多"，不是"懂行业术语"</p>
+        </div>
+    </div>
+
+    <div class="compare">
+        <div class="compare-col">
+            <h3>📋 步骤拆解 <span class="badge badge-blue">SOP</span></h3>
+            <p style="font-size:13px; color:var(--gray-3); margin-bottom:16px;">专家知道按什么顺序做，为什么这么做</p>
+            <div class="flow" style="padding-left:16px;">
+                <div class="flow-item" style="margin-bottom:6px;">
+                    <span class="flow-step">01</span>
+                    <span class="flow-text">主体信息是否完整、是否匹配</span>
+                </div>
+                <div class="flow-item" style="margin-bottom:6px;">
+                    <span class="flow-step">02</span>
+                    <span class="flow-text">关键权责与违约边界</span>
+                </div>
+                <div class="flow-item" style="margin-bottom:6px;">
+                    <span class="flow-step">03</span>
+                    <span class="flow-text">付款与交付条件</span>
+                </div>
+                <div class="flow-item" style="margin-bottom:6px;">
+                    <span class="flow-step">04</span>
+                    <span class="flow-text">争议解决条款</span>
+                </div>
+                <div class="flow-item">
+                    <span class="flow-step">05</span>
+                    <span class="flow-text">风险兜底与补救路径</span>
+                </div>
+            </div>
+        </div>
+        <div class="compare-col">
+            <h3>✅ 完成标准 <span class="badge badge-purple">验收口径</span></h3>
+            <p style="font-size:13px; color:var(--gray-3); margin-bottom:16px;">专家知道什么结果算"合格"、什么算"有风险"</p>
+            <div class="fail-row" style="margin-bottom:6px;">
+                <div class="fail-icon" style="color:var(--red);">●</div>
+                <div class="fail-text" style="font-size:13px;">哪些字段缺失 → 不能出报告</div>
+            </div>
+            <div class="fail-row" style="margin-bottom:6px;">
+                <div class="fail-icon" style="color:var(--yellow);">●</div>
+                <div class="fail-text" style="font-size:13px;">哪些数值异常 → 触发风险提示</div>
+            </div>
+            <div class="fail-row" style="margin-bottom:6px;">
+                <div class="fail-icon" style="color:var(--green);">●</div>
+                <div class="fail-text" style="font-size:13px;">哪些结论必须保守表达</div>
+            </div>
+            <div style="margin-top:16px; padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--bg);">
+                <p style="font-size:12px; color:var(--gray-3);">没有验收口径 → 输出了也没法判断好坏 → 只能凭感觉 → 项目必崩</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 03: 为什么专家知识更关键 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">03</div>
+        <div class="section-meta">
+            <h2>为什么专家知识比技术更关键</h2>
+            <p>技术往往不是第一难点</p>
+        </div>
+    </div>
+
+    <div class="fail-row">
+        <div class="fail-icon">🚫</div>
+        <div class="fail-text">没专家 → <strong>流程拆不出</strong> <span class="dim">→ 模型"自由发挥" = B端不可控、不可交付</span></div>
+    </div>
+    <div class="fail-row">
+        <div class="fail-icon">🚫</div>
+        <div class="fail-text">没标准 → <strong>没法评估</strong> <span class="dim">→ 60分还是95分？错一次损失多大？</span></div>
+    </div>
+    <div class="fail-row">
+        <div class="fail-icon">🚫</div>
+        <div class="fail-text">没业务 → <strong>提示词写不出</strong> <span class="dim">→ 像不会做菜的人写菜谱</span></div>
+    </div>
+
+    <div style="margin-top:24px; padding:20px; border:1px solid var(--accent-dim); border-radius:12px; background: #0a1628; text-align:center;">
+        <p style="font-size:14px; color:var(--gray-1);">有技术但没专家 = <strong style="color:var(--accent);">有发动机但没方向盘</strong>，车再好也开不动</p>
+    </div>
+</div>
+
+<!-- SECTION 04: 两个大坑 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">04</div>
+        <div class="section-meta">
+            <h2>有了专家也未必好使</h2>
+            <p>两个隐藏的大坑</p>
+        </div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">🕳️</div>
+        <div>
+            <h3>坑一：专家不愿意配合</h3>
+            <p>把能力交给 AI = 稀释自己在公司的稀缺性</p>
+            <div class="quote">"老子花了钱，你就得把事儿办好，不要总是麻烦我。"<br>— 企业客户真实心态</div>
+        </div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-icon">🕳️</div>
+        <div>
+            <h3>坑二：专家讲不清楚</h3>
+            <p>"知识的诅咒" — 做太久，判断已内化成直觉和肌肉记忆</p>
+            <div class="quote">"为什么先看这个字段？" → "我就是习惯先看"<br>"什么情况算风险？" → "看多了就知道"</div>
+            <p style="margin-top:8px;">大量时间花在"帮专家把经验翻译成可执行的步骤和标准"上</p>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 05: 横着切 vs 竖着切 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">05</div>
+        <div class="section-meta">
+            <h2>两条路径：横着切还是竖着切</h2>
+            <p>核心问题：你有没有专家知识</p>
+        </div>
+    </div>
+
+    <div class="compare">
+        <div class="compare-col" style="border-color: var(--accent-dim);">
+            <h3>🔽 竖着切 <span class="badge badge-blue">深耕行业</span></h3>
+            <div class="compare-row">
+                <span class="compare-label">策略</span>
+                <span class="compare-val">选一个行业，扎进去</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">壁垒</span>
+                <span class="compare-val" style="color:var(--green);">高 — 专家知识本身是壁垒</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">竞争</span>
+                <span class="compare-val" style="color:var(--green);">小 — 懂行又懂技术的人少</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">信任</span>
+                <span class="compare-val">"这个团队懂我们业务"</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">风险</span>
+                <span class="compare-val">市场天花板</span>
+            </div>
+        </div>
+        <div class="compare-col">
+            <h3>➡️ 横着切 <span class="badge badge-purple">通用场景</span></h3>
+            <div class="compare-row">
+                <span class="compare-label">策略</span>
+                <span class="compare-val">通用能力，服务所有行业</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">壁垒</span>
+                <span class="compare-val" style="color:var(--red);">低 — 充分竞争市场</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">竞争</span>
+                <span class="compare-val" style="color:var(--red);">大 — 都能做 RAG + DeepSeek</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">出路</span>
+                <span class="compare-val">拼服务或极致产品体验</span>
+            </div>
+            <div class="compare-row">
+                <span class="compare-label">风险</span>
+                <span class="compare-val">利润薄、替代性强</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BIG QUOTE -->
+<section class="big-quote">
+    <blockquote>"你不是在卖技术，你是在把专家的工作方式变成可复制的系统。"</blockquote>
+    <p class="attr">B端智能体落地的本质 — 专家流程工程化</p>
+</section>
+
+<!-- SECTION 06: 法务场景落地 -->
+<div class="section">
+    <div class="section-head">
+        <div class="section-num">06</div>
+        <div class="section-meta">
+            <h2>法务运营场景落地</h2>
+            <p>你们最懂自己的痛点，所以你们才是最该造 Skill 的人</p>
+        </div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📋</span>
+            <h3>合同风险审查 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">SOP: 5步审查路径</span>
+            <span class="tag">验收: 风险等级标准</span>
+            <span class="tag">输出: 风险报告表格</span>
+        </div>
+        <div class="flow-mini">上传合同 <span class="arrow">→</span> AI 逐项检查 <span class="arrow">→</span> 标注风险点 <span class="arrow">→</span> 输出审查报告</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📰</span>
+            <h3>法规监测 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">MCP: 连接法规数据库</span>
+            <span class="tag">Skill: 筛选相关条款</span>
+            <span class="tag">输出: 每日推送</span>
+        </div>
+        <div class="flow-mini">定时爬取新规 <span class="arrow">→</span> 匹配业务关键词 <span class="arrow">→</span> 生成摘要 <span class="arrow">→</span> 推送相关部门</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">🔍</span>
+            <h3>尽调报告 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">MCP: 工商/诉讼/知产数据</span>
+            <span class="tag">Skill: 尽调框架</span>
+            <span class="tag">验收: 字段完整性检查</span>
+        </div>
+        <div class="flow-mini">输入公司名 <span class="arrow">→</span> 自动检索多源数据 <span class="arrow">→</span> 交叉验证 <span class="arrow">→</span> 生成尽调报告</div>
+    </div>
+
+    <div class="scenario">
+        <div class="scenario-head">
+            <span class="scenario-icon">📝</span>
+            <h3>法务周报 Skill</h3>
+        </div>
+        <div class="tags">
+            <span class="tag">数据: 本周工作记录</span>
+            <span class="tag">Skill: 周报模板+风格</span>
+            <span class="tag">输出: 格式化周报</span>
+        </div>
+        <div class="flow-mini">获取工作记录 <span class="arrow">→</span> 按模板整理 <span class="arrow">→</span> 生成周报 <span class="arrow">→</span> 一键发送</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<section class="foot">
+    <h3>Resources</h3>
+    <div class="foot-tags">
+        <a class="foot-tag" href="https://github.com/anthropics/skills" target="_blank">Anthropic Skills</a>
+        <a class="foot-tag" href="https://github.com/anthropics/claude-code" target="_blank">Claude Code</a>
+        <a class="foot-tag" href="https://skillsmp.com" target="_blank">Skills Marketplace</a>
+        <a class="foot-tag" href="https://github.com/travisvn/awesome-claude-skills" target="_blank">Awesome Skills</a>
+    </div>
+</section>
+
+<script>
+const els = document.querySelectorAll('.card, .fail-row, .flow-item, .pitfall, .scenario, .compare-col');
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'translateX(0) translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
+els.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(8px)';
+    el.style.transition = 'all .3s ease';
+    obs.observe(el);
+    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateX(0) translateY(0)'; }, 300 + i * 40);
+});
+</script>
+</body>
+</html>
