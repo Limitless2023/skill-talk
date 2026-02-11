@@ -794,16 +794,113 @@
     </div>
 </section>
 
-<!-- 18: Q&A -->
+<!-- 18: Skill 局限性 & 擅长领域 -->
 <section class="slide" data-slide="18">
+    <div class="slide-inner">
+        <h2 class="sec-title anim">Skill 的局限性深度解析</h2>
+        <p class="hero-sub anim" style="margin-bottom:24px">不能做的事 & 替代方案</p>
+        <table class="anim" style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:24px">
+            <thead>
+                <tr style="border-bottom:1px solid var(--g4)">
+                    <th style="text-align:left;padding:8px;color:var(--g2)">局限性</th>
+                    <th style="text-align:left;padding:8px;color:var(--g2)">为什么不能？</th>
+                    <th style="text-align:left;padding:8px;color:var(--g2)">替代方案</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">执行复杂逻辑</td>
+                    <td style="padding:8px;color:var(--g3)">Skill 只是文本指令，不是可执行代码</td>
+                    <td style="padding:8px;color:var(--blue)">➡️ 用 Hook 或 Python/Bash 脚本</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">存储状态</td>
+                    <td style="padding:8px;color:var(--g3)">每次调用都是独立的，没有记忆</td>
+                    <td style="padding:8px;color:var(--blue)">➡️ 用文件或 MCP Source 持久化</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">访问外部 API</td>
+                    <td style="padding:8px;color:var(--g3)">Skill 本身不联网</td>
+                    <td style="padding:8px;color:var(--blue)">➡️ 创建 MCP Source 来连接 API</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px">100% 保证执行</td>
+                    <td style="padding:8px;color:var(--g3)">AI 理解有概率偏差</td>
+                    <td style="padding:8px;color:var(--blue)">➡️ 充分测试 + 清晰指令降低风险</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="anim" style="font-size:13px;color:var(--g2);margin-bottom:12px;font-weight:700">擅长的事 — 发挥 Skill 价值</p>
+        <table class="anim" style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead>
+                <tr style="border-bottom:1px solid var(--g4)">
+                    <th style="text-align:left;padding:8px;color:var(--g2)">能力</th>
+                    <th style="text-align:left;padding:8px;color:var(--g2)">应用场景</th>
+                    <th style="text-align:left;padding:8px;color:var(--g2)">价值</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">标准化流程</td>
+                    <td style="padding:8px;color:var(--g3)">Git commit 格式、代码审查清单</td>
+                    <td style="padding:8px;color:var(--blue)">统一团队规范</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">知识注入</td>
+                    <td style="padding:8px;color:var(--g3)">公司编码风格、架构原则</td>
+                    <td style="padding:8px;color:var(--blue)">新人快速上手</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--g5)">
+                    <td style="padding:8px">工作流引导</td>
+                    <td style="padding:8px;color:var(--g3)">分步骤操作、检查清单</td>
+                    <td style="padding:8px;color:var(--blue)">防止遗漏步骤</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px">上下文约束</td>
+                    <td style="padding:8px;color:var(--g3)">限定输出格式、语气风格</td>
+                    <td style="padding:8px;color:var(--blue)">提升输出质量</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- 19: 总结 -->
+<section class="slide" data-slide="19">
+    <div class="slide-inner">
+        <h2 class="sec-title anim">总结</h2>
+        <div class="callout anim" style="margin-bottom:24px">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">Skill 制作的本质：写一份给 AI 的<strong style="color:var(--blue)">"操作手册"</strong>，通过反复测试打磨直到 AI 能稳定理解并执行。</p>
+        </div>
+
+        <div class="anim" style="margin-bottom:24px">
+            <h4 style="font-size:13px;color:var(--g2);margin-bottom:12px">核心要点</h4>
+            <div class="callout-grid" style="font-size:13px">
+                <span class="callout-n">✅</span><span>规划时评估可行性</span>
+                <span class="callout-n">✅</span><span>创建时用具体指令 + 示例</span>
+                <span class="callout-n">✅</span><span>验证时用 skill_validate</span>
+                <span class="callout-n">✅</span><span>测试时反复迭代优化</span>
+                <span class="callout-n">✅</span><span>上线后持续收集反馈</span>
+            </div>
+        </div>
+
+        <div class="callout anim" style="border-color:var(--blue-dim)">
+            <p style="font-size:14px;text-align:center;color:var(--g1)">Skill 不是万能的，但在它擅长的领域（流程标准化、知识注入）是非常强大的<strong style="color:var(--blue)">生产力工具</strong> 🚀</p>
+        </div>
+    </div>
+</section>
+
+<!-- 20: Q&A -->
+<section class="slide" data-slide="20">
     <div class="slide-inner hero-center">
         <h1 class="hero-title anim" style="font-size:clamp(2.5rem,5vw,4rem)">Q&A</h1>
         <p class="hero-sub anim">随便聊聊，有问必答</p>
     </div>
 </section>
 
-<!-- 19: 收尾 + Resources -->
-<section class="slide" data-slide="19">
+<!-- 21: 收尾 + Resources -->
+<section class="slide" data-slide="21">
     <div class="slide-inner bq">
         <blockquote class="anim" style="margin-bottom:32px">以前：学编程才能造工具。<br>现在：<span class="hi">懂业务就能造工具</span>。</blockquote>
 
