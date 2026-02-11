@@ -797,61 +797,50 @@
 <!-- 18: Skill 局限性 & 擅长领域 -->
 <section class="slide" data-slide="18">
     <div class="slide-inner">
-        <p class="slide-num anim">Limitations</p>
-        <h2 class="slide-title anim" style="font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:36px">Skill 不能做什么</h2>
+        <div class="slide-num anim">Boundaries</div>
+        <h2 class="slide-title anim">Skill <span class="hi">不能做什么</span></h2>
+        <p class="slide-sub anim">认清边界，才能用好工具</p>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px">
-            <div class="callout anim">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-                    <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--red);border:1px solid var(--border);border-radius:6px;padding:2px 8px">x</span>
-                    <strong style="font-size:13px">执行复杂逻辑</strong>
-                </div>
-                <p style="font-size:12px;color:var(--g3);margin-bottom:6px">Skill 是文本指令，不是可执行代码</p>
-                <p style="font-size:12px;color:var(--g2)">替代 &mdash; Hook / Python / Bash 脚本</p>
-            </div>
-            <div class="callout anim">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-                    <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--red);border:1px solid var(--border);border-radius:6px;padding:2px 8px">x</span>
-                    <strong style="font-size:13px">存储状态</strong>
-                </div>
-                <p style="font-size:12px;color:var(--g3);margin-bottom:6px">每次调用独立，没有记忆</p>
-                <p style="font-size:12px;color:var(--g2)">替代 &mdash; 文件 / MCP Source 持久化</p>
-            </div>
-            <div class="callout anim">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-                    <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--red);border:1px solid var(--border);border-radius:6px;padding:2px 8px">x</span>
-                    <strong style="font-size:13px">访问外部 API</strong>
-                </div>
-                <p style="font-size:12px;color:var(--g3);margin-bottom:6px">Skill 本身不联网</p>
-                <p style="font-size:12px;color:var(--g2)">替代 &mdash; 创建 MCP Source 连接 API</p>
-            </div>
-            <div class="callout anim">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-                    <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--red);border:1px solid var(--border);border-radius:6px;padding:2px 8px">x</span>
-                    <strong style="font-size:13px">100% 保证执行</strong>
-                </div>
-                <p style="font-size:12px;color:var(--g3);margin-bottom:6px">AI 理解有概率偏差</p>
-                <p style="font-size:12px;color:var(--g2)">替代 &mdash; 充分测试 + 清晰指令</p>
-            </div>
+        <div class="pit anim">
+            <div class="pit-icon" style="color:var(--red)">01</div>
+            <div><h4>执行复杂逻辑 <span class="badge b-red">不能</span></h4>
+                <p>Skill 是文本指令，不是可执行代码</p>
+                <div class="quote">替代方案：用 Hook 或 Python / Bash 脚本处理</div></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon" style="color:var(--red)">02</div>
+            <div><h4>存储状态 <span class="badge b-red">不能</span></h4>
+                <p>每次调用独立，没有记忆</p>
+                <div class="quote">替代方案：用文件或 MCP Source 持久化</div></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon" style="color:var(--red)">03</div>
+            <div><h4>访问外部 API <span class="badge b-red">不能</span></h4>
+                <p>Skill 本身不联网</p>
+                <div class="quote">替代方案：创建 MCP Source 连接 API</div></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon" style="color:var(--red)">04</div>
+            <div><h4>100% 保证执行 <span class="badge b-red">不能</span></h4>
+                <p>AI 理解有概率偏差</p>
+                <div class="quote">替代方案：充分测试 + 清晰指令降低风险</div></div>
         </div>
 
-        <p class="anim" style="font-size:11px;color:var(--g3);letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:16px">擅长的事</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="callout anim" style="border-color:var(--blue-dim)">
-                <strong style="font-size:13px;color:var(--blue)">标准化流程</strong>
-                <p style="font-size:12px;color:var(--g3);margin-top:4px">Git commit 格式、代码审查清单 &mdash; 统一团队规范</p>
+        <div class="grid2 anim" style="margin-top:24px">
+            <div class="card card-accent">
+                <h3><span style="color:var(--blue)">●</span> 擅长的事</h3>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>标准化流程</strong> — 统一团队规范</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>知识注入</strong> — 新人快速上手</span></div>
+                <div class="row" style="margin-bottom:6px"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>工作流引导</strong> — 防止遗漏步骤</span></div>
+                <div class="row"><span class="row-icon" style="color:var(--blue)">›</span><span style="font-size:13px"><strong>上下文约束</strong> — 提升输出质量</span></div>
             </div>
-            <div class="callout anim" style="border-color:var(--blue-dim)">
-                <strong style="font-size:13px;color:var(--blue)">知识注入</strong>
-                <p style="font-size:12px;color:var(--g3);margin-top:4px">编码风格、架构原则 &mdash; 新人快速上手</p>
-            </div>
-            <div class="callout anim" style="border-color:var(--blue-dim)">
-                <strong style="font-size:13px;color:var(--blue)">工作流引导</strong>
-                <p style="font-size:12px;color:var(--g3);margin-top:4px">分步骤操作、检查清单 &mdash; 防止遗漏</p>
-            </div>
-            <div class="callout anim" style="border-color:var(--blue-dim)">
-                <strong style="font-size:13px;color:var(--blue)">上下文约束</strong>
-                <p style="font-size:12px;color:var(--g3);margin-top:4px">限定输出格式、语气风格 &mdash; 提升质量</p>
+            <div class="card">
+                <h3><span style="color:var(--g3)">●</span> 设计原则</h3>
+                <p style="font-size:13px;color:var(--g3);line-height:1.8">
+                    Skill 不是万能的，<br>但在它擅长的领域 —<br>
+                    <strong style="color:var(--g1)">流程标准化、知识注入</strong> —<br>
+                    是非常强大的生产力工具
+                </p>
             </div>
         </div>
     </div>
@@ -859,24 +848,35 @@
 
 <!-- 19: 总结 -->
 <section class="slide" data-slide="19">
-    <div class="slide-inner" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
-        <p class="slide-num anim">Takeaway</p>
-        <h2 class="slide-title anim" style="font-size:clamp(1.6rem,3.5vw,2.4rem);text-align:center;margin-bottom:40px">总结</h2>
+    <div class="slide-inner">
+        <div class="slide-num anim">Takeaway</div>
+        <h2 class="slide-title anim">总结</h2>
+        <p class="slide-sub anim">写一份给 AI 的操作手册，反复测试打磨，直到 AI 能稳定理解并执行</p>
 
-        <div class="callout anim" style="max-width:640px;width:100%;margin-bottom:40px;text-align:center">
-            <p style="font-size:15px;color:var(--g1);line-height:1.7">Skill 制作的本质：<br>写一份给 AI 的<strong style="color:var(--blue)">操作手册</strong>，反复测试打磨，<br>直到 AI 能稳定理解并执行。</p>
+        <div class="pit anim">
+            <div class="pit-icon">01</div>
+            <div><h4>规划 <span class="badge b-blue">评估</span></h4>
+                <p>评估可行性，确认 Skill 适合解决这个问题</p></div>
         </div>
-
-        <div style="display:grid;grid-template-columns:auto 1fr;gap:14px 20px;max-width:480px;width:100%">
-            <span class="callout-n anim">01</span><span class="anim" style="font-size:14px">规划时评估可行性</span>
-            <span class="callout-n anim">02</span><span class="anim" style="font-size:14px">创建时用具体指令 + 示例</span>
-            <span class="callout-n anim">03</span><span class="anim" style="font-size:14px">验证时用 skill_validate</span>
-            <span class="callout-n anim">04</span><span class="anim" style="font-size:14px">测试时反复迭代优化</span>
-            <span class="callout-n anim">05</span><span class="anim" style="font-size:14px">上线后持续收集反馈</span>
+        <div class="pit anim">
+            <div class="pit-icon">02</div>
+            <div><h4>创建 <span class="badge b-blue">编写</span></h4>
+                <p>用具体指令 + 示例，写清楚每一步怎么做</p></div>
         </div>
-
-        <div class="anim" style="margin-top:48px;max-width:640px;text-align:center">
-            <p style="font-size:14px;color:var(--g2);line-height:1.7">Skill 不是万能的，但在它擅长的领域<br>是非常强大的<strong style="color:var(--blue)">生产力工具</strong></p>
+        <div class="pit anim">
+            <div class="pit-icon">03</div>
+            <div><h4>验证 <span class="badge b-purple">检查</span></h4>
+                <p>用 skill_validate 检查格式和结构</p></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon">04</div>
+            <div><h4>测试 <span class="badge b-green">迭代</span></h4>
+                <p>反复测试，边用边优化，打磨到稳定</p></div>
+        </div>
+        <div class="pit anim">
+            <div class="pit-icon">05</div>
+            <div><h4>上线 <span class="badge b-green">反馈</span></h4>
+                <p>持续收集反馈，让 Skill 越用越好</p></div>
         </div>
     </div>
 </section>
@@ -891,37 +891,16 @@
 
 <!-- 21: 下一步行动 -->
 <section class="slide" data-slide="21">
-    <div class="slide-inner" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
-        <h2 class="anim" style="font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:-0.5px;margin-bottom:48px;text-align:center">下一步行动</h2>
-        <div style="display:grid;grid-template-columns:auto 1fr;gap:20px 24px;max-width:560px;width:100%">
-            <div class="anim" style="display:flex;align-items:baseline;gap:24px">
-                <span style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--blue);line-height:1">01</span>
-            </div>
-            <div class="anim" style="padding-top:4px">
-                <strong style="font-size:15px">选一个最痛的场景</strong><br>
-                <span style="font-size:13px;color:var(--g2)">从周报或合同预审开始</span>
-            </div>
-            <div class="anim" style="display:flex;align-items:baseline;gap:24px">
-                <span style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--blue);line-height:1">02</span>
-            </div>
-            <div class="anim" style="padding-top:4px">
-                <strong style="font-size:15px">用大白话写下你的 SOP</strong><br>
-                <span style="font-size:13px;color:var(--g2)">你怎么做，就怎么写</span>
-            </div>
-            <div class="anim" style="display:flex;align-items:baseline;gap:24px">
-                <span style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--blue);line-height:1">03</span>
-            </div>
-            <div class="anim" style="padding-top:4px">
-                <strong style="font-size:15px">打开 Claude，说"帮我做个 Skill"</strong><br>
-                <span style="font-size:13px;color:var(--g2)">今天就能跑起来</span>
-            </div>
-            <div class="anim" style="display:flex;align-items:baseline;gap:24px">
-                <span style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--blue);line-height:1">04</span>
-            </div>
-            <div class="anim" style="padding-top:4px">
-                <strong style="font-size:15px">用起来，迭代，量化效果</strong><br>
-                <span style="font-size:13px;color:var(--g2)">80 分先用着，边用边优化</span>
-            </div>
+    <div class="slide-inner">
+        <div class="slide-num anim">Action</div>
+        <h2 class="slide-title anim">下一步<span class="hi">行动</span></h2>
+        <p class="slide-sub anim">今天就能开始</p>
+
+        <div class="steps anim">
+            <div class="step"><span class="step-n">01</span><span class="step-t"><strong>选一个最痛的场景</strong> — 从周报或合同预审开始</span></div>
+            <div class="step"><span class="step-n">02</span><span class="step-t"><strong>用大白话写下你的 SOP</strong> — 你怎么做，就怎么写</span></div>
+            <div class="step"><span class="step-n">03</span><span class="step-t"><strong>打开 Claude，说"帮我做个 Skill"</strong> — 今天就能跑起来</span></div>
+            <div class="step"><span class="step-n">04</span><span class="step-t"><strong>用起来，迭代，量化效果</strong> — 80 分先用着，边用边优化</span></div>
         </div>
     </div>
 </section>
@@ -962,6 +941,7 @@
 </section>
 
 </div>
+<div id="author-mark" style="position:fixed;bottom:20px;left:24px;font-family:var(--mono);font-size:11px;color:var(--g4);z-index:999;letter-spacing:1.5px">Limitless</div>
 <button id="theme-toggle" title="切换 Light/Dark"><span style="font-family:var(--mono);font-size:12px;font-weight:700">D</span></button>
 <nav id="nav"></nav>
 <div id="counter"></div>
